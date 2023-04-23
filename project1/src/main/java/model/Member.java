@@ -11,10 +11,8 @@ public class Member {
 	private String id;
 	private String pass;
 	private String name;
-	private int gender;
 	private String tel;
 	private String email;
-	private String picture;
 	//getter,setter,toString
 	public String getId() {
 		return id;
@@ -34,12 +32,8 @@ public class Member {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getGender() {
-		return gender;
-	}
-	public void setGender(int gender) {
-		this.gender = gender;
-	}
+	
+	
 	public String getTel() {
 		return tel;
 	}
@@ -52,16 +46,11 @@ public class Member {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPicture() {
-		return picture;
-	}
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
+	
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", pass=" + pass + ", name=" + name + ", gender=" + gender + ", tel=" + tel
-				+ ", email=" + email + ", picture=" + picture + "]";
+		return "Member [id=" + id + ", pass=" + pass + ", name=" + name + ", gender=" +  ", tel=" + tel
+				+ ", email=" + email + ", picture=" +  "]";
 	}
 	
 }
