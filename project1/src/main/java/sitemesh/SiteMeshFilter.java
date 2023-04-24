@@ -21,15 +21,14 @@ import org.sitemesh.config.ConfigurableSiteMeshFilter;
 @WebFilter("/*")
 public class SiteMeshFilter extends ConfigurableSiteMeshFilter {
 	protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
-		builder.addDecoratorPath("/member/*","/layout/kiclayout.jsp")
+		builder.addDecoratorPath("/member/*", "/layout/project1layout.jsp")
 		.addExcludedPath("/member/id*")
 		.addExcludedPath("/member/pw*")
 		.addExcludedPath("/member/password*")
 		.addExcludedPath("/member/picture*");
 		
-		builder.addDecoratorPath("/board/*", "/layout/boardlayout.jsp")
+		builder.addDecoratorPath("/board/*", "/layout/project1layout.jsp")
 		.addExcludedPath("/board/img*");
-		builder.addDecoratorPath("/book/*", "/layout/project1layout.jsp");
 	}
 	
 }

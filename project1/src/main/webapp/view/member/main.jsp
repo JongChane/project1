@@ -8,12 +8,5 @@
 <title>회원관리</title>
 </head>
 <body>
-<div class="container"></div>
-	<h3 id="center">${sessionScope.login}로 로그인 되었습니다.</h3>
-	<h3 id="center"><a href="logout">로그아웃</a></h3>
-	<h3 id="center"><a href="info?id=${sessionScope.login}">회원정보</a></h3>
-		<c:if test="${sessionScope.login=='admin'}"> <%-- 관리자 로그인 --%>
-			<h3 id="center"><a href="list">회원목록</a></h3>
-		</c:if>
 </body>
 </html>
