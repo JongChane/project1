@@ -14,39 +14,38 @@ import model.Member;
 public interface MemberMapper {
 
 	@Insert("insert into member"
-	+ " (id, pass, name, gender, tel, email,picture) "
-	+ " values (#{id},#{pass},#{name},#{gender},#{tel},"
-	+ "  #{email},#{picture})")
-	int insert(Member mem);
+			+ " (name,id, pass, tel, email) "
+			+ " values (#{name},#{id},#{pass},#{tel},"
+			+ "  #{email})")
+		int insert(Member mem);
 
 	@Select("select * from member where id=#{value}")
-	Member selectOne(String id);
+		Member selectOne(String id);
 
-	@Update("update member set name=#{name},gender=#{gender},"
-			+ "tel=#{tel},email=#{email},picture=#{picture} "
-			+ "where id=#{id}")
+	@Update("update member set name=#{name}, tel=#{tel}, email=#{email} where id =#{id}")
 	int update(Member mem);
 
 	@Select({"<script>",
-		"select * from member ",
-		"<if test='ids != null'> where id in "
-		+ "<foreach collection='ids' item='id' "
-		+ " separator=',' open='(' close=')'>#{id}</foreach></if>",
-		"</script>"})
-	List<Member> list(Map<String, Object> map);
+				"select * from member",
+					  "<if test='ids != null'> where id in "
+					+ "<foreach collection='ids' item='id' "
+					+ " separator=',' open='(' close=')' > #{id}"
+					+ "</foreach></if>",
+			"</script>"		
+	})
+	List<Member> list(Map<String, Object > map);
 
 	@Delete("delete from member where id=#{value}")
 	int delete(String id);
 
-	@Select("select id from member "
-			+ "where email = #{email} and tel =#{tel}")
-	String idSearch(@Param("email")String email, 
-			        @Param("tel")String tel);
+	@Select("select id from member where email=#{email} and tel =#{tel}")
+	String idSearch(@Param("email")String email, @Param("tel")String tel);
 
-	@Select("select pass from member " 
-	          + " where id=#{id} and email=#{email} and tel=#{tel}")
+	@Select("select pass from member where id=#{id} and email=#{email} and tel=#{tel}")
 	String pwSearch(Map<String, Object> map);
 
 	@Update("update member set pass=#{pass} where id=#{id}")
-	int updatePass(@Param("id")String id, @Param("pass")String pass);
+	int updatePass(@Param("id")String id,@Param("pass") String pass);
+	
+	
 }
