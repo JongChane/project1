@@ -12,14 +12,13 @@
 	<h2 id="center">회원 상세 정보</h2>
 	<table class="table table-hover">
 		<tr><td rowspan="6" width="30%">
-		<th width="20%">아이디</th><td>${mem.id}</td></tr>
-			<tr><th>이름</th><td>${mem.name}</td></tr>
+		<th width="20%">아이디</th><td>${mem.member_id}</td></tr>
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
 			<tr><td colspan="2" id="center">
-		<a href="updateForm?id=${mem.id}">수정</a>
-			<c:if test="${param.id != 'admin'}">
-		<a href="deleteForm?id=${mem.id}">탈퇴</a>
+		<a href="updateForm?member_id=${mem.member_id}">수정</a>
+			<c:if test="${param.member_id != 'admin'}">
+		<a href="deleteForm?member_id=${mem.member_id}">탈퇴</a>
 		</c:if>
 	</td></tr>
 	</table>

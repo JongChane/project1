@@ -74,7 +74,7 @@ a{
   </c:if>
   <c:if test="${!empty sessionScope.login}">
      ${sessionScope.login}님&nbsp;&nbsp;
-     <a href="${path}/member/info?id=${sessionScope.login}">내정보</a>&nbsp;
+     <a href="${path}/member/info?member_id=${sessionScope.login}">내정보</a>&nbsp;
      <a href="${path}/member/logout">로그아웃</a>
   </c:if>
   </span>

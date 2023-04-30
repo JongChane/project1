@@ -8,7 +8,7 @@
 </head>
 <body>
 <h3>아이디찾기</h3>
-<form action="id" method="post">
+<form action="member_id" method="post">
 <table>
 	<tr><th>이메일</th><td><input type="text" name="email"></td></tr>
 	<tr><th>전화번호</th><td><input type="text" name="tel"></td></tr>

@@ -13,30 +13,29 @@
 <table class="table talbe-hover">
 	<tr>
 		<th>아이디</th>
-			<th>사진</th>
-				<th>이름</th>	
+			<th>사진</th>	
 					<th>전화</th>
 	</tr>
 		<c:forEach var = "m" items="${list}">
 		<tr>
 			<td>
-				<a href = "info?id=${m.id}">${m.id}</a>
+				<a href = "info?id=${m.member_id}">${m.member_id}</a>
 			</td>
 			<td>
 				${m.tel}
 			</td>
 			<td>
-				<a href = "updateForm?id=${m.id}">
+				<a href = "updateForm?id=${m.member_id}">
 					수정
 				</a>&nbsp;&nbsp;&nbsp;
-					<c:if test="${m.id != 'admin'}">
-    					<a href = "deleteForm?id=${m.id}">
+					<c:if test="${m.member_id != 'admin'}">
+    					<a href = "deleteForm?id=${m.member_id}">
     						강제탈퇴
     					</a>
 					</c:if>
 			</td>
 			<td>
-				<input type='checkbox' name='idchks' value="${m.id}"/>
+				<input type='checkbox' name='idchks' value="${m.member_id}"/>
 				<br/>
 			</td>
 		</tr>

@@ -8,9 +8,9 @@
 <title>로그인</title>
 <script type="text/javascript">
    function input_check(f) {
-	   if(f.id.value.trim() == '') {
+	   if(f.member_id.value.trim() == '') {
 		   alert("아이디를 입력하세요")
-		   f.id.focus()
+		   f.member_id.focus()
 		   return false
 	   }
 	   if(f.pass.value.trim() == '') {
@@ -33,7 +33,7 @@
      <h2 id="center">로그인</h2>
      <div class="form-group">
      	<label for="usr">ID:</label>
-     		<input type="text" class="form-control" id="usr" name="id">
+     		<input type="text" class="form-control" id="usr" name="member_id">
      	<label for="pwd">Password:</label>
      		<input type="password" class="form-control" id="pwd" name="pass">
      </div>
