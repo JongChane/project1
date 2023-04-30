@@ -32,15 +32,11 @@
 <table class="table table-hover">
 <tr>
 	<th>아이디</th>
-		<td><input type="text" name="id" readonly value="${mem.id}"></td>
+		<td><input type="text" name="member_id" readonly value="${mem.member_id}"></td>
 </tr>
 <tr>
 	<th> 비밀번호</th>
 		<td><input type="password" name="pass"></td>
-</tr>
-<tr>
-	<th>이름</th>
-	<td><input type="text" name="name" value="${mem.name}"></td>
 </tr>
 <tr>
 <th>전화번호</th>	
@@ -55,7 +51,7 @@
 <tr>
 	<td colspan="3">
 		<button type="submit" class="btn btn-dark">회원수정</button>
-			<c:if test="${param.id == sessionScope.login }">
+			<c:if test="${param.member_id == sessionScope.login }">
 			<button type="button" onclick="win_passchg()">비밀번호수정</button>
 			</c:if>
 	</td>

@@ -9,19 +9,14 @@
 <body>
 <script type="text/javascript">
    function input_check(f) {
-	   if(f.id.value.trim() == "") {
+	   if(f.member_id.value.trim() == "") {
 		   alert("아이디를 입력하세요")
-		   f.id.focus()
+		   f.member_id.focus()
 		   return false;
 	   }
 	   if(f.pass.value.trim() == "") {
 		   alert("비밀번호를 입력하세요")
 		   f.pass.focus()
-		   return false;
-	   }
-	   if(f.name.value.trim() == "") {
-		   alert("이름을 입력하세요")
-		   f.name.focus()
 		   return false;
 	   }
 	   return true;
@@ -36,10 +31,8 @@
 	</div>
 	<div class="col-9">
 		<div class="form-group">
-			<label for="name">이름:</label>
-				<input type="text" class="form-control" name="name" id="name">
 			<br><label for="id">아이디:</label>
-				<input type="text" class="form-control" name="id" id="id">
+				<input type="text" class="form-control" name="member_id" id="id">
 			<br><label for="pwd">비밀번호:</label>
 				<input type="password" class="form-control" name="pass" id="pwd">
 		</div>

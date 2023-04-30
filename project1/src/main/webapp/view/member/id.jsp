@@ -8,8 +8,8 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <script type="text/javascript">
-	function idsend(id){		
-	opener.document.f.id.value=id;
+	function idsend(member_id){		
+	opener.document.f.member_id.value=member_id;
 	self.close();
 	}
 </script>
@@ -18,11 +18,11 @@
 <div class="container">
 	<table class="table">
   <tr><th>아이디</th>
-    <td>${id}**</td>
+    <td>${member_id}**</td>
   </tr>
   <tr><td colspan="2">
      <input type="button" value="아이디전송" 
-     onclick="idsend('idsend('${id}')">
+     onclick="idsend('idsend('${member_id}')">
   </td></tr>
 </table>
 </div>

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +24,11 @@ public class MemberMybatisDao {
 		}
 		return false;
 	}
-	public Member selectOne(String id) {
+
+	public Member selectOne(String member_id) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).selectOne(id);
+			return session.getMapper(cls).selectOne(member_id);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -60,10 +59,11 @@ public class MemberMybatisDao {
 		}
 		return null;
 	}
-	public boolean delete (String id) {
+
+	public boolean delete(String member_id) {
 		 SqlSession session = MybatisConnection.getConnection();
 		 try {
-			 int cnt = session.getMapper(cls).delete(id);
+				int cnt = session.getMapper(cls).delete(member_id);
 			 return cnt > 0;
 		 } catch (Exception e){
 			 e.printStackTrace();
@@ -83,11 +83,12 @@ public class MemberMybatisDao {
 		 }
 		 return null;
  	}
-	public String pwSearch(String id, String email, String tel) {
+
+	public String pwSearch(String member_id, String email, String tel) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("id",id);
+			map.put("member_id", member_id);
 			map.put("email",email);
 			map.put("tel", tel);
 			return session.getMapper(cls).pwSearch(map);
@@ -98,10 +99,11 @@ public class MemberMybatisDao {
 		}
 		return null;
 	}
-	public boolean updatePass(String id, String pass) {
+
+	public boolean updatePass(String member_id, String pass) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {
-			int cnt = session.getMapper(cls).updatePass(id,pass);
+			int cnt = session.getMapper(cls).updatePass(member_id, pass);
 			return cnt>0;
 		} catch(Exception e){
 			e.printStackTrace();
