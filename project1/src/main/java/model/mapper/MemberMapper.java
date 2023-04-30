@@ -36,7 +36,7 @@ public interface MemberMapper {
 	@Delete("delete from member where member_id=#{value}")
 	int delete(String member_id);
 
-	@Select("select id from member where email=#{email} and tel =#{tel}")
+	@Select("select member_id from member where email=#{email} and tel =#{tel}")
 	String idSearch(@Param("email")String email, @Param("tel")String tel);
 
 	@Select("select pass from member where member_id=#{member_id} and email=#{email} and tel=#{tel}")
