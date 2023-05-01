@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>게시물 목록</title>
 <script type="text/javascript">
-    function listsubmit(page) {
+    function popularListsubmit(page) {
     	f = document.sf;  //검색 form 태그
     	f.pageNum.value=page;
     	f.submit();
@@ -26,7 +26,7 @@
 	<c:if test="${boardcount > 0}">
 		<tr>
 			<td colspan="5" style="text-align:right">글개수:${boardcount}
-			<a href="popularList?boardid=${boardid}">[인기글]</a>
+			<a href="list?boardid=${boardid}">[전체글]</a>
 			</td>
 			
 		</tr>
@@ -39,7 +39,7 @@
 			<th width="10%">조회수</th>
 			<th width="10%">추천수</th>
 		</tr>
-		<c:forEach var="b" items="${list}">
+		<c:forEach var="b" items="${popularList}">
  			<tr>
  				<td>${boardnum}</td>
  					<c:set var="boardnum" value="${boardnum - 1}" />
@@ -68,17 +68,17 @@
  			<td colspan="5" class="w3-center">
       	<c:if test="${pageNum <= 1}">[이전]</c:if>
       	<c:if test="${pageNum > 1}">
-      		<a href="javascript:listsubmit(${pageNum-1})">[이전]</a>
+      		<a href="javascript:popularListsubmit(${pageNum-1})">[이전]</a>
       	</c:if>
       	<c:forEach var="a" begin="${startpage}" end="${endpage}">
         	<c:if test="${a == pageNum}">[${a}]</c:if>
         	<c:if test="${a != pageNum}">
-          	<a href="javascript:listsubmit(${a})">[${a}]</a>
+          	<a href="javascript:popularListsubmit(${a})">[${a}]</a>
         	</c:if>
       	</c:forEach>
       	<c:if test="${pageNum >= maxpage}">[다음]</c:if>
       	<c:if test="${pageNum < maxpage}">
-      		<a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
+      		<a href="javascript:popularListsubmit(${pageNum+1})">[다음]</a>
       	</c:if>
  			</td>
  		</tr>  
@@ -87,7 +87,7 @@
 	<p align="right"><a href="writeForm">[글쓰기]</a></p>
 </table>
 <div>
-	<form action="list?boardid=${boardid}" method="post" name="sf">
+	<form action="popularList?boardid=${boardid}" method="post" name="sf">
    	<input type="hidden" name="pageNum" value="1" >
    	<select name="column" >
      	<option value="">선택하시오</option>

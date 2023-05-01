@@ -15,7 +15,7 @@ public interface BoardMapper {
 			+"<if test='col2 != null and col3==null'> ) </if>"
 			+"<if test='col3 != null'> or ${col3} like '%${find}%')</if></if>";
 	@Select({ "<script>",
-			"select count(*) from board where boardid=#{boardid}"+sqlcol,
+			"select count(*) from board where boardid=#{boardid} "+sqlcol,
 			"</script>"})
 	int boardCount(Map<String, Object> map);
 	@Select({"<script>" ,"SELECT *,"
@@ -25,4 +25,15 @@ public interface BoardMapper {
 			"</script>"})
 	List<Board> selectlist(Map<String, Object> map);
 
+	@Select({ "<script>",
+		"select count(*) from board where boardid=#{boardid} and recommendcnt >= 10 "+sqlcol,
+		"</script>"})
+int popularboardCount(Map<String, Object> map);
+	
+	@Select({"<script>" ,"SELECT *,"
+			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
+			+ " FROM board b where boardid=#{boardid} and recommendcnt >= 10 ORDER BY recommendcnt DESC " + sqlcol
+			+ " limit #{start},#{limit}",
+			"</script>"})
+	List<Board> selectPopularList(Map<String, Object> map);
 }
