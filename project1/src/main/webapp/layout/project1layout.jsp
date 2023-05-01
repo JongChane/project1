@@ -70,7 +70,7 @@ a{
   <span class="w3-bar-item w3-right">
   <c:if test="${empty sessionScope.login}">
      <a href="${path}/member/loginForm">로그인</a>
-     <a href="${path}/member/joinForm">회원가입</a>
+     <a href="${path}/member/joinAgree">회원가입</a>
   </c:if>
   <c:if test="${!empty sessionScope.login}">
      ${sessionScope.login}님&nbsp;&nbsp;

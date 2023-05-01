@@ -31,6 +31,7 @@ CREATE TABLE board
 	PRIMARY KEY (board_num)
 ) COMMENT = '게시판';
 
+select *from board
 
 -- 게시물추천
 CREATE TABLE board_recommend
@@ -95,7 +96,7 @@ CREATE TABLE member
 	PRIMARY KEY (member_id)
 ) COMMENT = '회원';
 
-
+select *from member
 
 /* Create Foreign Keys */
 

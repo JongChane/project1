@@ -9,8 +9,6 @@ import model.mapper.BoardMapper;
 import org.apache.ibatis.session.SqlSession;
 
 public class BoardMybatisDao {
-   public static void main(String[] args) {
       private Class<BoardMapper> cls = BoardMapper.class;
       private Map<String,Object> map = new HashMap<>();
    }
-}
