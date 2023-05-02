@@ -1,13 +1,9 @@
 package controller;
 
-<<<<<<< HEAD
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
-=======
 import java.util.Locale.Category;
->>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
-
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +19,6 @@ import model.BoardMybatisDao;
 public class BoardController extends MskimRequestMapping {
    private BoardMybatisDao dao = new BoardMybatisDao();
    
-<<<<<<< HEAD
 		@RequestMapping("list")
 		public String list(HttpServletRequest request, HttpServletResponse response) {
 			try {
@@ -162,17 +157,15 @@ public class BoardController extends MskimRequestMapping {
 			request.setAttribute("maxpage", maxpage);
 			request.setAttribute("today", new Date());
 			return "board/popularList";
-=======
+		}
    @RequestMapping("writeForm")
    public String writeForm(HttpServletRequest request,HttpServletResponse response) {
 //	   String boardid = (String)request.getAttribute(request.getParameter("boardid"));
 //	   String login = (String)request.getSession().getAttribute(request.getParameter("login"));
       return "board/writeForm";
->>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
-   }
-<<<<<<< HEAD
 
-=======
+   }
+
    
    @RequestMapping("write")
    public String write(HttpServletRequest request, HttpServletResponse response) {
@@ -202,5 +195,4 @@ public class BoardController extends MskimRequestMapping {
 	   return "alert";
    }
    
->>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
 }
