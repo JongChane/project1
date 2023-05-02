@@ -45,7 +45,7 @@ function inputcheck() {
 
 function inputout() {
   alert("게시글 등록을 취소하였습니다.");
-  location.href = 'view/board/list';
+  location.href = 'list'
 }
 </script>
 </head>
@@ -53,61 +53,66 @@ function inputout() {
 <h2>글 쓰기</h2>
 <hr>
 <div style="margin-left:200px">
-<form action="write" method="post" 
-       enctype="multipart/form-data" name="f">
-	<table>
-		<tr>
-			<td>
-				유머<input type="checkbox" name="category_num" value="1">&nbsp;&nbsp;&nbsp;
-				썰<input type="checkbox" name="category_num" value="2">&nbsp;&nbsp;&nbsp;
-				공포<input type="checkbox" name="category_num" value="3">&nbsp;&nbsp;&nbsp;
-				감동<input type="checkbox" name="category_num" value="4">&nbsp;&nbsp;&nbsp;
-			</td>
-		</tr>
-<!-- 
-		<tr>
-			<td>
-				뉴스<input type="checkbox" name="5">&nbsp;&nbsp;&nbsp;
-				루머<input type="checkbox" name="6">&nbsp;&nbsp;&nbsp;
-				움짤<input type="checkbox" name="7">&nbsp;&nbsp;&nbsp;
-				분석<input type="checkbox" name="8">&nbsp;&nbsp;&nbsp;
-			</td>
-		</tr>
+<form action="write" method="post" enctype="multipart/form-data" name="f">       
+<c:if test="${boardid == 2 }">
+   <table>
+      <tr>
+         <td>
+            유머<input type="checkbox" name="category_num" value="1">&nbsp;&nbsp;&nbsp;
+            썰<input type="checkbox" name="category_num" value="2">&nbsp;&nbsp;&nbsp;
+            공포<input type="checkbox" name="category_num" value="3">&nbsp;&nbsp;&nbsp;
+            감동<input type="checkbox" name="category_num" value="4">&nbsp;&nbsp;&nbsp;
+         </td>
+      </tr>
+</c:if>      
+<c:if test="${boardid == 3}">
+   <table>
+      <tr>
+         <td>
+            뉴스<input type="checkbox" name="category_num" value="5">&nbsp;&nbsp;&nbsp;
+            루머<input type="checkbox" name="category_num" value="6">&nbsp;&nbsp;&nbsp;
+            움짤<input type="checkbox" name="category_num" value="7">&nbsp;&nbsp;&nbsp;
+            분석<input type="checkbox" name="category_num" value="8">&nbsp;&nbsp;&nbsp;
+         </td>
+      </tr>
+     </table>
+</c:if>
 
-		<tr>
-			<td>
-				뉴스<input type="checkbox" name="5">&nbsp;&nbsp;&nbsp;
-				루머<input type="checkbox" name="6">&nbsp;&nbsp;&nbsp;
-				움짤<input type="checkbox" name="7">&nbsp;&nbsp;&nbsp;
-				분석<input type="checkbox" name="8">&nbsp;&nbsp;&nbsp;
-			</td>
-		</tr>
- -->	
-	
-		<tr>
-			<td>
-				<input type="text" name="title">
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-			<textarea rows="15" name="content" class="w3-input" id="content"></textarea>
-			</td>
-		 	<script>
-		 		CKEDITOR.replace("content",{
-				filebrowserImageUploadUrl : "imgupload"})
-			</script>
-		</tr>			
-		
-		<tr class="w3-center">
-			<td>
-				<a href="javascript:inputcheck()">[게시글 등록]</a>&nbsp;&nbsp;&nbsp;
-				<a href="javascript:inputout()">[취소]</a>
-			</td>
-		</tr>
-	</table>
-</form>	
+<c:if test="${boardid == 4}"> 
+   <table>
+      <tr>
+         <td>
+            레시피<input type="checkbox" name="category_num" value="9">&nbsp;&nbsp;&nbsp;
+            맛집<input type="checkbox" name="category_num" value="10">&nbsp;&nbsp;&nbsp;
+            자랑<input type="checkbox" name="category_num" value="11">&nbsp;&nbsp;&nbsp;
+         </td>
+      </tr>
+      </table>
+</c:if>   
+      <tr>
+         <td>
+            <input type="text" name="title">
+         </td>
+      </tr>
+      
+      <tr>
+         <td>
+         <textarea rows="15" name="content" class="w3-input" id="content"></textarea>
+         </td>
+          <script>
+             CKEDITOR.replace("content",{
+            filebrowserImageUploadUrl : "imgupload"})
+         </script>
+      </tr>         
+      
+      <tr class="w3-center">
+         <td>
+            <a href="javascript:inputcheck()">[게시글 등록]</a>&nbsp;&nbsp;&nbsp;
+            <a href="javascript:inputout()">[취소]</a>
+         </td>
+      </tr>
+   </table>
+</form>   
 </div>
 </body>
 </html>

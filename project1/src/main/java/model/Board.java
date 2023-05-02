@@ -9,7 +9,7 @@ public class Board {
 	private int readcnt;
 	private int recommendcnt;
 	private Date regdate;
-	private int boardid;
+	private String boardid;
 	private String file1;
 	private int category_num;
 	private String member_id;
@@ -62,11 +62,11 @@ public class Board {
 		this.regdate = regdate;
 	}
 
-	public int getBoardid() {
+	public String getBoardid() {
 		return boardid;
 	}
 
-	public void setBoardid(int boardid) {
+	public void setBoardid(String boardid) {
 		this.boardid = boardid;
 	}
 

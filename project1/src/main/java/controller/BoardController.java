@@ -1,18 +1,23 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale.Category;
+
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+
 import gdu.mskim.MskimRequestMapping;
 import gdu.mskim.RequestMapping;
 import model.Board;
 import model.BoardMybatisDao;
+import model.Comment;
 
 @WebServlet(urlPatterns = {"/board/*"},
          initParams = {@WebInitParam(name="view",value="/view/")})
@@ -160,39 +165,96 @@ public class BoardController extends MskimRequestMapping {
 		}
    @RequestMapping("writeForm")
    public String writeForm(HttpServletRequest request,HttpServletResponse response) {
-//	   String boardid = (String)request.getAttribute(request.getParameter("boardid"));
-//	   String login = (String)request.getSession().getAttribute(request.getParameter("login"));
+			String boardid = (String) request.getSession().getAttribute("boardid");
+			if (boardid == null)
+				boardid = "1";
+			String login = (String) request.getSession().getAttribute("login");
       return "board/writeForm";
 
    }
-
    
    @RequestMapping("write")
    public String write(HttpServletRequest request, HttpServletResponse response) {
-	   String boardid = (String)request.getSession().getAttribute("boardid");
-	   String login = (String)request.getSession().getAttribute("login");
-	   if(login == null) {
-		   request.setAttribute("msg", "로그인부터 하셔야합니다.");
-		   request.setAttribute("url", "member/loginForm");
-		   return "alert";
-	   }
-	   
-	   int num = dao.maxnum();
-	   Board board = new Board();
-	   board.setBoard_num(++num);
-	   board.setTitle(request.getParameter("title"));
-	   board.setContent(request.getParameter("content"));
-	   board.setBoardid(Integer.parseInt(boardid));
-	   board.setCategory_num(Integer.parseInt(request.getParameter("category_num")));
-	   board.setMember_id(login);
-	   
-//	   if(dao.insert(board)) {
-//		   return "redirect:list?boardid="+boardid;
-//	   }
-	   
-	   request.setAttribute("msg", "게시글 등록 실패");
-	   request.setAttribute("url", "writeForm");
-	   return "alert";
+			String login = (String) request.getSession().getAttribute("login");
+			String path = request.getServletContext().getRealPath("/") + "/upload/board/";
+
+			File f = new File(path);
+			if (!f.exists())
+				f.mkdirs();
+			int size = 10 * 1024 * 1024;
+			MultipartRequest multi = null;
+			try {
+				multi = new MultipartRequest(request, path, size, "UTF-8");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// 파라미터 Board 객체에 저장
+			Board board = new Board();
+			board.setTitle(multi.getParameter("title"));
+			board.setContent(multi.getParameter("content"));
+			String boardid = (String) request.getSession().getAttribute("boardid");
+			if (boardid == null)
+				boardid = "1";
+			board.setBoardid(boardid);
+			board.setFile1(multi.getFilesystemName("file1"));
+			board.setMember_id(login);
+			int num = dao.maxnum();
+			board.setBoard_num(++num);
+			board.setCategory_num(Integer.parseInt(multi.getParameter("category_num")));
+			String msg = "게시글 등록 실패";
+			String url = "writeForm";
+			if (dao.insert(board)) {
+				return "redirect:list?boardid=" + boardid;
+			}
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+
+			return "alert";
    }
    
+		@RequestMapping("imgupload")
+		public String imgupload(HttpServletRequest request, HttpServletResponse response) {
+			String path = request.getServletContext().getRealPath("/") + "/upload/imgfile/";
+			File f = new File(path);
+			if (!f.exists())
+				f.mkdirs();
+			int size = 10 * 1024 * 1024;
+			MultipartRequest multi = null;
+			try {
+				multi = new MultipartRequest(request, path, size, "UTF-8");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// ckeditor에서 file의 이름이 upload 임
+			String fileName = multi.getFilesystemName("upload");
+			request.setAttribute("fileName", fileName);
+			return "ckeditor";
+		}
+
+		@RequestMapping("comment")
+		public String comment(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			// board_num : 게시글 번호
+			int board_num = Integer.parseInt(request.getParameter("board_num"));
+			String url = "info?board_num=" + board_num + "&readcnt=f";
+			// 파라미터값 Comment 객체에 저장
+			Comment comm = new Comment();
+			comm.setBoard_num(board_num);
+			String login = (String) request.getSession().getAttribute("login");
+			comm.setMember_id(login);
+			comm.setContent(request.getParameter("content"));
+			int comment_num = dao.maxcomment_num(board_num); // num에 해당하는 최대 seq 컬럼의 값
+			comm.setComment_num(++comment_num);
+			if (dao.cominsert(comm)) { // comment 테이블에 insert
+				return "redirect:" + url;
+			}
+			request.setAttribute("msg", "답글 등록시 오류 발생");
+			request.setAttribute("url", url);
+			return "alert";
+		}
+
 }

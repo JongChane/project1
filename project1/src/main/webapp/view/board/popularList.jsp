@@ -20,7 +20,7 @@
 <table>
 	<c:if test="${boardcount == 0}">
 		<tr>
-			<td colspan="5">등록된 게시글이 없습니다.</td>
+			<td colspan="5">아직 인기글이 없습니다.</td>
 		</tr>	
 	</c:if>
 	<c:if test="${boardcount > 0}">

@@ -134,4 +134,53 @@ public class BoardMybatisDao {
 		    	  }
 		    	  return 0;
 		      }
+
+					public boolean insert(Board board) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							return session.getMapper(cls).insert(board) > 0;
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+						return false;
+					}
+
+					public List<Comment> selectclist(int board_num) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							map.put("board_num", board_num);
+							return session.getMapper(cls).selectclist(map);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+						return null;
+					}
+
+					public int maxcomment_num(int board_num) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							return session.getMapper(cls).maxcomment_num(board_num);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+						return 0;
+					}
+
+					public boolean cominsert(Comment comm) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							return session.getMapper(cls).cominsert(comm) > 0;
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+						return false;
+					}
    }

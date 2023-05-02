@@ -2,10 +2,12 @@ package model.mapper;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import model.Board;
+import model.Comment;
 
 public interface BoardMapper {
 	String sqlcol = "<if test='column != null'>" 		
@@ -28,7 +30,7 @@ public interface BoardMapper {
 	@Select({ "<script>",
 		"select count(*) from board where boardid=#{boardid} and recommendcnt >= 10 "+sqlcol,
 		"</script>"})
-int popularboardCount(Map<String, Object> map);
+	int popularboardCount(Map<String, Object> map);
 	
 	@Select({"<script>" ,"SELECT *,"
 			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
@@ -40,7 +42,18 @@ int popularboardCount(Map<String, Object> map);
 	@Select("select ifnull(max(board_num),0) from board")
 	int maxnum();
 	
-	@Insert("insert into board() values ()")
-	boolean insert();
+	@Insert("INSERT INTO board (board_num, title, content, readcnt, recommendcnt, regdate, boardid, file1, category_num, member_id)"
+			+ " VALUES (#{board_num}, #{title}, #{content}, 0, 0, NOW(), #{boardid}, #{file1}, #{category_num}, #{member_id})")
+	int insert(Board board);
+
+	@Select("select ifnull(max(comment_num),0) from comment where board_num=#{board_num}")
+	int maxcomment_num(int board_num);
+
+	@Insert("insert into comment (comment_num,content,regdate,recommendcnt,member_id, board_num)"
+			+ " values (#{comment_num},#{content},#{regdate},#{recommendcnt},#{member_id},#{board_num})")
+	int cominsert(Comment comm);
+
+	@Select("select * from comment where board_num = #{board_num}")
+	List<Comment> selectclist(Map<String, Object> map);
 
 }

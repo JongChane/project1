@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,16 +49,15 @@
  				</td>
  				<td>${b.member_id}</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
- 				<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
- 				<fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd" var="r" /> 
- 				<td>
- 					<c:if test="${t==r}">
-     				<fmt:formatDate value="${b.regdate}" pattern="HH:mm:ss" />
-	 				</c:if>
-	 				<c:if test="${t!=r}">
-     				<fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm" />
-   				</c:if>
-   			</td>
+		 <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
+ <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd" var="r" /> 
+ <td><c:if test="${t==r}">
+     <fmt:formatDate value="${b.regdate}" pattern="HH:mm:ss" />
+	 		</c:if>
+	 <c:if test="${t!=r}">
+     <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm" />
+   </c:if>
+  </td>
 		 		<td>${b.readcnt}</td>
 		 		<td>${b.recommendcnt}</td>
 			</tr>

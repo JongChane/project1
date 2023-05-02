@@ -9,6 +9,15 @@ public class Comment {
 	private int recommendcnt;
 	private String member_id;
 	private int board_num;
+	private String content;
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 	public int getComment_num() {
 		return comment_num;
@@ -53,7 +62,8 @@ public class Comment {
 	@Override
 	public String toString() {
 		return "Comment [comment_num=" + comment_num + ", regdate=" + regdate + ", recommendcnt=" + recommendcnt
-				+ ", member_id=" + member_id + ", board_num=" + board_num + "]";
+				+ ", member_id=" + member_id + ", board_num=" + board_num + ", content=" + content + "]";
 	}
+
 
 }
