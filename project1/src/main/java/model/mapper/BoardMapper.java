@@ -1,8 +1,14 @@
 package model.mapper;
 
+<<<<<<< HEAD
 import java.util.List;
 import java.util.Map;
+=======
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+>>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
 
+<<<<<<< HEAD
 import org.apache.ibatis.annotations.Select;
 
 import model.Board;
@@ -36,4 +42,12 @@ int popularboardCount(Map<String, Object> map);
 			+ " limit #{start},#{limit}",
 			"</script>"})
 	List<Board> selectPopularList(Map<String, Object> map);
+=======
+public interface BoardMapper {
+	@Select("select ifnull(max(board_num),0) from board")
+	int maxnum();
+	
+	@Insert("insert into board() values ()")
+	boolean insert();
+>>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
 }

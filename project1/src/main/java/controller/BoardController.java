@@ -1,8 +1,12 @@
 package controller;
 
+<<<<<<< HEAD
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
+=======
+import java.util.Locale.Category;
+>>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
 
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +23,7 @@ import model.BoardMybatisDao;
 public class BoardController extends MskimRequestMapping {
    private BoardMybatisDao dao = new BoardMybatisDao();
    
+<<<<<<< HEAD
 		@RequestMapping("list")
 		public String list(HttpServletRequest request, HttpServletResponse response) {
 			try {
@@ -157,6 +162,45 @@ public class BoardController extends MskimRequestMapping {
 			request.setAttribute("maxpage", maxpage);
 			request.setAttribute("today", new Date());
 			return "board/popularList";
+=======
+   @RequestMapping("writeForm")
+   public String writeForm(HttpServletRequest request,HttpServletResponse response) {
+//	   String boardid = (String)request.getAttribute(request.getParameter("boardid"));
+//	   String login = (String)request.getSession().getAttribute(request.getParameter("login"));
+      return "board/writeForm";
+>>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
    }
+<<<<<<< HEAD
 
+=======
+   
+   @RequestMapping("write")
+   public String write(HttpServletRequest request, HttpServletResponse response) {
+	   String boardid = (String)request.getSession().getAttribute("boardid");
+	   String login = (String)request.getSession().getAttribute("login");
+	   if(login == null) {
+		   request.setAttribute("msg", "로그인부터 하셔야합니다.");
+		   request.setAttribute("url", "member/loginForm");
+		   return "alert";
+	   }
+	   
+	   int num = dao.maxnum();
+	   Board board = new Board();
+	   board.setBoard_num(++num);
+	   board.setTitle(request.getParameter("title"));
+	   board.setContent(request.getParameter("content"));
+	   board.setBoardid(Integer.parseInt(boardid));
+	   board.setCategory_num(Integer.parseInt(request.getParameter("category_num")));
+	   board.setMember_id(login);
+	   
+//	   if(dao.insert(board)) {
+//		   return "redirect:list?boardid="+boardid;
+//	   }
+	   
+	   request.setAttribute("msg", "게시글 등록 실패");
+	   request.setAttribute("url", "writeForm");
+	   return "alert";
+   }
+   
+>>>>>>> branch 'kohyunbin' of https://github.com/JongChane/project1.git
 }
