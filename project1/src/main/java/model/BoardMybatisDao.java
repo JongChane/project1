@@ -124,4 +124,4 @@ public class BoardMybatisDao {
 				return null;
 			}
 
-   }
+   }
