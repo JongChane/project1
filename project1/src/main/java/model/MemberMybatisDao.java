@@ -112,4 +112,16 @@ public class MemberMybatisDao {
 		}
 		return false;
 	}
+
+	public List<Board> boardselect(String member_id) {
+		SqlSession session = MybatisConnection.getConnection();
+		try {
+			return session.getMapper(cls).boardlist(member_id);
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			MybatisConnection.close(session);
+		}
+		return null;
+	}
 }

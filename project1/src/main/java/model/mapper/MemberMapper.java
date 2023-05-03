@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import model.Board;
 import model.Member;
 
 public interface MemberMapper {
@@ -44,6 +45,9 @@ public interface MemberMapper {
 
 	@Update("update member set pass=#{pass} where member_id=#{member_id}")
 	int updatePass(@Param("member_id") String member_id, @Param("pass") String pass);
+
+	@Select("select * from board where member_id = #{value}")
+	List<Board> boardlist(String member_id);
 	
 	
 }
