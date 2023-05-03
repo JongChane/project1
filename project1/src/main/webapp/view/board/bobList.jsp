@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>게시물 목록</title>
 <script type="text/javascript">
-    function listsubmit(page) {
+    function bobListsubmit(page) {
     	f = document.sf;  //검색 form 태그
     	f.pageNum.value=page;
     	f.submit();
@@ -21,15 +21,13 @@
 <table>
 	<c:if test="${boardcount == 0}">
 		<tr>
-			<td colspan="5">등록된 게시글이 없습니다.</td>
+			<td colspan="5">아직 베스트 게시물이 없습니다.</td>
 		</tr>	
 	</c:if>
 	<c:if test="${boardcount > 0}">
 		<tr>
-			<td colspan="5" style="text-align:right">글개수:${boardcount}
-			<c:if test="${boardid!=1}">
-			<a href="popularList?boardid=${boardid}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[인기글]</a>
-			</c:if>
+			<td colspan="5" style="text-align:right">
+				베스트글개수:${boardcount}
 			</td>
 			
 		</tr>
@@ -43,7 +41,7 @@
 			<th width="5%">추천수</th>
 		</tr>
 		
-		<c:forEach var="b" items="${list}">
+		<c:forEach var="b" items="${bobList}">
  			<tr>
  				<td>${boardnum}</td>
  					<c:set var="boardnum" value="${boardnum - 1}" />
@@ -109,26 +107,25 @@
  			<td colspan="5" class="w3-center">
       	<c:if test="${pageNum <= 1}">[이전]</c:if>
       	<c:if test="${pageNum > 1}">
-      		<a href="javascript:listsubmit(${pageNum-1})">[이전]</a>
+      		<a href="javascript:bobListsubmit(${pageNum-1})">[이전]</a>
       	</c:if>
       	<c:forEach var="a" begin="${startpage}" end="${endpage}">
         	<c:if test="${a == pageNum}">[${a}]</c:if>
         	<c:if test="${a != pageNum}">
-          	<a href="javascript:listsubmit(${a})">[${a}]</a>
+          	<a href="javascript:bobListsubmit(${a})">[${a}]</a>
         	</c:if>
       	</c:forEach>
       	<c:if test="${pageNum >= maxpage}">[다음]</c:if>
       	<c:if test="${pageNum < maxpage}">
-      		<a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
+      		<a href="javascript:bobListsubmit(${pageNum+1})">[다음]</a>
       	</c:if>
  			</td>
  		</tr>  
 	</c:if>
 	<tr><td colspan="5" style="text-align:right">
-	<p align="right"><a href="writeForm">[글쓰기]</a></p>
 </table>
 <div>
-	<form action="list?boardid=${boardid}" method="post" name="sf">
+	<form action="bobList?boardid=${boardid}" method="post" name="sf">
    	<input type="hidden" name="pageNum" value="1" >
    	<select name="column" >
      	<option value="">선택</option>

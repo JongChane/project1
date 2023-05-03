@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import gdu.mskim.MSLogin;
 import gdu.mskim.MskimRequestMapping;
 import gdu.mskim.RequestMapping;
+import model.BoardMybatisDao;
 import model.Member;
 import model.MemberMybatisDao;
 
@@ -20,6 +21,7 @@ import model.MemberMybatisDao;
    initParams= {@WebInitParam(name="view",value="/view/")})
 public class MemberController extends MskimRequestMapping{
 	private MemberMybatisDao dao = new MemberMybatisDao();
+	private BoardMybatisDao bdao = new BoardMybatisDao();
 //===================================================	
 	public String loginCheck(HttpServletRequest request,
 			HttpServletResponse response) {

@@ -11,15 +11,17 @@ import model.Comment;
 
 public interface BoardMapper {
 	String sqlcol = "<if test='column != null'>" 		
-			+"<if test='col1 != null'> and (${col1} like '%${find}%'</if>"
-			+"<if test='col2 == null'> ) </if>"
-			+"<if test='col2 != null'> or ${col2} like '%${find}%'</if>"
-			+"<if test='col2 != null and col3==null'> ) </if>"
-			+"<if test='col3 != null'> or ${col3} like '%${find}%')</if></if>";
+	+"<if test='col1 != null'> and (${col1} like '%${find}%'</if>"
+	+"<if test='col2 == null'> ) </if>"
+	+"<if test='col2 != null'> or ${col2} like '%${find}%'</if>"
+	+"<if test='col2 != null and col3==null'> ) </if>"
+	+"<if test='col3 != null'> or ${col3} like '%${find}%')</if></if>";
+	
 	@Select({ "<script>",
 			"select count(*) from board where boardid=#{boardid} "+sqlcol,
 			"</script>"})
 	int boardCount(Map<String, Object> map);
+
 	@Select({"<script>" ,"SELECT *,"
 			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
 			+ " FROM board b where boardid=#{boardid}  " + sqlcol
@@ -28,14 +30,14 @@ public interface BoardMapper {
 	List<Board> selectlist(Map<String, Object> map);
 
 	@Select({ "<script>",
-		"select count(*) from board where boardid=#{boardid} and recommendcnt >= 10 "+sqlcol,
+			"select count(*) from board where boardid=#{boardid} and recommendcnt >= 10 " + sqlcol,
 		"</script>"})
 	int popularboardCount(Map<String, Object> map);
 	
 	@Select({"<script>" ,"SELECT *,"
 			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
-			+ " FROM board b where boardid=#{boardid} and recommendcnt >= 10 ORDER BY recommendcnt DESC " + sqlcol
-			+ " limit #{start},#{limit}",
+			+ " FROM board b where boardid=#{boardid} and recommendcnt >= 10 " + sqlcol
+			+ " ORDER BY recommendcnt DESC limit #{start},#{limit}",
 			"</script>"})
 	List<Board> selectPopularList(Map<String, Object> map);
 
@@ -55,5 +57,17 @@ public interface BoardMapper {
 
 	@Select("select * from comment where board_num = #{board_num}")
 	List<Comment> selectclist(Map<String, Object> map);
+	
+	@Select({ "<script>",
+		"select count(*) from board where recommendcnt >= 10 "+sqlcol,
+		"</script>"})
+	int bobboardCount(Map<String, Object> map);
+	
+	@Select({"<script>" ,"SELECT *,"
+			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
+			+ " FROM board b where recommendcnt >= 10 " + sqlcol
+			+ " ORDER BY recommendcnt DESC limit #{start},#{limit}",
+			"</script>"})
+	List<Board> selectbobList(Map<String, Object> map);
 
 }
