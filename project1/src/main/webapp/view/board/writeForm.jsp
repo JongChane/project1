@@ -45,7 +45,7 @@ function inputcheck() {
 
 function inputout() {
   alert("게시글 등록을 취소하였습니다.");
-  location.href = 'view/board/list';
+  location.href = 'list'
 }
 </script>
 </head>
@@ -55,6 +55,8 @@ function inputout() {
 <div style="margin-left:200px">
 <form action="write" method="post" 
        enctype="multipart/form-data" name="f">
+       
+<c:if test="${boardid == 2 }">
 	<table>
 		<tr>
 			<td>
@@ -64,26 +66,30 @@ function inputout() {
 				감동<input type="checkbox" name="category_num" value="4">&nbsp;&nbsp;&nbsp;
 			</td>
 		</tr>
-<!-- 
-		<tr>
-			<td>
-				뉴스<input type="checkbox" name="5">&nbsp;&nbsp;&nbsp;
-				루머<input type="checkbox" name="6">&nbsp;&nbsp;&nbsp;
-				움짤<input type="checkbox" name="7">&nbsp;&nbsp;&nbsp;
-				분석<input type="checkbox" name="8">&nbsp;&nbsp;&nbsp;
-			</td>
-		</tr>
+</c:if>		
 
+<c:if test="${boardid == 3}">
+	<table>
 		<tr>
 			<td>
-				뉴스<input type="checkbox" name="5">&nbsp;&nbsp;&nbsp;
-				루머<input type="checkbox" name="6">&nbsp;&nbsp;&nbsp;
-				움짤<input type="checkbox" name="7">&nbsp;&nbsp;&nbsp;
-				분석<input type="checkbox" name="8">&nbsp;&nbsp;&nbsp;
+				뉴스<input type="checkbox" name="category_num" value="5">&nbsp;&nbsp;&nbsp;
+				루머<input type="checkbox" name="category_num" value="6">&nbsp;&nbsp;&nbsp;
+				움짤<input type="checkbox" name="category_num" value="7">&nbsp;&nbsp;&nbsp;
+				분석<input type="checkbox" name="category_num" value="8">&nbsp;&nbsp;&nbsp;
 			</td>
 		</tr>
- -->	
-	
+</c:if>
+
+<c:if test="${boardid == 4}"> 
+	<table>
+		<tr>
+			<td>
+				레시피<input type="checkbox" name="category_num" value="9">&nbsp;&nbsp;&nbsp;
+				맛집<input type="checkbox" name="category_num" value="10">&nbsp;&nbsp;&nbsp;
+				자랑<input type="checkbox" name="category_num" value="11">&nbsp;&nbsp;&nbsp;
+			</td>
+		</tr>
+</c:if>	
 		<tr>
 			<td>
 				<input type="text" name="title">

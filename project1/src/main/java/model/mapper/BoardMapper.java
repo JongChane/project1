@@ -40,7 +40,9 @@ int popularboardCount(Map<String, Object> map);
 	@Select("select ifnull(max(board_num),0) from board")
 	int maxnum();
 	
-	@Insert("insert into board() values ()")
-	boolean insert();
+	@Insert("INSERT INTO board (board_num, title, content, readcnt, recommendcnt, regdate, boardid, file1, category_num, member_id)"
+	         + " VALUES (#{board_num}, #{title}, #{content}, 0, 0, NOW(), #{boardid}, #{file1}, #{category_num}, #{member_id})")
+	int insert(Board board);
+	
 
 }
