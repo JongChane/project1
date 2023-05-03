@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,9 @@
 	<c:if test="${boardcount > 0}">
 		<tr>
 			<td colspan="5" style="text-align:right">글개수:${boardcount}
+			<c:if test="${boardid!=1}">
 			<a href="popularList?boardid=${boardid}">[인기글]</a>
+			</c:if>
 			</td>
 			
 		</tr>
@@ -39,11 +42,21 @@
 			<th width="5%">조회수</th>
 			<th width="5%">추천수</th>
 		</tr>
+		
 		<c:forEach var="b" items="${list}">
  			<tr>
  				<td>${boardnum}</td>
  					<c:set var="boardnum" value="${boardnum - 1}" />
- 				<td>${b.category_num}</td>
+<td>
+  <c:set var="categoryMap" value="${categoryMap}" />
+      <!-- 추가적인 카테고리 번호와 문자열 매핑을 필요에 따라 정의할 수 있습니다 -->
+  <c:forEach var="entry" items="${categoryMap}">
+    <c:if test="${entry.key == b.category_num}">
+      ${entry.value}
+    </c:if>
+  </c:forEach>
+
+</td>
  				<td style="text-align: left">
  					<a href="info?board_num=${b.board_num}">${b.title}</a>
  				</td>

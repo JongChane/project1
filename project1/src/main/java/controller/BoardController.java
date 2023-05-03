@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.annotation.WebInitParam;
@@ -26,6 +27,11 @@ public class BoardController extends MskimRequestMapping {
    
 		@RequestMapping("list")
 		public String list(HttpServletRequest request, HttpServletResponse response) {
+			HashMap<Integer, String> categoryMap = new HashMap<Integer, String>();
+			categoryMap.put(1, "유머");
+			categoryMap.put(2, "공포");
+			categoryMap.put(3, "액션");
+			categoryMap.put(4, "로맨스");
 			try {
 				request.setCharacterEncoding("UTF-8");
 			} catch (UnsupportedEncodingException e1) {
