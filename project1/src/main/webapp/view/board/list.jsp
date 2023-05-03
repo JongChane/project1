@@ -35,9 +35,9 @@
 			<th width="10%">분류</th>
 			<th width="40%">제목</th>
 			<th width="15%">글쓴이</th>
-			<th width="10%">작성일</th>
-			<th width="10%">조회수</th>
-			<th width="10%">추천수</th>
+			<th width="20%">작성일</th>
+			<th width="5%">조회수</th>
+			<th width="5%">추천수</th>
 		</tr>
 		<c:forEach var="b" items="${list}">
  			<tr>
@@ -49,15 +49,15 @@
  				</td>
  				<td>${b.member_id}</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
-		 <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
+ <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
  <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd" var="r" /> 
  <td><c:if test="${t==r}">
      <fmt:formatDate value="${b.regdate}" pattern="HH:mm:ss" />
-	 		</c:if>
+	 </c:if>
 	 <c:if test="${t!=r}">
      <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm" />
    </c:if>
-  </td>
+        </td>
 		 		<td>${b.readcnt}</td>
 		 		<td>${b.recommendcnt}</td>
 			</tr>
@@ -89,7 +89,7 @@
 	<form action="list?boardid=${boardid}" method="post" name="sf">
    	<input type="hidden" name="pageNum" value="1" >
    	<select name="column" >
-     	<option value="">선택하시오</option>
+     	<option value="">선택</option>
      	<option value="member_id">글쓴이</option>
 	 	 	<option value="title">제목</option>
 		 	<option value="content">내용</option>
@@ -98,7 +98,7 @@
     <script type="text/javascript">
 			document.sf.column.value='${param.column}'
     </script>
-		<input type="text" placeholder="Search" name="find" value="${param.find}">
+		<input type="text" placeholder="검색" name="find" value="${param.find}">
 		<button type="submit">Search</button>
 	</form>
 </div>
