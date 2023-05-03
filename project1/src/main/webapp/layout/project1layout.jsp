@@ -61,7 +61,7 @@ a{
 <div style="background-color:#282a35;  font-family:'TheJamsil5Bold'; sans-serif; font-weight: 500;"
        class="w3-container w3-center w3-bar w3-top w3-large">
   <a href="${path}/member/main" class="w3-bar-item"><img src="${path}/image/332.PNG" class="w3-image" width="13%">&nbsp;&nbsp;Smile 3300</a>
-  <a href="${path}/board/list?boardid=1" class="w3-bar-item w3-button">베스트게시판</a>
+  <a href="${path}/board/bobList?boardid=1" class="w3-bar-item w3-button">베스트게시판</a>
   <a href="${path}/board/list?boardid=2" class="w3-bar-item w3-button">유머게시판</a>
   <a href="${path}/board/list?boardid=3" class="w3-bar-item w3-button">해축게시판</a>
   <a href="${path}/board/list?boardid=4" class="w3-bar-item w3-button">음식게시판</a>

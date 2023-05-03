@@ -26,7 +26,7 @@
 	<c:if test="${boardcount > 0}">
 		<tr>
 			<td colspan="5" style="text-align:right">글개수:${boardcount}
-			<a href="list?boardid=${boardid}">[전체글]</a>
+			<a href="list?boardid=${boardid}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[전체글]</a>
 			</td>
 			
 		</tr>
@@ -43,7 +43,43 @@
  			<tr>
  				<td>${boardnum}</td>
  					<c:set var="boardnum" value="${boardnum - 1}" />
- 				<td>${b.category_num}</td>
+ 				<td>
+ 					<c:choose>
+       	 		<c:when test="${b.category_num == 1}">
+         		  유머
+        		</c:when>
+        		<c:when test="${b.category_num == 2}">
+            	썰
+        		</c:when>
+        		<c:when test="${b.category_num == 3}">
+            	공포
+       		  </c:when>
+        		<c:when test="${b.category_num == 4}">
+            	감동
+        		</c:when>
+        		<c:when test="${b.category_num == 5}">
+           	  뉴스
+        	  </c:when>
+        		<c:when test="${b.category_num == 6}">
+            	루머
+        		</c:when>
+        		<c:when test="${b.category_num == 7}">
+           	  움짤
+        		</c:when>
+        		<c:when test="${b.category_num == 8}">
+           	  분석
+        		</c:when>
+        		<c:when test="${b.category_num == 9}">
+           	  레시피
+        		</c:when>
+        		<c:when test="${b.category_num == 10}">
+           	  맛집
+        		</c:when>
+        		<c:when test="${b.category_num == 11}">
+              자랑
+        		</c:when>     
+   		 </c:choose>
+    </td>
  				<td style="text-align: left">
  					<a href="info?board_num=${b.board_num}">${b.title}</a>
  				</td>
