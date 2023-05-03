@@ -23,7 +23,7 @@ public interface BoardMapper {
 	@Select({"<script>" ,"SELECT *,"
 			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
 			+ " FROM board b where boardid=#{boardid}  " + sqlcol
-			+ " limit #{start},#{limit}",
+			+ " order by board_num desc limit #{start},#{limit}",
 			"</script>"})
 	List<Board> selectlist(Map<String, Object> map);
 
@@ -43,7 +43,7 @@ public interface BoardMapper {
 	int maxnum();
 	
 	@Insert("INSERT INTO board (board_num, title, content, readcnt, recommendcnt, regdate, boardid, file1, category_num, member_id)"
-			+ " VALUES (#{board_num}, #{title}, #{content}, 0, 0, NOW(), #{boardid}, #{file1}, #{category_num}, #{member_id})")
+			+ " VALUES (#{board_num}, #{title}, #{content}, 0, 0, now(), #{boardid}, #{file1}, #{category_num}, #{member_id})")
 	int insert(Board board);
 
 	@Select("select ifnull(max(comment_num),0) from comment where board_num=#{board_num}")
