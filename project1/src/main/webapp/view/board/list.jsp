@@ -85,10 +85,13 @@
         </c:when>
     </c:choose>
 </td>
-
- 				<td style="text-align: left">
- 					<a href="info?board_num=${b.board_num}">${b.title}</a>
- 				</td>
+		<td style="text-align: left">
+        <a href="info?board_num=${b.board_num}">
+        <c:if test="${not empty b.thumbnail}">
+            <img src="${b.thumbnail}" alt="Thumbnail" style="width: 50px; height: 50px; margin-right: 10px;">
+        </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
+        ${b.title}</a>
+    </td>
  				<td>${b.member_id}</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
  <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
