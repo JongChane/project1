@@ -19,6 +19,7 @@ import gdu.mskim.MskimRequestMapping;
 import gdu.mskim.RequestMapping;
 import model.Board;
 import model.BoardMybatisDao;
+import model.BoardRecommend;
 import model.Comment;
 
 @WebServlet(urlPatterns = {"/board/*"},
@@ -354,15 +355,54 @@ public class BoardController extends MskimRequestMapping {
 			request.setAttribute("url", url);
 			return "alert";
 		}
+
+		@RequestMapping("recommend")
+		public String recommend(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			String login = (String) request.getSession().getAttribute("login");
+			int num = Integer.parseInt(request.getParameter("board_num"));
+			BoardRecommend br = new BoardRecommend();
+			String url = "info?board_num=" + num + "&readcnt=f";
+			br.setBoard_num(num);
+			br.setMember_id(login);
+
+			// Check if the user has already recommended the post
+			int check = dao.checkRecommend(br);
+
+			if (check == 0) {
+				dao.recommend(br);
+				dao.updaterecommend(num);
+				request.setAttribute("msg", "추천이 완료되었습니다!");
+				request.setAttribute("url", url);
+				return "alert";
+			} else {
+				request.setAttribute("msg", "이미 추천한 게시물입니다..");
+				request.setAttribute("url", url);
+				return "alert";
+			}
+		}
+
 		@RequestMapping("info")
 		public String info(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
 			String login = (String)request.getSession().getAttribute("login");
 			String boardid = (String)request.getSession().getAttribute("boardid");
 			String readcnt = request.getParameter("readcnt");
 			int num = Integer.parseInt(request.getParameter("board_num"));
+			String url = "info?board_num=" + num + "&readcnt=f";
 			Board b = dao.selectOne(num);
-			if(readcnt == null || !readcnt.equals("f"))
+			
+			if (readcnt == null || !readcnt.equals("f")) {
 				dao.readcntAdd(num);
+			}
 			boardid = b.getBoardid();
 			//category_num : 게시판 분류 화면에 출력
 			String category_name = null;
@@ -401,6 +441,8 @@ public class BoardController extends MskimRequestMapping {
 			request.setAttribute("category_name", category_name);
 //			request.setAttribute("commlist",commlist);
 			return "board/info";
+		
 		}
+		
 
 }
