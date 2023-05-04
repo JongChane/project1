@@ -91,7 +91,7 @@ function inputout() {
 </c:if>   
       <tr>
          <td>
-            <input type="text" name="title">
+            <input type="text" name="title" placeholder="제목">
          </td>
       </tr>
       

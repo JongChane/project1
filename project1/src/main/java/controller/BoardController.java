@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -62,12 +64,23 @@ public class BoardController extends MskimRequestMapping {
 			int boardcount = dao.boardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
 			// list : 현재 페이지에 보여질 게시물 목록.
 			List<Board> list = dao.list(boardid, pageNum, limit, column, find);
+			for (Board board : list) {
+			    String content = board.getContent();
+			    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+			    Matcher imgMatcher = imgPattern.matcher(content);
+
+			    if (imgMatcher.find()) {
+			        String thumbnailUrl = imgMatcher.group(1);
+			        board.setThumbnail(thumbnailUrl);
+			    }
+			}
 			int maxpage = (int) ((double) boardcount / limit + 0.95);
 			int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
 			int endpage = startpage + 9;
 			if (endpage > maxpage)
 				endpage = maxpage;
 			// boardName : 게시판 이름 화면에 출력
+			
 			String boardName = null;
 			switch (boardid) {
 			case "1":
@@ -134,6 +147,16 @@ public class BoardController extends MskimRequestMapping {
 			int boardcount = dao.popularboardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
 			// list : 현재 페이지에 보여질 게시물 목록.
 			List<Board> popularList = dao.PopularList(boardid, pageNum, limit, column, find);
+			for (Board board : popularList) {
+			    String content = board.getContent();
+			    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+			    Matcher imgMatcher = imgPattern.matcher(content);
+
+			    if (imgMatcher.find()) {
+			        String thumbnailUrl = imgMatcher.group(1);
+			        board.setThumbnail(thumbnailUrl);
+			    }
+			}
 			int maxpage = (int) ((double) boardcount / limit + 0.95);
 			int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
 			int endpage = startpage + 9;
@@ -206,6 +229,16 @@ public class BoardController extends MskimRequestMapping {
 			int boardcount = dao.bobboardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
 			// list : 현재 페이지에 보여질 게시물 목록.
 			List<Board> bobList = dao.bobList(boardid, pageNum, limit, column, find);
+			for (Board board : bobList) {
+			    String content = board.getContent();
+			    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+			    Matcher imgMatcher = imgPattern.matcher(content);
+
+			    if (imgMatcher.find()) {
+			        String thumbnailUrl = imgMatcher.group(1);
+			        board.setThumbnail(thumbnailUrl);
+			    }
+			}
 			int maxpage = (int) ((double) boardcount / limit + 0.95);
 			int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
 			int endpage = startpage + 9;

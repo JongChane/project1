@@ -13,7 +13,15 @@ public class Board {
 	private String file1;
 	private int category_num;
 	private String member_id;
+	private String thumbnail;
 
+	public String getThumbnail() {
+	    return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+	    this.thumbnail = thumbnail;
+	}
 	public int getBoard_num() {
 		return board_num;
 	}
