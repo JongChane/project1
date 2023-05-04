@@ -12,7 +12,6 @@ function inputcheck() {
   var isChecked = false;
   var count = 0; // 체크된 항목의 개수를 저장할 변수
   var checkedValue = null; // 체크된 항목의 value 값을 저장할 변수
-
   for (var i = 0; i < f["category_num"].length; i++) {
     if (f["category_num"][i].checked) {
       isChecked = true;
@@ -20,29 +19,23 @@ function inputcheck() {
       checkedValue = f["category_num"][i].value;
     }
   }
-
   // 체크된 항목이 없을 경우
   if (!isChecked) {
     alert("하나 이상의 항목을 선택해주세요.");
     return false;
   }
-
   // 체크된 항목이 2개 이상일 경우
   if (count > 1) {
     alert("하나의 항목만 선택해주세요.");
     return false;
   }
-
   if (f.title.value == "") {
     alert("제목을 적어주세요.");
     f.title.focus();
     return false;
   }
-
   f.submit();
 }
-
-
 function inputout() {
   alert("게시글 등록을 취소하였습니다.");
   location.href = 'list'
@@ -91,7 +84,7 @@ function inputout() {
 </c:if>   
       <tr>
          <td>
-            <input type="text" name="title" placeholder="제목">
+            <input type="text" name="title">
          </td>
       </tr>
       

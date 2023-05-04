@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import model.Board;
 import model.Comment;
@@ -69,5 +70,13 @@ public interface BoardMapper {
 			+ " ORDER BY recommendcnt DESC limit #{start},#{limit}",
 			"</script>"})
 	List<Board> selectbobList(Map<String, Object> map);
+	@Select("select * from board where board_num= #{value}")
+	Board selectOne(int num);
+	
+	@Update("update board set readcnt = readcnt + 1 where board_num=#{value}")
+	void readcntAdd(int num);
+	
+	
+
 
 }
