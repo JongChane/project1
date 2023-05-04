@@ -14,6 +14,7 @@ import gdu.mskim.MSLogin;
 import gdu.mskim.MskimRequestMapping;
 import gdu.mskim.RequestMapping;
 import model.BoardMybatisDao;
+import model.Board;
 import model.Member;
 import model.MemberMybatisDao;
 
@@ -124,9 +125,12 @@ public class MemberController extends MskimRequestMapping{
 	@MSLogin("loginIdCheck")
 	public String info
 	   (HttpServletRequest request, HttpServletResponse response) {
-				String member_id = request.getParameter("member_id");
-				Member mem = dao.selectOne(member_id);
+		String member_id = request.getParameter("member_id");
+		Member mem = dao.selectOne(member_id);
+		//List<Board>: Board.java(빈클래스) list를 변수명을 주고 MemberDao에  함수 만들어주고 함수 만든거로 멤버메퍼에서 DB연동해서 DB값 저장
+		List<Board> list = dao.boardselect(member_id);
 		request.setAttribute("mem", mem);
+		request.setAttribute("list", list);
 		return "member/info"; 
 	}
 	
