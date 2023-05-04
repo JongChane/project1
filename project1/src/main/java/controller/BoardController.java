@@ -360,11 +360,10 @@ public class BoardController extends MskimRequestMapping {
 			String boardid = (String)request.getSession().getAttribute("boardid");
 			String readcnt = request.getParameter("readcnt");
 			int num = Integer.parseInt(request.getParameter("board_num"));
-			int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 			Board b = dao.selectOne(num);
 			if(readcnt == null || !readcnt.equals("f"))
 				dao.readcntAdd(num);
-			
+			boardid = b.getBoardid();
 			//category_num : 게시판 분류 화면에 출력
 			String category_name = null;
 			switch(b.getCategory_num()){
@@ -383,7 +382,7 @@ public class BoardController extends MskimRequestMapping {
 			
 			// boardName : 게시판 이름 화면에 출력
 			String boardName = "베스트게시판";
-			switch (boardid) {
+			switch (b.getBoardid()) {
 			case "2":
 				boardName = "유머게시판";
 				break;

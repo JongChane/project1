@@ -88,7 +88,7 @@
 		<td style="text-align: left">
         <a href="info?board_num=${b.board_num}">
         <c:if test="${not empty b.thumbnail}">
-            <img src="${b.thumbnail}" alt="Thumbnail" style="width: 50px; height: 50px; margin-right: 10px;">
+            <img src="${b.thumbnail}" style="width: 50px; height: 50px; margin-right: 10px;">
         </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
         ${b.title}</a>
     </td>

@@ -9,10 +9,10 @@
 <title>회원 정보 보기</title>
 </head>
 <body>
-	<div class="container">
+	<div class="container" style="text-align:center">
 	<h2 id="center">회원 상세 정보</h2>
 	<table class="table table-hover">
-		<tr><td rowspan="6" width="30%">
+		<tr><td rowspan="6" width="30%" >
 		<th width="20%">아이디</th><td>${mem.member_id}</td></tr>
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
@@ -27,7 +27,7 @@
 	</table>
  		<table>
 		<tr>
-			<td colspan="5" style="text-align:right">글개수:${boardcount}
+			<td colspan="5" style="text-align:right">내가 쓴 글개수:${boardcount}
 			<a href="popularList?boardid=${boardid}"></a>
 			</td>
 		</tr>
@@ -43,10 +43,46 @@
 		<c:forEach var="b" items="${list}">
  			<tr>
  				<td>${boardnum}</td>
- 					<c:set var="boardnum" value="${boardnum +1}" />
- 				<td>${b.category_num}</td>
+ 					<c:set var="boardnum" value="${boardnum + 1}" />
+ 				<td>
+    <c:choose>
+        <c:when test="${b.category_num == 1}">
+            유머
+        </c:when>
+        <c:when test="${b.category_num == 2}">
+            썰
+        </c:when>
+        <c:when test="${b.category_num == 3}">
+            공포
+        </c:when>
+        <c:when test="${b.category_num == 4}">
+            감동
+        </c:when>
+        <c:when test="${b.category_num == 5}">
+            뉴스
+        </c:when>
+        <c:when test="${b.category_num == 6}">
+            루머
+        </c:when>
+        <c:when test="${b.category_num == 7}">
+            움짤
+        </c:when>
+        <c:when test="${b.category_num == 8}">
+            분석
+        </c:when>
+        <c:when test="${b.category_num == 9}">
+            레시피
+        </c:when>
+        <c:when test="${b.category_num == 10}">
+            맛집
+        </c:when>
+        <c:when test="${b.category_num == 11}">
+            자랑
+        </c:when>     
+    </c:choose>
+</td>
  				<td style="text-align: left">
- 					<a href="info?board_num=${b.board_num}">${b.title}</a>
+ 					<a href="../board/info?board_num=${b.board_num}">${b.title}</a>
  				</td>
  				<td>${b.member_id}</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
