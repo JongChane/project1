@@ -354,5 +354,53 @@ public class BoardController extends MskimRequestMapping {
 			request.setAttribute("url", url);
 			return "alert";
 		}
+		@RequestMapping("info")
+		public String info(HttpServletRequest request, HttpServletResponse response) {
+			String login = (String)request.getSession().getAttribute("login");
+			String boardid = (String)request.getSession().getAttribute("boardid");
+			String readcnt = request.getParameter("readcnt");
+			int num = Integer.parseInt(request.getParameter("board_num"));
+			Board b = dao.selectOne(num);
+			if(readcnt == null || !readcnt.equals("f"))
+				dao.readcntAdd(num);
+			boardid = b.getBoardid();
+			//category_num : 게시판 분류 화면에 출력
+			String category_name = null;
+			switch(b.getCategory_num()){
+				case 1 : category_name = "유머";break;
+				case 2 : category_name = "썰";break;
+				case 3 : category_name = "공포";break;
+				case 4 : category_name = "감동";break;
+				case 5 : category_name = "뉴스";break;
+				case 6 : category_name = "루머";break;	
+				case 7 : category_name = "움짤";break;
+				case 8 : category_name = "분석";break;
+				case 9 : category_name = "레시피";break;	
+				case 10 : category_name = "맛집";break;	
+				case 11 : category_name = "자랑";break;	
+			}
+			
+			// boardName : 게시판 이름 화면에 출력
+			String boardName = "베스트게시판";
+			switch (b.getBoardid()) {
+			case "2":
+				boardName = "유머게시판";
+				break;
+			case "3":
+				boardName = "해축게시판";
+				break;
+			case "4":
+				boardName = "음식게시판";
+				break;
+			}
+			//댓글 목록 화면에 전달
+//			List<Comment> commlist = cdao.list(num);
+			request.setAttribute("b",b);
+			request.setAttribute("boardid",boardid);
+			request.setAttribute("boardName",boardName);
+			request.setAttribute("category_name", category_name);
+//			request.setAttribute("commlist",commlist);
+			return "board/info";
+		}
 
 }
