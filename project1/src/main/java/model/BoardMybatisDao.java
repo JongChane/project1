@@ -300,4 +300,28 @@ public class BoardMybatisDao {
 						return result;
 					}
 
+					public void unrecommend(BoardRecommend br) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							session.getMapper(cls).unrecommend(br);
+							session.commit();
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+					}
+
+					public void downrecommend(int num) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							session.getMapper(cls).downrecommend(num);
+							session.commit();
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+					}
+
    }

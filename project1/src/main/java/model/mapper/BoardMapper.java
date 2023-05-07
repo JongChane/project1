@@ -3,6 +3,7 @@ package model.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -86,6 +87,10 @@ public interface BoardMapper {
 	@Select("SELECT COUNT(*) FROM board_recommend WHERE board_num=#{board_num} AND member_id=#{member_id}")
 	int checkRecommend(BoardRecommend br);
 	
+	@Delete("delete from board_recommend where board_num=#{board_num} and member_id=#{member_id}")
+	void unrecommend(BoardRecommend br);
 
+	@Update("update board set recommendcnt = recommendcnt-1 where board_num=#{value}")
+	int downrecommend(int num);
 
 }

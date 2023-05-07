@@ -26,7 +26,7 @@ import model.Comment;
          initParams = {@WebInitParam(name="view",value="/view/")})
 public class BoardController extends MskimRequestMapping {
    private BoardMybatisDao dao = new BoardMybatisDao();
-   
+
 		@RequestMapping("list")
 		public String list(HttpServletRequest request, HttpServletResponse response) {
 			try {
@@ -363,28 +363,39 @@ public class BoardController extends MskimRequestMapping {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+
 			String login = (String) request.getSession().getAttribute("login");
+			if (login == null) {
+				request.setAttribute("msg", "비회원은 추천할 수 없습니다.");
+				request.setAttribute("url", "../member/loginForm");
+				return "alert";
+			}
+
 			int num = Integer.parseInt(request.getParameter("board_num"));
 			BoardRecommend br = new BoardRecommend();
 			String url = "info?board_num=" + num + "&readcnt=f";
 			br.setBoard_num(num);
 			br.setMember_id(login);
 
-			// Check if the user has already recommended the post
 			int check = dao.checkRecommend(br);
 
 			if (check == 0) {
+				// If the user has not recommended the post, add a new recommendation
 				dao.recommend(br);
 				dao.updaterecommend(num);
 				request.setAttribute("msg", "추천이 완료되었습니다!");
 				request.setAttribute("url", url);
 				return "alert";
 			} else {
-				request.setAttribute("msg", "이미 추천한 게시물입니다..");
+				// If the user has already recommended the post, remove the recommendation
+				dao.unrecommend(br);
+				dao.downrecommend(num);
+				request.setAttribute("msg", "추천이 취소되었습니다.");
 				request.setAttribute("url", url);
 				return "alert";
 			}
 		}
+
 
 		@RequestMapping("info")
 		public String info(HttpServletRequest request, HttpServletResponse response) {
