@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Comment {
 
-	private int comment_num;
+	private int comment_num = 0;
 	private Date regdate;
 	private int recommendcnt;
 	private String member_id;

@@ -10,7 +10,6 @@ public class Board {
 	private int recommendcnt;
 	private Date regdate;
 	private String boardid;
-	private String file1;
 	private int category_num;
 	private String member_id;
 	private String thumbnail;
@@ -78,14 +77,6 @@ public class Board {
 		this.boardid = boardid;
 	}
 
-	public String getFile1() {
-		return file1;
-	}
-
-	public void setFile1(String file1) {
-		this.file1 = file1;
-	}
-
 	public int getCategory_num() {
 		return category_num;
 	}
@@ -105,9 +96,10 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [board_num=" + board_num + ", title=" + title + ", content=" + content + ", readcnt=" + readcnt
-				+ ", recommendcnt=" + recommendcnt + ", regdate=" + regdate + ", boardid=" + boardid + ", file1=" + file1
-				+ ", category_num=" + category_num + ", member_id=" + member_id + "]";
+				+ ", recommendcnt=" + recommendcnt + ", regdate=" + regdate + ", boardid=" + boardid + ", category_num="
+				+ category_num + ", member_id=" + member_id + ", thumbnail=" + thumbnail + "]";
 	}
+
 
 	
 }
