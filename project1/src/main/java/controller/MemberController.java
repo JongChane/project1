@@ -105,12 +105,7 @@ public class MemberController extends MskimRequestMapping{
 	@RequestMapping("main")
 	public String main(HttpServletRequest request,
 			HttpServletResponse response) {
-		String login=(String)request.getSession().getAttribute("login");
-		if(login == null) {  
-			request.setAttribute("msg", "로그인하세요");
-			request.setAttribute("url", "loginForm");
-			return "alert"; 
-		}
+
 		return "member/main"; 
 	}
 	

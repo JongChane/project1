@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,14 +56,36 @@
 	
 	<%-- 댓글 작성시 화면 출력 공간 --%>
 	<div class="w3-container">
-	<table class="w3-table-all">
+	<table class="w3-table-all">		
+		<c:forEach var="c" items="${top3Comments}">
+		<c:if test="${c.recommendcnt > 10}">
+			<tr class="w3-orange">
+				<td>${c.member_id}</td>
+				<td>${c.content}</td>
+				<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td class="w3-right">
+					<form id="comrecommend" method="post" action="comrecommend" name="rf">
+    					<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
+    					<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
+    					<button type="submit">👍 : ${c.recommendcnt}</button>
+					</form>
+				<a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
+				</td>
+		</tr>
+		</c:if>
+		</c:forEach>
 		<c:forEach var="c" items="${commlist}">
-		<tr class="w3-black">
+			<tr class="w3-black">
 			<td>${c.member_id}</td>
 			<td>${c.content}</td>
 			<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td class="w3-right">
-			<a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
+					<form id="comrecommend" method="post" action="comrecommend" name="rf">
+    				<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
+    				<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
+    				<button type="submit">👍 : ${c.recommendcnt}</button>
+					</form>
+					<a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
 			</td>
 		</tr>
 		</c:forEach>
