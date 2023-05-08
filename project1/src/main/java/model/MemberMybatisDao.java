@@ -124,4 +124,14 @@ public class MemberMybatisDao {
 		}
 		return null;
 	}
+	public void exupdate(String member_id, int exp) {
+		SqlSession session = MybatisConnection.getConnection();
+		try {
+			session.getMapper(cls).exupdate(member_id, exp);
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			MybatisConnection.close(session);
+		}
+	}
 }

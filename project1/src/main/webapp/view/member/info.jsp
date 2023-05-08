@@ -17,7 +17,8 @@
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
 			<tr><th>레벨</th><td>${mem.level}</td></tr>
- 			
+			<tr><th>필요경험치</th><td>${mem.level}</td></tr>
+			
 			<tr><td colspan="2" id="center">
 		<a href="updateForm?member_id=${mem.member_id}">수정</a>
 			<c:if test="${param.member_id != 'admin'}">
