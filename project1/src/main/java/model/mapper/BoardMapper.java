@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -83,6 +84,19 @@ public interface BoardMapper {
 
 	@Update("update board set title=#{title},content=#{content} where board_num=#{board_num}")
 	int update(Board board);
+
+	@Select("select * from board where boardid=2 order by regdate desc" )
+	List<Board> selectHumor();
+	
+	@Select("select * from board where boardid=3 order by regdate desc" )
+	List<Board> selectSoccer();
+	
+	@Select("select * from board where boardid=4 order by regdate desc" )
+	List<Board> selectFood();
+	
+	@Select("select * from board order by regdate desc" )
+	List<Board> selectBest();
+
 	
 	
 	

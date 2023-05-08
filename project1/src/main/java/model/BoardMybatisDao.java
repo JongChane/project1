@@ -288,7 +288,51 @@ public class BoardMybatisDao {
 		return false;
 	}
 
+	public List<Board> selectHumor() {
+	    SqlSession session = MybatisConnection.getConnection();
+	    try {
+	        return session.getMapper(cls).selectHumor();
+	    } catch(Exception e ) {
+	        e.printStackTrace();
+	    } finally {
+	        MybatisConnection.close(session);
+	    }
+	    return null;
+	}
 
+	public List<Board> selectSoccer() {
+	    SqlSession session = MybatisConnection.getConnection();
+	    try {
+	        return session.getMapper(cls).selectSoccer();
+	    } catch(Exception e ) {
+	        e.printStackTrace();
+	    } finally {
+	        MybatisConnection.close(session);
+	    }
+	    return null;
+	}
 
+	public List<Board> selectFood() {
+	    SqlSession session = MybatisConnection.getConnection();
+	    try {
+	        return session.getMapper(cls).selectFood();
+	    } catch(Exception e ) {
+	        e.printStackTrace();
+	    } finally {
+	        MybatisConnection.close(session);
+	    }
+	    return null;
+	}
 
+	public List<Board> selectBest() {
+		   SqlSession session = MybatisConnection.getConnection();
+		    try {
+		        return session.getMapper(cls).selectBest();
+		    } catch(Exception e ) {
+		        e.printStackTrace();
+		    } finally {
+		        MybatisConnection.close(session);
+		    }
+		    return null;
+	}
 }
