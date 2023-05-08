@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
+</head>  
 <body>
 	<div class="w3-container">
 		<table>
@@ -26,7 +26,10 @@
 			</tr>
 			<tr>
 				<td class="w3-center">
-					<input type="button" value="추천 :${b.recommendcnt}">
+					<form id="recommend" method="post" action="recommend" name="rf">
+    				<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
+    				<button type="submit">👍 : ${b.recommendcnt}</button>
+					</form>
 				</td>
 				
 			</tr>

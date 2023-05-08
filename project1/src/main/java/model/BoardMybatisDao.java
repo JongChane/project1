@@ -288,6 +288,66 @@ public class BoardMybatisDao {
 		return false;
 	}
 
+					public int recommend(BoardRecommend br) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							session.getMapper(cls).recommendcnt(br);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+						return -1;
+					}
+
+					public int updaterecommend(int num) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							return session.getMapper(cls).updaterecommend(num);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+						return -1;
+					}
+
+					public int checkRecommend(BoardRecommend br) {
+						SqlSession session = MybatisConnection.getConnection();
+						int result = -1;
+						try {
+							result = session.getMapper(cls).checkRecommend(br);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+						return result;
+					}
+
+					public void unrecommend(BoardRecommend br) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							session.getMapper(cls).unrecommend(br);
+							session.commit();
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+					}
+
+					public void downrecommend(int num) {
+						SqlSession session = MybatisConnection.getConnection();
+						try {
+							session.getMapper(cls).downrecommend(num);
+							session.commit();
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							MybatisConnection.close(session);
+						}
+					}
 
 
 
