@@ -19,7 +19,7 @@
 				<td>${b.title}</td>
 			</tr>
 			<tr>
-				<td>Lv10 | ${b.member_id} | 조회수 : ${b.readcnt} | 댓글 1000 | <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+				<td>Lv10 | ${b.member_id} | 조회수 : ${b.readcnt} | 추천수 : ${b.recommendcnt} | 댓글수 : ${b.commcnt} | <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 			</tr>
 			
 			<tr>
@@ -59,22 +59,32 @@
 	<table class="w3-table-all">		
 		<c:forEach var="c" items="${top3Comments}" varStatus="status">
 		<c:if test="${c.recommendcnt > 10}">
-			<tr class="w3-orange">
+			<c:choose>
+				<c:when test="${status.index == 0}">
+					<tr style="background-color:orange;">
+				</c:when>
+				<c:when test="${status.index == 1}">
+					<tr style="background-color:silver;">
+				</c:when>
+				<c:when test="${status.index == 2}">
+				  <tr class="w3-brown">
+				</c:when>
+			</c:choose>
 				<td>${c.member_id}</td>
 				<td>${c.content}</td>
 				<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>				
 				<td class="w3-right">
-						<c:choose>
-					<c:when test="${status.index == 0}">
-						🥇
-					</c:when>
-					<c:when test="${status.index == 1}">
-						🥈
-					</c:when>
-					<c:when test="${status.index == 2}">
-						🥉
-					</c:when>
-				</c:choose>
+					<c:choose>
+						<c:when test="${status.index == 0}">
+							🥇
+						</c:when>
+						<c:when test="${status.index == 1}">
+							🥈
+						</c:when>
+						<c:when test="${status.index == 2}">
+							🥉
+						</c:when>
+					</c:choose>
 					<form id="comrecommend" method="post" action="comrecommend" name="rf">
     					<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
     					<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">

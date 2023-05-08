@@ -72,7 +72,9 @@ public interface BoardMapper {
 			+ " ORDER BY recommendcnt DESC limit #{start},#{limit}",
 			"</script>"})
 	List<Board> selectbobList(Map<String, Object> map);
-	@Select("select * from board where board_num= #{value}")
+
+	@Select({ "<script>", "SELECT *, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
+			+ " FROM board b WHERE board_num = #{value}", "</script>" })
 	Board selectOne(int num);
 	
 	@Update("update board set readcnt = readcnt + 1 where board_num=#{value}")
