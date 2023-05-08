@@ -59,4 +59,18 @@ public class CommentMybatisDao {
 		}
 	}
 
+	public boolean delete(int board_num,int comment_num) {
+		SqlSession session = MybatisConnection.getConnection();
+		try {
+			int cnt = session.getMapper(cls).delete(board_num,comment_num);
+			if(cnt > 0) return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			MybatisConnection.close(session);
+		}
+		return false;
+	}
+
+
 }

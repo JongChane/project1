@@ -22,4 +22,7 @@ public interface CommentMapper {
 
 	@Delete("delete from comment where board_num = #{value}")
 	void deleteAll(int board_num);
+
+	@Delete("delete from comment where comment_num = #{comment_num} and board_num = #{board_num}")
+	int delete(int comment_num ,int board_num);
 }

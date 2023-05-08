@@ -273,12 +273,25 @@ public class BoardController extends MskimRequestMapping {
 		if (boardid == null)
 			boardid = "1";
 		String login = (String) request.getSession().getAttribute("login");
+		
+		if(login==null) {
+			String msg = "로그인을 하세요.";
+			String url ="../member/loginForm";
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			return "alert";
+		}
 		return "board/writeForm";
 
 	}
 
 	@RequestMapping("write")
 	public String write(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		String login = (String) request.getSession().getAttribute("login");
 		// 파라미터 Board 객체에 저장
 		Board board = new Board();
@@ -322,36 +335,6 @@ public class BoardController extends MskimRequestMapping {
 		return "ckeditor";
 	}
 
-	@RequestMapping("comment")
-	public String comment(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		// board_num : 게시글 번호
-		int board_num = Integer.parseInt(request.getParameter("board_num"));
-		String url = "info?board_num=" + board_num + "&readcnt=f";
-		// 파라미터값 Comment 객체에 저장
-		Comment comm = new Comment();
-		comm.setBoard_num(board_num); //b.board_num
-
-		String login = (String) request.getSession().getAttribute("login");
-		comm.setMember_id(login);
-		System.out.println(login);
-
-		// c.member_id 값 설정
-		comm.setContent(request.getParameter("content")); //name="content" 파라미터값 설정
-		int comment_num = cdao.maxcomment_num(board_num); // comment_num에 해당하는 최대 comment_num 컬럼의 값
-		comm.setComment_num(++comment_num);
-		if (cdao.cominsert(comm)) { // comment 테이블에 insert
-			return "redirect:" + url;
-		}
-		request.setAttribute("msg", "답글 등록시 오류 발생");
-		request.setAttribute("url", url);
-		return "alert";
-
-	}
 	@RequestMapping("info")
 	public String info(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -453,7 +436,7 @@ public class BoardController extends MskimRequestMapping {
 			}
 		}
 	}
-	
+
 	@RequestMapping("updateForm")
 	public String updateForm(HttpServletRequest request, HttpServletResponse response) {
 		String login = (String)request.getSession().getAttribute("login");
@@ -471,24 +454,70 @@ public class BoardController extends MskimRequestMapping {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-	    int board_num = Integer.parseInt(request.getParameter("board_num"));
-	    String title = request.getParameter("title");
-	    String content = request.getParameter("content");
-	    Board b = dao.selectOne(board_num);
-	    b.setTitle(title);
-	    b.setContent(content);
-	    String msg = null; 
-	    String url = null;
-	    if (dao.update(b)) {
-	        msg = "게시글 수정이 되었습니다.";
-	        url = "info?board_num=" + b.getBoard_num();
-	    } else {
-	        msg = "게시글 수정 실패";
-	        url = "updateForm?board_num=" + b.getBoard_num();
-	    }
-	    request.setAttribute("msg", msg);
-	    request.setAttribute("url", url);
-	    return "alert";
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		Board b = dao.selectOne(board_num);
+		b.setTitle(title);
+		b.setContent(content);
+		String msg = null; 
+		String url = null;
+		if (dao.update(b)) {
+			msg = "게시글 수정이 되었습니다.";
+			url = "info?board_num=" + b.getBoard_num();
+		} else {
+			msg = "게시글 수정 실패";
+			url = "updateForm?board_num=" + b.getBoard_num();
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return "alert";
+	}
+	
+	@RequestMapping("comment")
+	public String comment(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		// board_num : 게시글 번호
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		String url = "info?board_num=" + board_num + "&readcnt=f";
+		// 파라미터값 Comment 객체에 저장
+		Comment comm = new Comment();
+		comm.setBoard_num(board_num); //b.board_num
+
+		String login = (String) request.getSession().getAttribute("login");
+		comm.setMember_id(login);
+		System.out.println(login);
+
+		// c.member_id 값 설정
+		comm.setContent(request.getParameter("content")); //name="content" 파라미터값 설정
+		int comment_num = cdao.maxcomment_num(board_num); // comment_num에 해당하는 최대 comment_num 컬럼의 값
+		comm.setComment_num(++comment_num);
+		if (cdao.cominsert(comm)) { // comment 테이블에 insert
+			return "redirect:" + url;
+		}
+		request.setAttribute("msg", "답글 등록시 오류 발생");
+		request.setAttribute("url", url);
+		return "alert";
+
+	}
+
+	@RequestMapping("commdel")
+	public String commdel(HttpServletRequest request, HttpServletResponse response) {
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		int comment_num = Integer.parseInt(request.getParameter("comment_num"));
+		System.out.println(board_num);
+		System.out.println(comment_num);
+		String url = "info?board_num=" + board_num + "&readcnt=f";
+		if(cdao.delete(board_num,comment_num)) {
+			return "redirect:" + url;
+		}
+		request.setAttribute("msg", "댓글삭제 실패하였습니다.");
+		request.setAttribute("url", url);
+		return "alert";
 	}
 }
 

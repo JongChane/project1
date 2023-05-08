@@ -59,7 +59,7 @@
 			<td>${c.content}</td>
 			<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td class="w3-right">
-			<a class="w3-btn w3-border w3-green" href="commdel?num=${param.num}&seq=${c.comment_num}">삭제</a>
+			<a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
 			</td>
 		</tr>
 		</c:forEach>
