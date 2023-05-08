@@ -13,6 +13,16 @@ public class Board {
 	private int category_num;
 	private String member_id;
 	private String thumbnail;
+	private int commcnt;
+
+	
+	public int getCommcnt() {
+		return commcnt;
+	}
+
+	public void setCommcnt(int commcnt) {
+		this.commcnt = commcnt;
+	}
 
 	public String getThumbnail() {
 	    return thumbnail;
@@ -97,7 +107,7 @@ public class Board {
 	public String toString() {
 		return "Board [board_num=" + board_num + ", title=" + title + ", content=" + content + ", readcnt=" + readcnt
 				+ ", recommendcnt=" + recommendcnt + ", regdate=" + regdate + ", boardid=" + boardid + ", category_num="
-				+ category_num + ", member_id=" + member_id + ", thumbnail=" + thumbnail + "]";
+				+ category_num + ", member_id=" + member_id + ", thumbnail=" + thumbnail + ", commcnt=" + commcnt + "]";
 	}
 
 
