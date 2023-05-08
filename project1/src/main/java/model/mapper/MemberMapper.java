@@ -58,4 +58,11 @@ public interface MemberMapper {
 			+ " + (SELECT SUM(recommendcnt) FROM board WHERE member_id=#{member_id})) "
 			+ " WHERE member_id=#{member_id} ")
 	void exupdate(@Param("member_id") String member_id, @Param("exp") int exp);
+	
+	@Select("select ifnull(max(board_num),0) from board")
+	int maxnum();
+
+	@Select("select count(*) from board where boardid=#{boardid}")
+	int boardCount(Map<String, Object> map);
+
 } 

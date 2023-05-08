@@ -124,6 +124,7 @@ public class MemberMybatisDao {
 		}
 		return null;
 	}
+
 	public void exupdate(String member_id, int exp) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {
@@ -134,4 +135,19 @@ public class MemberMybatisDao {
 			MybatisConnection.close(session);
 		}
 	}
+
+	public int boardCount(String member_id) {
+		SqlSession session = MybatisConnection.getConnection();
+		try {
+			map.clear();
+			map.put("member_id", member_id);
+		return session.getMapper(cls).boardCount(map);
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		MybatisConnection.close(session);
+	}
+		return 0;
+	}
+
 }

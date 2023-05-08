@@ -47,15 +47,15 @@ public interface BoardMapper {
 	@Select("select ifnull(max(board_num),0) from board")
 	int maxnum();
 	
-	@Insert("INSERT INTO board (board_num, title, content, readcnt, recommendcnt, regdate, boardid, file1, category_num, member_id)"
-			+ " VALUES (#{board_num}, #{title}, #{content}, 0, 0, now(), #{boardid}, #{file1}, #{category_num}, #{member_id})")
+	@Insert("INSERT INTO board (board_num, title, content, readcnt, recommendcnt, regdate, boardid, category_num, member_id)"
+			+ " VALUES (#{board_num}, #{title}, #{content}, 0, 0, now(), #{boardid}, #{category_num}, #{member_id})")
 	int insert(Board board);
 
 	@Select("select ifnull(max(comment_num),0) from comment where board_num=#{board_num}")
 	int maxcomment_num(int board_num);
 
-	@Insert("insert into comment (comment_num,content,regdate,recommendcnt,member_id, board_num)"
-			+ " values (#{comment_num},#{content},#{regdate},#{recommendcnt},#{member_id},#{board_num})")
+	@Insert("insert into comment (comment_num+=1,content,regdate,recommendcnt,member_id, board_num)"
+			+ " values (#{comment_num}+=1,#{content},#{regdate},#{recommendcnt},#{member_id},#{board_num})")
 	int cominsert(Comment comm);
 
 	@Select("select * from comment where board_num = #{board_num}")
@@ -78,6 +78,15 @@ public interface BoardMapper {
 	@Update("update board set readcnt = readcnt + 1 where board_num=#{value}")
 	void readcntAdd(int num);
 	
+
+	@Delete("delete from board where board_num=#{value}")
+	int delete(int board_num);
+
+
+	@Update("update board set title=#{title},content=#{content} where board_num=#{board_num}")
+	int update(Board board);
+	
+
 	@Insert("insert into board_recommend (board_num,member_id) values(#{board_num}, #{member_id})")
 	void recommendcnt(BoardRecommend br);
 
@@ -86,6 +95,7 @@ public interface BoardMapper {
 
 	@Select("SELECT COUNT(*) FROM board_recommend WHERE board_num=#{board_num} AND member_id=#{member_id}")
 	int checkRecommend(BoardRecommend br);
+
 	
 	@Delete("delete from board_recommend where board_num=#{board_num} and member_id=#{member_id}")
 	void unrecommend(BoardRecommend br);
