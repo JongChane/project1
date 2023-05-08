@@ -57,13 +57,24 @@
 	<%-- 댓글 작성시 화면 출력 공간 --%>
 	<div class="w3-container">
 	<table class="w3-table-all">		
-		<c:forEach var="c" items="${top3Comments}">
+		<c:forEach var="c" items="${top3Comments}" varStatus="status">
 		<c:if test="${c.recommendcnt > 10}">
 			<tr class="w3-orange">
 				<td>${c.member_id}</td>
 				<td>${c.content}</td>
-				<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>				
 				<td class="w3-right">
+						<c:choose>
+					<c:when test="${status.index == 0}">
+						🥇
+					</c:when>
+					<c:when test="${status.index == 1}">
+						🥈
+					</c:when>
+					<c:when test="${status.index == 2}">
+						🥉
+					</c:when>
+				</c:choose>
 					<form id="comrecommend" method="post" action="comrecommend" name="rf">
     					<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
     					<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
