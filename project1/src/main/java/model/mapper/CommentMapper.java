@@ -47,3 +47,4 @@ public interface CommentMapper {
    int comdownrecommend(int num);
    
 }
+

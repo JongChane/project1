@@ -41,10 +41,6 @@
 			<div align="left">
 				<a href="list?boardid=${boardid}">목록으로</a>
 			</div>
-			<div>
-				&nbsp;
-				&nbsp;
-			</div>
 			<c:if test="${sessionScope.login eq b.member_id}">
 			<div align="right">
 				<a href="updateForm?board_num=${b.board_num}" class="w3-btn"style="margin-right:10px;">수정</a>
@@ -53,7 +49,6 @@
 			</c:if>
 		</div>
 	</div>
-	
 	<%-- 댓글 작성시 화면 출력 공간 --%>
 	<div class="w3-container">
 	<table class="w3-table-all">		
