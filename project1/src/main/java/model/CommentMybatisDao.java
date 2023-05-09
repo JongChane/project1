@@ -139,6 +139,28 @@ public void comdownrecommend(int num) {
 	
 }
 
+public Comment selectOne(int comment_num) {
+	SqlSession session = MybatisConnection.getConnection();
+	try {
+		session.getMapper(cls).selectOne(comment_num);
+	} catch(Exception e) {
+		e.printStackTrace();
+	} finally {
+		MybatisConnection.close(session);
+	}
+	return null;
+}
+
+public void grpStepAdd(int grp, int grpstep) {
+	SqlSession session = MybatisConnection.getConnection();
+	try {
+		session.getMapper(cls).grpStepAdd(grp,grpstep);
+	} catch(Exception e) {
+    e.printStackTrace();
+  } finally {
+		MybatisConnection.close(session);
+	}
+
 public int commcount(int num) {
 	SqlSession session = MybatisConnection.getConnection();
 	try {

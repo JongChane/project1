@@ -442,11 +442,15 @@ public class BoardController extends MskimRequestMapping {
 		String login = (String) request.getSession().getAttribute("login");
 		comm.setMember_id(login);
 		System.out.println(login);
-
+		cdao.grpStepAdd(comm.getGrp(),comm.getGrpstep()); // grpstep 변경
+		
 		// c.member_id 값 설정
 		comm.setContent(request.getParameter("content")); //name="content" 파라미터값 설정
 		int comment_num = cdao.maxcomment_num(board_num); // comment_num에 해당하는 최대 comment_num 컬럼의 값
+		int grpstep = comm.getGrpstep();
 		comm.setComment_num(++comment_num);
+		comm.setGrp(comment_num);
+		comm.setGrpstep(grpstep+1);
 		if (cdao.cominsert(comm)) { // comment 테이블에 insert
 			return "redirect:" + url;
 		}
@@ -609,6 +613,7 @@ public class BoardController extends MskimRequestMapping {
 				boardName = "음식게시판";
 				break;
 			}
+
 			int commcount = cdao.commcount(num);
 			int pageNum = 1;
 			try {
@@ -621,6 +626,7 @@ public class BoardController extends MskimRequestMapping {
 			if (endpage > maxpage)
 				endpage = maxpage;
 			int commnum = commcount - (pageNum - 1) * limit;
+
 		      //댓글 목록 화면에 전달
 			  List<Comment> commlist = cdao.selectclist(num, pageNum, limit);
 			  List<Comment> top3Comments = commlist.stream()
@@ -641,7 +647,7 @@ public class BoardController extends MskimRequestMapping {
 			  request.setAttribute("pageNum", pageNum);
 			  request.setAttribute("commcount", commcount);
 		      return "board/info";
-		      
+		}
 		
-		}		
+		
 }
