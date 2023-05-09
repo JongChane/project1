@@ -6,17 +6,27 @@
 <meta charset="UTF-8">
 <title>개인정보 약관</title>
 <script type="text/javascript">
-
-const agreeCheckbox = document.getElementsByName("agreeCheckbox")[0];
+function is_checked(){
+const agreeCheckbox = document.getElementsByName("agreeCheckbox");
 const signupButton = document.getElementById("signupButton");
 
-agreeCheckbox.addEventListener("change", function() {
+agreeCheckbox[0].addEventListener("change", function() {
   if (this.checked) {
     signupButton.disabled = false;
   } else {
     signupButton.disabled = true;
   }
 });
+}
+function signUp() {
+	  const agreeCheckbox = document.getElementsByName("agreeCheckbox");
+
+	  if (agreeCheckbox[0].checked) {
+	    return false;
+	  }
+		  alert("가입하기 전에 개인정보처리방침에 동의해야 합니다.");
+	  return true;
+	}
 </script>
 <style type="text/css">
 	h2{
@@ -30,7 +40,7 @@ agreeCheckbox.addEventListener("change", function() {
 
 </style>
 </head>
-<body>
+<body onload="is_checked();">
 	<div class="container">
 		<h2 align="center">개인정보 약관 동의서</h2>
 		<hr>
@@ -72,17 +82,13 @@ agreeCheckbox.addEventListener("change", function() {
 			 </td></tr>
 		</table>
 		<br>
-		<div class="container">
-  <table style="margin:auto;">
-    <tr>
-      <td>
-        동의<input type='checkbox' name="agreeCheckbox" value="Agree" />
-      </td>
-    </tr> 
-  </table>
-  <br>
+		<div >
   <div style="text-align:center;">
-    <button type="button" class="btn btn-dark" onclick="location='joinForm'">동의 및 회원가입</button>
+ <form onsubmit="return signUp();">
+        동의<input type='checkbox'name="agreeCheckbox" value="Agree"/>
+  <br>
+    <button type="submit" class="btn btn-dark" id="signupButton" onclick="location='joinForm'">동의 및 회원가입</button>
+    </form>
   </div>
 </div>
 		<hr>

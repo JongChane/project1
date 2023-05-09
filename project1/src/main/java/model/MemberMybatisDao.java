@@ -135,19 +135,16 @@ public class MemberMybatisDao {
 			MybatisConnection.close(session);
 		}
 	}
-
-	public int boardCount(String member_id) {
+	public List<Board> listdelete(String member_id) {
 		SqlSession session = MybatisConnection.getConnection();
-		try {
-			map.clear();
-			map.put("member_id", member_id);
-		return session.getMapper(cls).boardCount(map);
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		MybatisConnection.close(session);
+		 try {
+			session.getMapper(cls).listdelete(member_id);
+		 } catch (Exception e){
+			 e.printStackTrace();
+		 } finally {
+			 MybatisConnection.close(session);
+		 }
+		 return null;
 	}
-		return 0;
-	}
-
+	 
 }

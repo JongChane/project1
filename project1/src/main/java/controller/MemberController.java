@@ -129,8 +129,6 @@ public class MemberController extends MskimRequestMapping{
 		return "redirect:loginForm"; 
 	}
 	
-	
-	
 	@RequestMapping("info")
 	@MSLogin("loginIdCheck")
 	public String info
@@ -145,6 +143,7 @@ public class MemberController extends MskimRequestMapping{
 		request.setAttribute("list", list);
 		return "member/info";
 	}
+	
 	@RequestMapping("finfo")
 	public String finfo
 	   (HttpServletRequest request, HttpServletResponse response) {

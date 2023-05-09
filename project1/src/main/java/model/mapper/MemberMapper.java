@@ -64,5 +64,8 @@ public interface MemberMapper {
 
 	@Select("select count(*) from board where boardid=#{boardid}")
 	int boardCount(Map<String, Object> map);
+	
+	 @Delete("delete from board where member_id=#{member_id}")
+	    int listdelete(String member_id);
 
 } 

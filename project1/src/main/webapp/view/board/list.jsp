@@ -95,7 +95,7 @@
         
     </td>
  		<td>
- 			<a href="../member/info?member_id=${b.member_id}">${b.member_id}</a>
+ 			<a href="../member/finfo?member_id=${b.member_id}">${b.member_id}</a>
  		</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
  <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 

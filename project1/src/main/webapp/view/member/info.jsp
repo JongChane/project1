@@ -7,16 +7,27 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 정보 보기</title>
+<script type="text/javascript">
+function selectAll(selectAll)  {
+     const checkboxes 
+          = document.getElementsByName('idchks');
+     
+     checkboxes.forEach((checkbox) => {
+       checkbox.checked = selectAll.checked;
+     })
+   }
+</script>
 </head>
 <body>
 	<div class="container" style="text-align:center">
 	<h2 id="center">회원 상세 정보</h2>
+	<form name="f" method="post">
 	<table class="table table-hover">
 		<tr><td rowspan="6" width="30%" >
 			<tr><th>레벨</th><td>${mem.level}</td></tr>
 			<tr>
 				<th>현재exp/필요exp</th>
-				<td>${mem.ex\p}/
+				<td>${mem.exp}/
 		<c:choose>
         <c:when test="${mem.level == 1}">
             100
@@ -103,7 +114,8 @@
         </c:when>
         <c:when test="${b.category_num == 6}">
             루머
-        </c:when>
+        </c:when> 
+        
         <c:when test="${b.category_num == 7}">
             움짤
         </c:when>
@@ -142,11 +154,12 @@
 			</tr>
 		</c:forEach>
 		
-		
-			
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">
+				<div id="right">
+					<button type="submit" id="right">삭제</button>
+				</div>
       	<c:if test="${pageNum <= 1}">[이전]</c:if>
       	<c:if test="${pageNum > 1}">
       		<a href="javascript:listsubmit(${pageNum-1})">[이전]</a>
@@ -165,10 +178,8 @@
  		</tr>
  		
 	</table>	
-			</div>
-			<div id="right">
-				<button type="submit" id="right">삭제</button>
-			</div>
 	
+	</form>
+			</div>
 </body>
 </html>
