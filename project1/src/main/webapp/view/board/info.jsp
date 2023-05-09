@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,34 +37,86 @@
 			
 		</table>
 		
-		<div style="display:flex; justify-content:space-around; width:35%; margin-top:10px;">
-			<div align="left"><a href="list?boardid=${boardid}">목록으로</a></div>
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-			<div align="right">
-				<button>하이</button>
-				<button>하이</button>
+		<div style="display:flex; justify-content:space-between; width:35%; margin-top:10px;">
+			<div align="left">
+				<a href="list?boardid=${boardid}">목록으로</a>
 			</div>
+			<div>
+				&nbsp;
+				&nbsp;
+			</div>
+			<c:if test="${sessionScope.login eq b.member_id}">
+			<div align="right">
+				<a href="updateForm?board_num=${b.board_num}" class="w3-btn"style="margin-right:10px;">수정</a>
+				<a href="deleteForm?board_num=${b.board_num}" style="margin-right:50px;">삭제</a>
+			</div>
+			</c:if>
 		</div>
 	</div>
 	
-<!--  	<div class="w3-container">
-		<table>
-			<tr>
-				
-				<td style="width:770px">
-					댓글 : 30
+	<%-- 댓글 작성시 화면 출력 공간 --%>
+	<div class="w3-container">
+	<table class="w3-table-all">		
+		<c:forEach var="c" items="${top3Comments}" varStatus="status">
+		<c:if test="${c.recommendcnt > 10}">
+			<tr class="w3-orange">
+				<td>${c.member_id}</td>
+				<td>${c.content}</td>
+				<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>				
+				<td class="w3-right">
+						<c:choose>
+					<c:when test="${status.index == 0}">
+						🥇
+					</c:when>
+					<c:when test="${status.index == 1}">
+						🥈
+					</c:when>
+					<c:when test="${status.index == 2}">
+						🥉
+					</c:when>
+				</c:choose>
+					<form id="comrecommend" method="post" action="comrecommend" name="rf">
+    					<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
+    					<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
+    					<button type="submit">👍 : ${c.recommendcnt}</button>
+					</form>
+				<a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
 				</td>
-			</tr>
-			<tr>
-				<td>
-					<span>BEST!</span><br>
-					Lv10 | 고현빈 | 2023-05-03 15:41<br>
-					ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ추성훈이 죽이러 올듯
-				</td>
-			</tr>
-		</table>
+		</tr>
+		</c:if>
+		</c:forEach>
+		<c:forEach var="c" items="${commlist}">
+			<tr class="w3-black">
+			<td>${c.member_id}</td>
+			<td>${c.content}</td>
+			<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td class="w3-right">
+					<form id="comrecommend" method="post" action="comrecommend" name="rf">
+    				<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
+    				<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
+    				<button type="submit">👍 : ${c.recommendcnt}</button>
+					</form>
+					<a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
+			</td>
+		</tr>
+		</c:forEach>
+	</table>
 	</div>
--->	
+	
+	<%-- 댓글 등록,삭제 및 조회 --%>
+	<span id="comment"></span>
+	<form action="comment" method="post">
+	<input type="hidden" name="board_num" value="${b.board_num}">
+	<input type="hidden" name="member_id" value="${sessionScope.login}">
+	<div class="w3-row-padding">
+		<div class="w3-col s6 ">
+			<p><textarea rows="2" cols="68" name="content"></textarea></p>
+		</div>
+		<div class="w3-col s6">
+			<p><button type="submit" class="w3-btn w3-border w3-white">댓글등록</button></p>
+		</div>
+	</div>
+	</form>
+	
 </body>
 </html>

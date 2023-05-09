@@ -109,7 +109,6 @@ public class MemberController extends MskimRequestMapping{
 	public String main(HttpServletRequest request,
 			HttpServletResponse response) {
 		String login=(String)request.getSession().getAttribute("login");
-		
 		return "member/main"; 
 	}
 	
