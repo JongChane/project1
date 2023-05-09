@@ -10,43 +10,43 @@
 <title>게시물 목록</title>
 <script type="text/javascript">
     function listsubmit(page) {
-    	f = document.sf;  //검색 form 태그
-    	f.pageNum.value=page;
-    	f.submit();
+       f = document.sf;  //검색 form 태그
+       f.pageNum.value=page;
+       f.submit();
     }
 </script>    
 </head>
 <body>
 <h2>${boardName}</h2>
 <table>
-	<c:if test="${boardcount == 0}">
-		<tr>
-			<td colspan="5">등록된 게시글이 없습니다.</td>
-		</tr>	
-	</c:if>
-	<c:if test="${boardcount > 0}">
-		<tr>
-			<td colspan="5" style="text-align:right">글개수:${boardcount}
-			<c:if test="${boardid!=1}">
-			<a href="popularList?boardid=${boardid}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[인기글]</a>
-			</c:if>
-			</td>
-			
-		</tr>
-		<tr>
-			<th width="5%">글번호</th>
-			<th width="10%">분류</th>
-			<th width="40%">제목</th>
-			<th width="15%">글쓴이</th>
-			<th width="20%">작성일</th>
-			<th width="5%">조회수</th>
-			<th width="5%">추천수</th>
-		</tr>
-		
-		<c:forEach var="b" items="${list}">
- 			<tr>
- 				<td>${boardnum}</td>
- 					<c:set var="boardnum" value="${boardnum - 1}" />
+   <c:if test="${boardcount == 0}">
+      <tr>
+         <td colspan="5">등록된 게시글이 없습니다.</td>
+      </tr>   
+   </c:if>
+   <c:if test="${boardcount > 0}">
+      <tr>
+         <td colspan="5" style="text-align:right">글개수:${boardcount}
+         <c:if test="${boardid!=1}">
+         <a href="popularList?boardid=${boardid}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[인기글]</a>
+         </c:if>
+         </td>
+         
+      </tr>
+      <tr>
+         <th width="5%">글번호</th>
+         <th width="10%">분류</th>
+         <th width="40%">제목</th>
+         <th width="15%">글쓴이</th>
+         <th width="20%">작성일</th>
+         <th width="5%">조회수</th>
+         <th width="5%">추천수</th>
+      </tr>
+      
+      <c:forEach var="b" items="${list}">
+          <tr>
+             <td>${boardnum}</td>
+                <c:set var="boardnum" value="${boardnum - 1}" />
 
 <td>
     <c:choose>
@@ -85,7 +85,7 @@
         </c:when>
     </c:choose>
 </td>
-		<td style="text-align: left">
+      <td style="text-align: left">
         <a href="info?board_num=${b.board_num}">
         <c:if test="${not empty b.thumbnail}">
             <img src="${b.thumbnail}" style="width: 50px; height: 50px; margin-right: 10px;">
@@ -94,60 +94,62 @@
         </a>
         
     </td>
- 				<td>${b.member_id}</td>
-				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
+       <td>
+          <a href="../member/finfo?member_id=${b.member_id}">${b.member_id}</a>
+       </td>
+            <%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
  <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
  <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd" var="r" /> 
  <td><c:if test="${t==r}">
      <fmt:formatDate value="${b.regdate}" pattern="HH:mm:ss" />
-	 </c:if>
-	 <c:if test="${t!=r}">
+    </c:if>
+    <c:if test="${t!=r}">
      <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm" />
    </c:if>
         </td>
-		 		<td>${b.readcnt}</td>
-		 		<td>${b.recommendcnt}</td>
-			</tr>
-		</c:forEach>
-		<%-- 페이지 처리하기 --%>
- 		<tr>
- 			<td colspan="5" class="w3-center">
-      	<c:if test="${pageNum <= 1}">[이전]</c:if>
-      	<c:if test="${pageNum > 1}">
-      		<a href="javascript:listsubmit(${pageNum-1})">[이전]</a>
-      	</c:if>
-      	<c:forEach var="a" begin="${startpage}" end="${endpage}">
-        	<c:if test="${a == pageNum}">[${a}]</c:if>
-        	<c:if test="${a != pageNum}">
-          	<a href="javascript:listsubmit(${a})">[${a}]</a>
-        	</c:if>
-      	</c:forEach>
-      	<c:if test="${pageNum >= maxpage}">[다음]</c:if>
-      	<c:if test="${pageNum < maxpage}">
-      		<a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
-      	</c:if>
- 			</td>
- 		</tr>  
-	</c:if>
-	<tr><td colspan="5" style="text-align:right">
-	<p align="right"><a href="writeForm">[글쓰기]</a></p>
+             <td>${b.readcnt}</td>
+             <td>${b.recommendcnt}</td>
+         </tr>
+      </c:forEach>
+      <%-- 페이지 처리하기 --%>
+       <tr>
+          <td colspan="5" class="w3-center">
+         <c:if test="${pageNum <= 1}">[이전]</c:if>
+         <c:if test="${pageNum > 1}">
+            <a href="javascript:listsubmit(${pageNum-1})">[이전]</a>
+         </c:if>
+         <c:forEach var="a" begin="${startpage}" end="${endpage}">
+           <c:if test="${a == pageNum}">[${a}]</c:if>
+           <c:if test="${a != pageNum}">
+             <a href="javascript:listsubmit(${a})">[${a}]</a>
+           </c:if>
+         </c:forEach>
+         <c:if test="${pageNum >= maxpage}">[다음]</c:if>
+         <c:if test="${pageNum < maxpage}">
+            <a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
+         </c:if>
+          </td>
+       </tr>  
+   </c:if>
+   <tr><td colspan="5" style="text-align:right">
+   <p align="right"><a href="writeForm">[글쓰기]</a></p>
 </table>
 <div>
-	<form action="list?boardid=${boardid}" method="post" name="sf">
-   	<input type="hidden" name="pageNum" value="1" >
-   	<select name="column" >
-     	<option value="">선택</option>
-     	<option value="member_id">글쓴이</option>
-	 	 	<option value="title">제목</option>
-		 	<option value="content">내용</option>
-    	<option value="title,content">제목+내용</option>
-   	</select>
+   <form action="list?boardid=${boardid}" method="post" name="sf">
+      <input type="hidden" name="pageNum" value="1" >
+      <select name="column" >
+        <option value="">선택</option>
+        <option value="member_id">글쓴이</option>
+           <option value="title">제목</option>
+          <option value="content">내용</option>
+       <option value="title,content">제목+내용</option>
+      </select>
     <script type="text/javascript">
-			document.sf.column.value='${param.column}'
+         document.sf.column.value='${param.column}'
     </script>
-		<input type="text" placeholder="검색" name="find" value="${param.find}">
-		<button type="submit">Search</button>
-	</form>
+      <input type="text" placeholder="검색" name="find" value="${param.find}">
+      <button type="submit">Search</button>
+   </form>
 </div>
 </body>
 </html>

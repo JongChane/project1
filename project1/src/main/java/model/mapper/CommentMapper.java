@@ -46,6 +46,4 @@ public interface CommentMapper {
    @Update("update comment set recommendcnt = recommendcnt-1 where comment_num=#{value}")
    int comdownrecommend(int num);
    
-   
-   
 }

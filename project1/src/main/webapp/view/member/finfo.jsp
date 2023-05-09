@@ -15,16 +15,17 @@
 		<tr><td rowspan="6" width="30%" >
 			<tr><th>레벨</th><td>${mem.level}</td></tr>
 		<th width="20%">아이디</th><td>${mem.member_id}</td></tr>
+		<c:if test="${param.member_id == 'member_id'}">
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
-			
-			
-			<tr><td colspan="2" id="center">
+	
+				<tr><td colspan="2" id="center">
 		<a href="updateForm?member_id=${mem.member_id}">수정</a>
 			<c:if test="${param.member_id != 'admin'}">
 		<a href="deleteForm?member_id=${mem.member_id}">탈퇴</a>
 		</c:if>
 	</td></tr>
+	</c:if>
 	</table>
  		<table>
 		<tr>
@@ -40,8 +41,6 @@
 			<th width="10%">작성일</th>
 			<th width="10%">조회수</th>
 			<th width="10%">추천수</th>
-			<th><input type='checkbox' name='idchks' 
-			value='selectall' onchange='selectAll(this)'></th>
 		</tr>
 		<c:forEach var="b" items="${list}">
  			<tr>
@@ -100,13 +99,8 @@
  		</td>
 		 		<td>${b.readcnt}</td>
 		 		<td>${b.recommendcnt}</td>
-		 		<td><input type='checkbox' name='idchks' value="${m.member_id}"/>
-				<br/></td>
 			</tr>
 		</c:forEach>
-		
-		
-			
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">
@@ -125,12 +119,8 @@
       		<a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
       	</c:if>
  			</td>
- 		</tr>
- 		
+ 		</tr>  
 	</table>	
-			</div>
-			<div id="right">
-				<button type="submit" id="right">삭제</button>
 			</div>
 	
 </body>

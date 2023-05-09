@@ -110,6 +110,9 @@ public class Board {
 				+ category_num + ", member_id=" + member_id + ", thumbnail=" + thumbnail + ", commcnt=" + commcnt + "]";
 	}
 
-
 	
+}
+
+
+   
 }
