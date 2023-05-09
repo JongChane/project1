@@ -35,10 +35,13 @@ public class CommentMybatisDao {
       return false;
    }
 
-   public List<Comment> selectclist(int board_num) {
+   public List<Comment> selectclist(int board_num, int pageNum, int limit) {
       SqlSession session = MybatisConnection.getConnection();
       try {
-         map.put("board_num", board_num);
+    	  map.clear();
+    	  map.put("board_num", board_num);
+    	  map.put("start", (pageNum - 1) * limit);
+		  map.put("limit", limit);
          return session.getMapper(cls).selectclist(map);
       } catch (Exception e) {
          e.printStackTrace();
@@ -88,7 +91,7 @@ public int checkcomRecommend(ComRecommend cr) {
 public int comrecommend(ComRecommend cr) {
 	SqlSession session = MybatisConnection.getConnection();
 	try {
-		session.getMapper(cls).comrecommendcnt(cr);
+	 return session.getMapper(cls).comrecommendcnt(cr);
 	} catch (Exception e) {
 		e.printStackTrace();
 	} finally {
@@ -134,6 +137,18 @@ public void comdownrecommend(int num) {
 		MybatisConnection.close(session);
 	}
 	
+}
+
+public int commcount(int num) {
+	SqlSession session = MybatisConnection.getConnection();
+	try {
+	return session.getMapper(cls).commcount(num);
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		MybatisConnection.close(session);
+	}
+	return 0;
 }
 
 }

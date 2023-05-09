@@ -44,9 +44,9 @@
 		</tr>
 		
 		<c:forEach var="b" items="${list}">
- 			<tr>
- 				<td>${boardnum}</td>
- 					<c:set var="boardnum" value="${boardnum - 1}" />
+ 		<tr>
+ 			<td>${boardnum}</td>
+ 			<c:set var="boardnum" value="${boardnum - 1}" />
 
 <td>
     <c:choose>

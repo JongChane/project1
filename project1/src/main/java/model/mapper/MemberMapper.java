@@ -53,7 +53,7 @@ public interface MemberMapper {
 	
 	@Update("UPDATE member set EXP = "
 			+ "(SELECT "
-			+ "(SELECT COUNT(*) * 10  bexp FROM board WHERE member_id=#{member_id}) "
+			+ "(SELECT COUNT(*) * 10 exp FROM board WHERE member_id=#{member_id}) "
 			+ " + (SELECT COUNT(*) * 5 FROM comment WHERE member_id=#{member_id}) "
 			+ " + (SELECT SUM(recommendcnt) FROM board WHERE member_id=#{member_id})) "
 			+ " WHERE member_id=#{member_id} ")

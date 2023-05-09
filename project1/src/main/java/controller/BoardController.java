@@ -563,14 +563,19 @@ public class BoardController extends MskimRequestMapping {
 			} catch (UnsupportedEncodingException e1) {
 				e1.printStackTrace();
 			}
+			if (request.getParameter("boardid") != null) {
+				// session에 게시판 종류 정보 등록
+				request.getSession().setAttribute("boardid", request.getParameter("boardid"));
+				request.getSession().setAttribute("pageNum", "1"); // 현재페이지 번호
+			}
 			String login = (String)request.getSession().getAttribute("login");
 			String boardid = (String)request.getSession().getAttribute("boardid");
 			String readcnt = request.getParameter("readcnt");
 			int num = Integer.parseInt(request.getParameter("board_num"));
-
 			String url = "info?board_num=" + num + "&readcnt=f";
 			Board b = dao.selectOne(num);
-			
+			Member member = mdao.selectOne(b.getMember_id());
+			int level = member.getLevel();
 			if (readcnt == null || !readcnt.equals("f")) {
 				dao.readcntAdd(num);
 			}
@@ -604,20 +609,37 @@ public class BoardController extends MskimRequestMapping {
 				boardName = "음식게시판";
 				break;
 			}
-			
-
+			int commcount = cdao.commcount(num);
+			int pageNum = 1;
+			try {
+				pageNum = Integer.parseInt(request.getParameter("pageNum"));
+			} catch (NumberFormatException e) {	}
+			int limit = 10; // 한페이지에 보여질 게시물 건수
+			int maxpage = (int) ((double) commcount / limit + 0.95);
+			int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
+			int endpage = startpage + 9;
+			if (endpage > maxpage)
+				endpage = maxpage;
+			int commnum = commcount - (pageNum - 1) * limit;
 		      //댓글 목록 화면에 전달
-			  List<Comment> commlist = cdao.selectclist(num);
+			  List<Comment> commlist = cdao.selectclist(num, pageNum, limit);
 			  List<Comment> top3Comments = commlist.stream()
 					    .sorted(Comparator.comparing(Comment::getRecommendcnt).reversed())
 					    .limit(3)
 					    .collect(Collectors.toList());
      		  request.setAttribute("top3Comments", top3Comments);					
 		      request.setAttribute("b",b);
+		      request.setAttribute("level", level);
 		      request.setAttribute("boardid",boardid);
 		      request.setAttribute("boardName",boardName);
+		      request.setAttribute("commnum", commnum);
 		      request.setAttribute("category_name", category_name);
 		      request.setAttribute("commlist",commlist);
+			  request.setAttribute("startpage", startpage);
+			  request.setAttribute("endpage", endpage);
+			  request.setAttribute("maxpage", maxpage);
+			  request.setAttribute("pageNum", pageNum);
+			  request.setAttribute("commcount", commcount);
 		      return "board/info";
 		      
 		
