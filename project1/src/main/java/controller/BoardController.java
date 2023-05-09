@@ -3,10 +3,12 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +21,9 @@ import gdu.mskim.MskimRequestMapping;
 import gdu.mskim.RequestMapping;
 import model.Board;
 import model.BoardMybatisDao;
+import model.BoardRecommend;
 import model.BoardRecommendMybatisDao;
+import model.ComRecommend;
 import model.Comment;
 import model.CommentMybatisDao;
 import model.Member;
@@ -32,239 +36,240 @@ public class BoardController extends MskimRequestMapping {
 	private CommentMybatisDao cdao = new CommentMybatisDao();
 	private MemberMybatisDao mdao = new MemberMybatisDao();
 	private BoardRecommendMybatisDao brdao = new BoardRecommendMybatisDao(); 
-	@RequestMapping("list")
-	public String list(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		if (request.getParameter("boardid") != null) {
-			// session에 게시판 종류 정보 등록
-			request.getSession().setAttribute("boardid", request.getParameter("boardid"));
-			request.getSession().setAttribute("pageNum", "1"); // 현재페이지 번호
-		}
-		String boardid = (String) request.getSession().getAttribute("boardid");
-		if (boardid == null)
-			boardid = "2";
-		int pageNum = 1;
-		try {
-			pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		} catch (NumberFormatException e) {
-		}
-		String column = request.getParameter("column");
-		String find = request.getParameter("find");
-		/*
-		 * column,find 파라미터 중 한개만 존재하는 경우 두개의 파라미터값은 없는 상태로 설정
-		 */
-		if (column == null || column.trim().equals("")) {
-			column = null;
-			find = null;
-		}
-		if (find == null || find.trim().equals("")) {
-			column = null;
-			find = null;
-		}
-		int limit = 10; // 한페이지에 보여질 게시물 건수
-		// boardcount : 게시물종류별 게시물 등록건수
-		int boardcount = dao.boardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
-		// list : 현재 페이지에 보여질 게시물 목록.
-		List<Board> list = dao.list(boardid, pageNum, limit, column, find);
-		for (Board board : list) {
-			String content = board.getContent();
-			Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
-			Matcher imgMatcher = imgPattern.matcher(content);
-
-			if (imgMatcher.find()) {
-				String thumbnailUrl = imgMatcher.group(1);
-				board.setThumbnail(thumbnailUrl);
+		@RequestMapping("list")
+		public String list(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
 			}
-		}
-		int maxpage = (int) ((double) boardcount / limit + 0.95);
-		int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
-		int endpage = startpage + 9;
-		if (endpage > maxpage)
-			endpage = maxpage;
-		// boardName : 게시판 이름 화면에 출력
-
-		String boardName = null;
-		switch (boardid) {
-		case "1":
-			return "redirect:bobList?boardid=" + boardid;
-		case "2":
-			boardName = "유머게시판";
-			break;
-		case "3":
-			boardName = "해축게시판";
-			break;
-		case "4":
-			boardName = "음식게시판";
-			break;
-		}
-		int boardnum = boardcount - (pageNum - 1) * limit;
-		request.setAttribute("boardName", boardName);
-		request.setAttribute("boardcount", boardcount);
-		request.setAttribute("boardid", boardid);
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("boardnum", boardnum);
-		request.setAttribute("list", list);
-		request.setAttribute("startpage", startpage);
-		request.setAttribute("endpage", endpage);
-		request.setAttribute("maxpage", maxpage);
-		request.setAttribute("today", new Date());
-		return "board/list";
-	}
-
-	@RequestMapping("popularList")
-	public String popularList(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		if (request.getParameter("boardid") != null) {
-			// session에 게시판 종류 정보 등록
-			request.getSession().setAttribute("boardid", request.getParameter("boardid"));
-			request.getSession().setAttribute("pageNum", "1"); // 현재페이지 번호
-		}
-		String boardid = (String) request.getSession().getAttribute("boardid");
-		if (boardid == null)
-			boardid = "2";
-		int pageNum = 1;
-		try {
-			pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		} catch (NumberFormatException e) {
-		}
-		String column = request.getParameter("column");
-		String find = request.getParameter("find");
-		/*
-		 * column,find 파라미터 중 한개만 존재하는 경우 두개의 파라미터값은 없는 상태로 설정
-		 */
-		if (column == null || column.trim().equals("")) {
-			column = null;
-			find = null;
-		}
-		if (find == null || find.trim().equals("")) {
-			column = null;
-			find = null;
-		}
-		int limit = 10; // 한페이지에 보여질 게시물 건수
-		// boardcount : 게시물종류별 게시물 등록건수
-		int boardcount = dao.popularboardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
-		// list : 현재 페이지에 보여질 게시물 목록.
-		List<Board> popularList = dao.PopularList(boardid, pageNum, limit, column, find);
-		for (Board board : popularList) {
-			String content = board.getContent();
-			Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
-			Matcher imgMatcher = imgPattern.matcher(content);
-
-			if (imgMatcher.find()) {
-				String thumbnailUrl = imgMatcher.group(1);
-				board.setThumbnail(thumbnailUrl);
+			if (request.getParameter("boardid") != null) {
+				// session에 게시판 종류 정보 등록
+				request.getSession().setAttribute("boardid", request.getParameter("boardid"));
+				request.getSession().setAttribute("pageNum", "1"); // 현재페이지 번호
 			}
-		}
-		int maxpage = (int) ((double) boardcount / limit + 0.95);
-		int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
-		int endpage = startpage + 9;
-		if (endpage > maxpage)
-			endpage = maxpage;
-		// boardName : 게시판 이름 화면에 출력
-		String boardName = null;
-		switch (boardid) {
-		case "1":
-			return "redirect:bobList?boardid=" + boardid;
-		case "2":
-			boardName = "유머게시판";
-			break;
-		case "3":
-			boardName = "해축게시판";
-			break;
-		case "4":
-			boardName = "음식게시판";
-			break;
-		}
-		int boardnum = boardcount - (pageNum - 1) * limit;
-		request.setAttribute("boardName", boardName);
-		request.setAttribute("boardcount", boardcount);
-		request.setAttribute("boardid", boardid);
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("boardnum", boardnum);
-		request.setAttribute("popularList", popularList);
-		request.setAttribute("startpage", startpage);
-		request.setAttribute("endpage", endpage);
-		request.setAttribute("maxpage", maxpage);
-		request.setAttribute("today", new Date());
-		return "board/popularList";
-	}
-
-	@RequestMapping("bobList")
-	public String bobList(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		if (request.getParameter("boardid") != null) {
-			// session에 게시판 종류 정보 등록
-			request.getSession().setAttribute("boardid", request.getParameter("boardid"));
-			request.getSession().setAttribute("pageNum", "1"); // 현재페이지 번호
-		}
-		String boardid = (String) request.getSession().getAttribute("boardid");
-		if (boardid == null)
-			boardid = "1";
-		int pageNum = 1;
-		try {
-			pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		} catch (NumberFormatException e) {
-		}
-		String column = request.getParameter("column");
-		String find = request.getParameter("find");
-		/*
-		 * column,find 파라미터 중 한개만 존재하는 경우 두개의 파라미터값은 없는 상태로 설정
-		 */
-		if (column == null || column.trim().equals("")) {
-			column = null;
-			find = null;
-		}
-		if (find == null || find.trim().equals("")) {
-			column = null;
-			find = null;
-		}
-		int limit = 10; // 한페이지에 보여질 게시물 건수
-		// boardcount : 게시물종류별 게시물 등록건수
-		int boardcount = dao.bobboardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
-		// list : 현재 페이지에 보여질 게시물 목록.
-		List<Board> bobList = dao.bobList(boardid, pageNum, limit, column, find);
-		for (Board board : bobList) {
-			String content = board.getContent();
-			Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
-			Matcher imgMatcher = imgPattern.matcher(content);
-
-			if (imgMatcher.find()) {
-				String thumbnailUrl = imgMatcher.group(1);
-				board.setThumbnail(thumbnailUrl);
+			String boardid = (String) request.getSession().getAttribute("boardid");
+			if (boardid == null)
+				boardid = "2";
+			int pageNum = 1;
+			try {
+				pageNum = Integer.parseInt(request.getParameter("pageNum"));
+			} catch (NumberFormatException e) {
 			}
+			String column = request.getParameter("column");
+			String find = request.getParameter("find");
+			/*
+			 * column,find 파라미터 중 한개만 존재하는 경우 두개의 파라미터값은 없는 상태로 설정
+			 */
+			if (column == null || column.trim().equals("")) {
+				column = null;
+				find = null;
+			}
+			if (find == null || find.trim().equals("")) {
+				column = null;
+				find = null;
+			}
+			int limit = 10; // 한페이지에 보여질 게시물 건수
+			// boardcount : 게시물종류별 게시물 등록건수
+			int boardcount = dao.boardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
+			// list : 현재 페이지에 보여질 게시물 목록.
+			List<Board> list = dao.list(boardid, pageNum, limit, column, find);
+			for (Board board : list) {
+			    String content = board.getContent();
+			    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+			    Matcher imgMatcher = imgPattern.matcher(content);
+
+			    if (imgMatcher.find()) {
+			        String thumbnailUrl = imgMatcher.group(1);
+			        board.setThumbnail(thumbnailUrl);
+			    }
+			}
+			int maxpage = (int) ((double) boardcount / limit + 0.95);
+			int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
+			int endpage = startpage + 9;
+			if (endpage > maxpage)
+				endpage = maxpage;
+			// boardName : 게시판 이름 화면에 출력
+			
+			String boardName = null;
+			switch (boardid) {
+			case "1":
+				return "redirect:bobList?boardid=" + boardid;
+			case "2":
+				boardName = "유머게시판";
+				break;
+			case "3":
+				boardName = "해축게시판";
+				break;
+			case "4":
+				boardName = "음식게시판";
+				break;
+			}
+			int boardnum = boardcount - (pageNum - 1) * limit;
+			request.setAttribute("boardName", boardName);
+			request.setAttribute("boardcount", boardcount);
+			request.setAttribute("boardid", boardid);
+			request.setAttribute("pageNum", pageNum);
+			request.setAttribute("boardnum", boardnum);
+			request.setAttribute("list", list);
+			request.setAttribute("startpage", startpage);
+			request.setAttribute("endpage", endpage);
+			request.setAttribute("maxpage", maxpage);
+			request.setAttribute("today", new Date());
+			return "board/list";
 		}
-		int maxpage = (int) ((double) boardcount / limit + 0.95);
-		int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
-		int endpage = startpage + 9;
-		if (endpage > maxpage)
-			endpage = maxpage;
-		// boardName : 게시판 이름 화면에 출력
-		String boardName = "베스트게시판";
-		int boardnum = boardcount - (pageNum - 1) * limit;
-		request.setAttribute("boardName", boardName);
-		request.setAttribute("boardcount", boardcount);
-		request.setAttribute("boardid", boardid);
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("boardnum", boardnum);
-		request.setAttribute("bobList", bobList);
-		request.setAttribute("startpage", startpage);
-		request.setAttribute("endpage", endpage);
-		request.setAttribute("maxpage", maxpage);
-		request.setAttribute("today", new Date());
-		return "board/bobList";
-	}
+
+		@RequestMapping("popularList")
+		public String popularList(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+			if (request.getParameter("boardid") != null) {
+				// session에 게시판 종류 정보 등록
+				request.getSession().setAttribute("boardid", request.getParameter("boardid"));
+				request.getSession().setAttribute("pageNum", "1"); // 현재페이지 번호
+			}
+			String boardid = (String) request.getSession().getAttribute("boardid");
+			if (boardid == null)
+				boardid = "2";
+			int pageNum = 1;
+			try {
+				pageNum = Integer.parseInt(request.getParameter("pageNum"));
+			} catch (NumberFormatException e) {
+			}
+			String column = request.getParameter("column");
+			String find = request.getParameter("find");
+			/*
+			 * column,find 파라미터 중 한개만 존재하는 경우 두개의 파라미터값은 없는 상태로 설정
+			 */
+			if (column == null || column.trim().equals("")) {
+				column = null;
+				find = null;
+			}
+			if (find == null || find.trim().equals("")) {
+				column = null;
+				find = null;
+			}
+			int limit = 10; // 한페이지에 보여질 게시물 건수
+			// boardcount : 게시물종류별 게시물 등록건수
+			int boardcount = dao.popularboardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
+			// list : 현재 페이지에 보여질 게시물 목록.
+			List<Board> popularList = dao.PopularList(boardid, pageNum, limit, column, find);
+			for (Board board : popularList) {
+			    String content = board.getContent();
+			    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+			    Matcher imgMatcher = imgPattern.matcher(content);
+
+			    if (imgMatcher.find()) {
+			        String thumbnailUrl = imgMatcher.group(1);
+			        board.setThumbnail(thumbnailUrl);
+			    }
+			}
+			int maxpage = (int) ((double) boardcount / limit + 0.95);
+			int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
+			int endpage = startpage + 9;
+			if (endpage > maxpage)
+				endpage = maxpage;
+			// boardName : 게시판 이름 화면에 출력
+			String boardName = null;
+			switch (boardid) {
+			case "1":
+				return "redirect:bobList?boardid=" + boardid;
+			case "2":
+				boardName = "유머게시판";
+				break;
+			case "3":
+				boardName = "해축게시판";
+				break;
+			case "4":
+				boardName = "음식게시판";
+				break;
+			}
+			int boardnum = boardcount - (pageNum - 1) * limit;
+			request.setAttribute("boardName", boardName);
+			request.setAttribute("boardcount", boardcount);
+			request.setAttribute("boardid", boardid);
+			request.setAttribute("pageNum", pageNum);
+			request.setAttribute("boardnum", boardnum);
+			request.setAttribute("popularList", popularList);
+			request.setAttribute("startpage", startpage);
+			request.setAttribute("endpage", endpage);
+			request.setAttribute("maxpage", maxpage);
+			request.setAttribute("today", new Date());
+			return "board/popularList";
+		}
+
+
+		@RequestMapping("bobList")
+		public String bobList(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+			if (request.getParameter("boardid") != null) {
+				// session에 게시판 종류 정보 등록
+				request.getSession().setAttribute("boardid", request.getParameter("boardid"));
+				request.getSession().setAttribute("pageNum", "1"); // 현재페이지 번호
+			}
+			String boardid = (String) request.getSession().getAttribute("boardid");
+			if (boardid == null)
+				boardid = "1";
+			int pageNum = 1;
+			try {
+				pageNum = Integer.parseInt(request.getParameter("pageNum"));
+			} catch (NumberFormatException e) {
+			}
+			String column = request.getParameter("column");
+			String find = request.getParameter("find");
+			/*
+			 * column,find 파라미터 중 한개만 존재하는 경우 두개의 파라미터값은 없는 상태로 설정
+			 */
+			if (column == null || column.trim().equals("")) {
+				column = null;
+				find = null;
+			}
+			if (find == null || find.trim().equals("")) {
+				column = null;
+				find = null;
+			}
+			int limit = 10; // 한페이지에 보여질 게시물 건수
+			// boardcount : 게시물종류별 게시물 등록건수
+			int boardcount = dao.bobboardCount(boardid, column, find); // 게시판 종류별 전체 게시물등록 건수 리턴
+			// list : 현재 페이지에 보여질 게시물 목록.
+			List<Board> bobList = dao.bobList(boardid, pageNum, limit, column, find);
+			for (Board board : bobList) {
+			    String content = board.getContent();
+			    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+			    Matcher imgMatcher = imgPattern.matcher(content);
+
+			    if (imgMatcher.find()) {
+			        String thumbnailUrl = imgMatcher.group(1);
+			        board.setThumbnail(thumbnailUrl);
+			    }
+			}
+			int maxpage = (int) ((double) boardcount / limit + 0.95);
+			int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
+			int endpage = startpage + 9;
+			if (endpage > maxpage)
+				endpage = maxpage;
+			// boardName : 게시판 이름 화면에 출력
+			String boardName = "베스트게시판";
+			int boardnum = boardcount - (pageNum - 1) * limit;
+			request.setAttribute("boardName", boardName);
+			request.setAttribute("boardcount", boardcount);
+			request.setAttribute("boardid", boardid);
+			request.setAttribute("pageNum", pageNum);
+			request.setAttribute("boardnum", boardnum);
+			request.setAttribute("bobList", bobList);
+			request.setAttribute("startpage", startpage);
+			request.setAttribute("endpage", endpage);
+			request.setAttribute("maxpage", maxpage);
+			request.setAttribute("today", new Date());
+			return "board/bobList";
+		}
 
 
 	@RequestMapping("writeForm")
@@ -335,60 +340,6 @@ public class BoardController extends MskimRequestMapping {
 		return "ckeditor";
 	}
 
-	@RequestMapping("info")
-	public String info(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		String login = (String)request.getSession().getAttribute("login");
-		String boardid = (String)request.getSession().getAttribute("boardid");
-		String readcnt = request.getParameter("readcnt");
-		int num = Integer.parseInt(request.getParameter("board_num"));
-		Board b = dao.selectOne(num);
-		if(readcnt == null || !readcnt.equals("f"))
-			dao.readcntAdd(num);
-		boardid = b.getBoardid();
-
-		//category_num : 게시판 분류 화면에 출력
-		String category_name = null;
-		switch(b.getCategory_num()){
-		case 1 : category_name = "유머";break;
-		case 2 : category_name = "썰";break;
-		case 3 : category_name = "공포";break;
-		case 4 : category_name = "감동";break;
-		case 5 : category_name = "뉴스";break;
-		case 6 : category_name = "루머";break;	
-		case 7 : category_name = "움짤";break;
-		case 8 : category_name = "분석";break;
-		case 9 : category_name = "레시피";break;	
-		case 10 : category_name = "맛집";break;	
-		case 11 : category_name = "자랑";break;	
-		}
-
-		// boardName : 게시판 이름 화면에 출력
-		String boardName = "베스트게시판";
-		switch (b.getBoardid()) {
-		case "2":
-			boardName = "유머게시판";
-			break;
-		case "3":
-			boardName = "해축게시판";
-			break;
-		case "4":
-			boardName = "음식게시판";
-			break;
-		}
-		//댓글 목록 화면에 전달
-		List<Comment> commlist = cdao.selectclist(num);
-		request.setAttribute("b",b);
-		request.setAttribute("boardid",boardid);
-		request.setAttribute("boardName",boardName);
-		request.setAttribute("category_name", category_name);
-		request.setAttribute("commlist",commlist);
-		return "board/info";
-	}
 
 	@RequestMapping("deleteForm") //보류
 	public String deleteForm(HttpServletRequest request, HttpServletResponse response) {
@@ -515,9 +466,160 @@ public class BoardController extends MskimRequestMapping {
 		if(cdao.delete(board_num,comment_num)) {
 			return "redirect:" + url;
 		}
-		request.setAttribute("msg", "댓글삭제 실패하였습니다.");
+		request.setAttribute("msg", "댓글삭제를 실패하였습니다.");
 		request.setAttribute("url", url);
 		return "alert";
 	}
-}
 
+
+		@RequestMapping("recommend")
+		public String recommend(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+			String login = (String) request.getSession().getAttribute("login");
+			if (login == null) {
+				request.setAttribute("msg", "비회원은 추천할 수 없습니다.");
+				request.setAttribute("url", "../member/loginForm");
+				return "alert";
+			}
+
+			int num = Integer.parseInt(request.getParameter("board_num"));
+			BoardRecommend br = new BoardRecommend();
+			String url = "info?board_num=" + num + "&readcnt=f";
+			br.setBoard_num(num);
+			br.setMember_id(login);
+
+			int check = dao.checkRecommend(br);
+
+			if (check == 0) {
+				// If the user has not recommended the post, add a new recommendation
+				dao.recommend(br);
+				dao.updaterecommend(num);
+				request.setAttribute("msg", "추천이 완료되었습니다!");
+				request.setAttribute("url", url);
+				return "alert";
+			} else {
+				// If the user has already recommended the post, remove the recommendation
+				dao.unrecommend(br);
+				dao.downrecommend(num);
+				request.setAttribute("msg", "추천이 취소되었습니다.");
+				request.setAttribute("url", url);
+				return "alert";
+			}
+		}
+
+		@RequestMapping("comrecommend")
+		public String comrecommend(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+			String login = (String) request.getSession().getAttribute("login");
+			if (login == null) {
+				request.setAttribute("msg", "비회원은 추천할 수 없습니다.");
+				request.setAttribute("url", "../member/loginForm");
+				return "alert";
+			}
+
+			int board_num = Integer.parseInt(request.getParameter("board_num"));
+			int num = Integer.parseInt(request.getParameter("comment_num"));
+			ComRecommend cr = new ComRecommend();
+			String url = "info?board_num=" + board_num + "&readcnt=f";
+			cr.setComment_num(num);
+			cr.setMember_id(login);
+
+			int check = cdao.checkcomRecommend(cr);
+			System.out.println(board_num);
+			System.out.println(num);
+			if (check == 0) {
+				// If the user has not recommended the post, add a new recommendation
+				cdao.comrecommend(cr);
+				cdao.comupdaterecommend(num); 
+				request.setAttribute("msg", "댓글추천이 완료되었습니다!");
+				request.setAttribute("url", url);
+				return "alert";
+			} else {
+				// If the user has already recommended the post, remove the recommendation
+				cdao.comunrecommend(cr);
+				cdao.comdownrecommend(num);
+				request.setAttribute("msg", "댓글추천이 취소되었습니다.");
+				request.setAttribute("url", url);
+				return "alert";
+				
+			}
+			
+		}
+
+		@RequestMapping("info")
+		public String info(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+			String login = (String)request.getSession().getAttribute("login");
+			String boardid = (String)request.getSession().getAttribute("boardid");
+			String readcnt = request.getParameter("readcnt");
+			int num = Integer.parseInt(request.getParameter("board_num"));
+
+			String url = "info?board_num=" + num + "&readcnt=f";
+			Board b = dao.selectOne(num);
+			
+			if (readcnt == null || !readcnt.equals("f")) {
+				dao.readcntAdd(num);
+			}
+			boardid = b.getBoardid();
+			//category_num : 게시판 분류 화면에 출력
+			String category_name = null;
+			switch(b.getCategory_num()){
+				case 1 : category_name = "유머";break;
+				case 2 : category_name = "썰";break;
+				case 3 : category_name = "공포";break;
+				case 4 : category_name = "감동";break;
+				case 5 : category_name = "뉴스";break;
+				case 6 : category_name = "루머";break;	
+				case 7 : category_name = "움짤";break;
+				case 8 : category_name = "분석";break;
+				case 9 : category_name = "레시피";break;	
+				case 10 : category_name = "맛집";break;	
+				case 11 : category_name = "자랑";break;	
+			}
+			
+			// boardName : 게시판 이름 화면에 출력
+			String boardName = "베스트게시판";
+			switch (b.getBoardid()) {
+			case "2":
+				boardName = "유머게시판";
+				break;
+			case "3":
+				boardName = "해축게시판";
+				break;
+			case "4":
+				boardName = "음식게시판";
+				break;
+			}
+			
+
+		      //댓글 목록 화면에 전달
+			  List<Comment> commlist = cdao.selectclist(num);
+			  List<Comment> top3Comments = commlist.stream()
+					    .sorted(Comparator.comparing(Comment::getRecommendcnt).reversed())
+					    .limit(3)
+					    .collect(Collectors.toList());
+     		  request.setAttribute("top3Comments", top3Comments);					
+		      request.setAttribute("b",b);
+		      request.setAttribute("boardid",boardid);
+		      request.setAttribute("boardName",boardName);
+		      request.setAttribute("category_name", category_name);
+		      request.setAttribute("commlist",commlist);
+		      return "board/info";
+		      
+		
+		}		
+}

@@ -90,9 +90,13 @@
         <c:if test="${not empty b.thumbnail}">
             <img src="${b.thumbnail}" style="width: 50px; height: 50px; margin-right: 10px;">
         </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
-        ${b.title}</a>
+        ${b.title}&nbsp;&nbsp;<span style="color:orange;">[${b.commcnt}]</span>
+        </a>
+        
     </td>
- 				<td>${b.member_id}</td>
+ 		<td>
+ 			<a href="../member/info?member_id=${b.member_id}">${b.member_id}</a>
+ 		</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
  <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
  <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd" var="r" /> 

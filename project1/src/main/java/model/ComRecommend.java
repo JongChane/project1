@@ -4,6 +4,16 @@ public class ComRecommend {
 	private int num;
 	private String member_id;
 	private int comment_num;
+	private boolean recommend;
+	
+	
+	public boolean isRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(boolean recommend) {
+		this.recommend = recommend;
+	}
 
 	public int getNum() {
 		return num;
@@ -31,7 +41,9 @@ public class ComRecommend {
 
 	@Override
 	public String toString() {
-		return "ComRecommend [num=" + num + ", member_id=" + member_id + ", comment_num=" + comment_num + "]";
+		return "ComRecommend [num=" + num + ", member_id=" + member_id + ", comment_num=" + comment_num + ", recommend="
+				+ recommend + "]";
 	}
+
 
 }

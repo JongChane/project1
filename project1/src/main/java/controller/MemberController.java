@@ -1,7 +1,10 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -110,8 +113,7 @@ public class MemberController extends MskimRequestMapping{
 		List<Board> soccer = bdao.selectSoccer();
 		List<Board> food = bdao.selectFood();
 		List<Board> best = bdao.selectBest();
-		
-		
+	
 		request.setAttribute("humor", humor);
 		request.setAttribute("soccer", soccer);
 		request.setAttribute("food", food);
@@ -135,12 +137,26 @@ public class MemberController extends MskimRequestMapping{
 	(HttpServletRequest request, HttpServletResponse response) {
 		request.getSession().setAttribute("boardid", request.getParameter("boardid"));
 		String member_id = request.getParameter("member_id");
-		Member mem = dao.selectOne(member_id);
 		//List<Board>: Board.java(빈클래스) list를 변수명을 주고 MemberDao에  함수 만들어주고 함수 만든거로 멤버메퍼에서 DB연동해서 DB값 저장
 		List<Board> list = dao.boardselect(member_id);
+		dao.exupdate(member_id, 0);
+		Member mem = dao.selectOne(member_id);
 		request.setAttribute("mem", mem);
 		request.setAttribute("list", list);
-		return "member/info"; 
+		return "member/info";
+	}
+	@RequestMapping("finfo")
+	public String finfo
+	   (HttpServletRequest request, HttpServletResponse response) {
+		request.getSession().setAttribute("boardid", request.getParameter("boardid"));
+		String member_id = request.getParameter("member_id");
+		//List<Board>: Board.java(빈클래스) list를 변수명을 주고 MemberDao에  함수 만들어주고 함수 만든거로 멤버메퍼에서 DB연동해서 DB값 저장
+		List<Board> list = dao.boardselect(member_id);
+		dao.exupdate(member_id, 0);
+		Member mem = dao.selectOne(member_id);
+		request.setAttribute("mem", mem);
+		request.setAttribute("list", list);
+		return "member/finfo";
 	}
 
 	@RequestMapping("join")

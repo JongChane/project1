@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import model.Board;
+import model.BoardRecommend;
 import model.Comment;
 
 public interface BoardMapper {
@@ -72,12 +73,15 @@ public interface BoardMapper {
 			+ " ORDER BY recommendcnt DESC limit #{start},#{limit}",
 			"</script>"})
 	List<Board> selectbobList(Map<String, Object> map);
-	@Select("select * from board where board_num= #{value}")
+
+	@Select({ "<script>", "SELECT *, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
+			+ " FROM board b WHERE board_num = #{value}", "</script>" })
 	Board selectOne(int num);
 	
 	@Update("update board set readcnt = readcnt + 1 where board_num=#{value}")
 	void readcntAdd(int num);
 	
+
 	@Delete("delete from board where board_num=#{value}")
 	int delete(int board_num);
 
@@ -98,8 +102,21 @@ public interface BoardMapper {
 	List<Board> selectBest();
 
 	
-	
-	
 
+	@Insert("insert into board_recommend (board_num,member_id) values(#{board_num}, #{member_id})")
+	void recommendcnt(BoardRecommend br);
+
+	@Update("update board set recommendcnt = recommendcnt+1 where board_num=#{value}")
+	int updaterecommend(int num);
+
+	@Select("SELECT COUNT(*) FROM board_recommend WHERE board_num=#{board_num} AND member_id=#{member_id}")
+	int checkRecommend(BoardRecommend br);
+
+	
+	@Delete("delete from board_recommend where board_num=#{board_num} and member_id=#{member_id}")
+	void unrecommend(BoardRecommend br);
+
+	@Update("update board set recommendcnt = recommendcnt-1 where board_num=#{value}")
+	int downrecommend(int num);
 
 }

@@ -18,7 +18,9 @@ public interface MemberMapper {
 			+ " #{email}, 0, 1)")
 		int insert(Member mem);
 
-		@Select("select * from member where member_id=#{value}")
+//		@Select("select * from member where member_id=#{value}")
+	    @Select("SELECT m.member_id, m.pass, m.tel,m.email, m.exp, l.level  "
+	    		+ "FROM level l , member m WHERE member_id=#{value} and m.exp BETWEEN l.minexp and l.maxexp")
 		Member selectOne(String member_id);
 
 		@Update("update member set tel=#{tel}, email=#{email} where member_id =#{member_id}")
@@ -30,7 +32,7 @@ public interface MemberMapper {
 					+ "<foreach collection='ids' item='member_id' "
 					+ " separator=',' open='(' close=')' > #{member_id}"
 					+ "</foreach></if>",
-			"</script>"		
+				"</script>"
 	})
 	List<Member> list(Map<String, Object > map);
 
@@ -49,5 +51,18 @@ public interface MemberMapper {
 	@Select("select * from board where member_id = #{value}")
 	List<Board> boardlist(String member_id);
 	
+	@Update("UPDATE member set EXP = "
+			+ "(SELECT "
+			+ "(SELECT COUNT(*) * 10  bexp FROM board WHERE member_id=#{member_id}) "
+			+ " + (SELECT COUNT(*) * 5 FROM comment WHERE member_id=#{member_id}) "
+			+ " + (SELECT SUM(recommendcnt) FROM board WHERE member_id=#{member_id})) "
+			+ " WHERE member_id=#{member_id} ")
+	void exupdate(@Param("member_id") String member_id, @Param("exp") int exp);
 	
-}
+	@Select("select ifnull(max(board_num),0) from board")
+	int maxnum();
+
+	@Select("select count(*) from board where boardid=#{boardid}")
+	int boardCount(Map<String, Object> map);
+
+} 
