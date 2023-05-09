@@ -23,7 +23,8 @@
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>  
+</head>
+
 <body>
 	<div class="w3-container">
 		<table>
@@ -34,7 +35,7 @@
 				<td>${b.title}</td>
 			</tr>
 			<tr>
-				<td>Lv10 | ${b.member_id} | 조회수 : ${b.readcnt} | 추천수 : ${b.recommendcnt} | 댓글수 : ${b.commcnt} | <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+				<td>Lv${level} | ${b.member_id} | 조회수 : ${b.readcnt} | 추천수 : ${b.recommendcnt} | 댓글수 : ${b.commcnt} | <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 			</tr>
 			
 			<tr>
@@ -67,34 +68,27 @@
 	<%-- 댓글 작성시 화면 출력 공간 --%>
 	<div class="w3-container">
 	<table class="w3-table-all">		
+		
 		<c:forEach var="c" items="${top3Comments}" varStatus="status">
 		<c:if test="${c.recommendcnt > 10}">
 			<c:choose>
 				<c:when test="${status.index == 0}">
 					<tr style="background-color:orange;">
+					<td>🥇</td>
 				</c:when>
 				<c:when test="${status.index == 1}">
 					<tr style="background-color:silver;">
+					<td>🥈</td>
 				</c:when>
 				<c:when test="${status.index == 2}">
 				  <tr class="w3-brown">
+				  <td>🥉</td>
 				</c:when>
 			</c:choose>
 				<td>${c.member_id}</td>
 				<td>${c.content}</td>
 				<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>				
 				<td class="w3-right">
-					<c:choose>
-						<c:when test="${status.index == 0}">
-							🥇
-						</c:when>
-						<c:when test="${status.index == 1}">
-							🥈
-						</c:when>
-						<c:when test="${status.index == 2}">
-							🥉
-						</c:when>
-					</c:choose>
 					<form id="comrecommend" method="post" action="comrecommend" name="rf">
     					<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
     					<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
@@ -107,6 +101,8 @@
 		</c:forEach>
 		<c:forEach var="c" items="${commlist}" varStatus="stat">
 			<tr class="w3-black">
+			<td>${commnum}</td>
+ 			<c:set var="commnum" value="${commnum-1}" />
 			<td>${c.member_id}</td>
 			<td>${c.content}</td>
 			<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -136,6 +132,25 @@
 			</td>
 		</tr>
 		</c:forEach>
+			<%-- 페이지 처리하기 --%>
+ 		<tr class="w3-black">
+ 			<td colspan="5" class="w3-center">
+      	<c:if test="${pageNum <= 1}">[이전]</c:if>
+      	<c:if test="${pageNum > 1}">
+      		<a href="info?board_num=${b.board_num}&readcnt=f&pageNum=${pageNum - 1}">[이전]</a>
+      	</c:if>
+      	<c:forEach var="a" begin="${startpage}" end="${endpage}">
+        	<c:if test="${a == pageNum}">[${a}]</c:if>
+        	<c:if test="${a != pageNum}">
+          	<a href="info?board_num=${b.board_num}&readcnt=f&pageNum=${a}">[${a}]</a>
+        	</c:if>
+      	</c:forEach>
+      	<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+      	<c:if test="${pageNum < maxpage}">
+      		<a href="info?board_num=${b.board_num}&readcnt=f&pageNum=${pageNum + 1}">[다음]</a>
+      	</c:if>
+ 			</td>
+ 		</tr>  
 	</table>
 	</div>
 	
@@ -155,5 +170,4 @@
 	</div>
 	</span>
 </body>
-
 </html>

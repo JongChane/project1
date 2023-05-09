@@ -104,7 +104,7 @@ public interface BoardMapper {
 	
 
 	@Insert("insert into board_recommend (board_num,member_id) values(#{board_num}, #{member_id})")
-	void recommendcnt(BoardRecommend br);
+	int recommendcnt(BoardRecommend br);
 
 	@Update("update board set recommendcnt = recommendcnt+1 where board_num=#{value}")
 	int updaterecommend(int num);

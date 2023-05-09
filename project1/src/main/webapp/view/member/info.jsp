@@ -14,7 +14,44 @@
 	<table class="table table-hover">
 		<tr><td rowspan="6" width="30%" >
 			<tr><th>레벨</th><td>${mem.level}</td></tr>
-		<th width="20%">아이디</th><td>${mem.member_id}</td></tr>
+			<tr>
+				<th>현재exp/필요exp</th>
+				<td>${mem.ex\p}/
+		<c:choose>
+        <c:when test="${mem.level == 1}">
+            100
+        </c:when>
+        <c:when test="${mem.level == 2}">
+            200
+        </c:when>
+        <c:when test="${mem.level == 3}">
+            300
+        </c:when>
+        <c:when test="${mem.level == 4}">
+            400
+        </c:when>
+        <c:when test="${mem.level == 5}">
+            500
+        </c:when>
+        <c:when test="${mem.level == 6}">
+            600
+        </c:when>
+        <c:when test="${mem.level == 7}">
+            700
+        </c:when>
+        <c:when test="${mem.level == 8}">
+            800
+        </c:when>
+        <c:when test="${mem.level == 9}">
+            900
+        </c:when>
+        <c:when test="${mem.level == 10}">
+            999,999
+        </c:when>
+   	    </c:choose>
+				</td>
+			</tr>
+			<tr><th width="20%">아이디</th><td>${mem.member_id}</td></tr>
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
 			

@@ -22,7 +22,7 @@ public interface CommentMapper {
          + " values (#{comment_num},#{content},now(),#{recommendcnt},#{member_id},#{board_num},#{grp},#{grpstep})")
    int cominsert(Comment comm);
    
-   @Select("select * from comment where board_num = #{board_num}")
+   @Select("select * from comment where board_num = #{board_num} order by board_num desc limit #{start},#{limit}")
    List<Comment> selectclist(Map<String, Object> map);
 
    @Delete("delete from comment where board_num = #{value}")
@@ -35,7 +35,7 @@ public interface CommentMapper {
    int checkcomRecommend(ComRecommend cr);
    
    @Insert("insert into com_recommend (comment_num,member_id) values(#{comment_num}, #{member_id})")
-   void comrecommendcnt(ComRecommend cr);
+   int comrecommendcnt(ComRecommend cr);
    
    @Update("update comment set recommendcnt = recommendcnt+1 where comment_num=#{comment_num}")
    int comupdaterecommend(int num);
@@ -51,7 +51,11 @@ public interface CommentMapper {
 
    @Update("update board set grpstep = grpstep + 1 "
 			+ " where grp=#{grp} and grpstep>#{grpstep}")
-	void grpStepAdd(@Param("grp")int grp, @Param("grpstep")int grpstep);
+  	void grpStepAdd(@Param("grp")int grp, @Param("grpstep")int grpstep);
+   
+  @Select("select count(*) from comment where board_num=#{value} ")
+   int commcount(int num);
+
    
 }
 
