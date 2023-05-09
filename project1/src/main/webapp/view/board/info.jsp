@@ -6,6 +6,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+  window.onload = function(){
+	document.querySelector('#reply').addEventListener('click', function() {
+		document.querySelector('#comment').style.display = 'block';
+		})
+	};
+	function showreply(rno) {
+		comm1 = document.querySelector('#comment'+rno)
+		console.log(comm1.style.display)
+		if (comm1.style.display == 'block')
+		    document.querySelector('#comment'+rno).style.display = 'none';
+		else 
+			document.querySelector('#comment'+rno).style.display = 'block';
+	}
+</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>  
@@ -90,11 +105,27 @@
 		</tr>
 		</c:if>
 		</c:forEach>
-		<c:forEach var="c" items="${commlist}">
+		<c:forEach var="c" items="${commlist}" varStatus="stat">
 			<tr class="w3-black">
 			<td>${c.member_id}</td>
 			<td>${c.content}</td>
 			<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td>
+				<input type="button" name="reply" id="reply${stat.count}" value="[댓글달기]" onclick="showreply(${stat.count})">
+				
+				<form action="comment" id="comment${stat.count}" method="post" name="comment" style="display: none;">
+				<input type="hidden" name="board_num" value="${b.board_num}">
+				<input type="hidden" name="member_id" value="${sessionScope.login}">
+				<div class="w3-row-padding">
+					<div class="w3-col s6 ">
+						<p><textarea rows="2" cols="68" name="content"></textarea></p>
+					</div>
+					<div class="w3-col s6">
+						<p><button type="submit" class="w3-btn w3-border w3-white">댓글등록</button></p>
+					</div>
+				</div>
+				</form>
+			</td>
 			<td class="w3-right">
 					<form id="comrecommend" method="post" action="comrecommend" name="rf">
     				<input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
@@ -109,7 +140,7 @@
 	</div>
 	
 	<%-- 댓글 등록,삭제 및 조회 --%>
-	<span id="comment"></span>
+	<span id="comment">
 	<form action="comment" method="post">
 	<input type="hidden" name="board_num" value="${b.board_num}">
 	<input type="hidden" name="member_id" value="${sessionScope.login}">
@@ -120,8 +151,9 @@
 		<div class="w3-col s6">
 			<p><button type="submit" class="w3-btn w3-border w3-white">댓글등록</button></p>
 		</div>
-	</div>
 	</form>
-	
+	</div>
+	</span>
 </body>
+
 </html>

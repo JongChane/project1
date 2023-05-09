@@ -300,8 +300,7 @@ public class BoardMybatisDao {
 			MybatisConnection.close(session);
 		}
 	}
-
-
+	
 	public List<Board> selectHumor() {
 	    SqlSession session = MybatisConnection.getConnection();
 	    try {
@@ -312,7 +311,8 @@ public class BoardMybatisDao {
 	        MybatisConnection.close(session);
 	    }
 	    return null;
-
+	}
+	
 	public void downrecommend(int num) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {

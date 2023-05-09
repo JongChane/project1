@@ -30,9 +30,9 @@
 							<td>
 							<c:choose>
 							  <c:when test="${board.category_num == 1}">유머</c:when>
-							  <c:when test="${board.category_num == 2}">영화</c:when>
-							  <c:when test="${board.category_num == 3}">감동</c:when>
-							  <c:when test="${board.category_num == 4}">공포</c:when>
+							  <c:when test="${board.category_num == 2}">썰</c:when>
+							  <c:when test="${board.category_num == 3}">공포</c:when>
+							  <c:when test="${board.category_num == 4}">감동</c:when>
 							  <c:when test="${board.category_num == 5}">뉴스</c:when>
 							  <c:when test="${board.category_num == 6}">루머</c:when>
 							  <c:when test="${board.category_num == 7}">움짤</c:when>
@@ -43,7 +43,7 @@
 							  <c:otherwise></c:otherwise>
 							</c:choose>
 							</td>
-							<td>${board.content}</td>
+							<td><a href="../board/info?board_num=${board.board_num}">${board.content}</a></td>
 							<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" />
 							<fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"
 								var="r" />
@@ -66,8 +66,8 @@
 				<c:forEach items="${humor}" var="board" varStatus="status">
 					<c:if test="${status.index < 5}">
 						<tr>
-							<td>${board.category_num == 1 ? "유머" : board.category_num == 2 ? "영화" : board.category_num == 3? "감동" : board.category_num == 4 ? "공포" : ""}</td>
-							<td>${board.content}</td>
+							<td>${board.category_num == 1 ? "유머" : board.category_num == 2 ? "썰" : board.category_num == 3? "공포" : board.category_num == 4 ? "감동" : ""}</td>
+							<td><a href="../board/info?board_num=${board.board_num}">${board.content}</a></td>
 							<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" />
 							<fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"
 								var="r" />
@@ -93,7 +93,7 @@
 				<c:if test="${status.index < 5}">
 					<tr>
 						<td>${board.category_num == 5 ? "뉴스" : board.category_num == 6 ? "루머" : board.category_num == 7? "움짤" : board.category_num == 8 ? "분석" : ""}</td>
-						<td>${board.content}</td>
+						<td><a href="../board/info?board_num=${board.board_num}">${board.content}</a></td>
 						<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" />
 						<fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"
 							var="r" />
@@ -118,7 +118,7 @@
 				<c:if test="${status.index < 5}">
 					<tr>
 						<td>${board.category_num == 9 ? "레시피" : board.category_num == 10 ? "맛집" : board.category_num == 11? "자랑" : ""}</td>
-						<td>${board.content}</td>
+						<td><a href="../board/info?board_num=${board.board_num}">${board.content}</a></td>
 						<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" />
 						<fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"
 							var="r" />
