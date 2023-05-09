@@ -21,9 +21,9 @@ import gdu.mskim.MskimRequestMapping;
 import gdu.mskim.RequestMapping;
 import model.Board;
 import model.BoardMybatisDao;
+import model.BoardRecommend;
 import model.BoardRecommendMybatisDao;
 import model.ComRecommend;
-import model.BoardRecommend;
 import model.Comment;
 import model.CommentMybatisDao;
 import model.Member;
@@ -466,7 +466,7 @@ public class BoardController extends MskimRequestMapping {
 		if(cdao.delete(board_num,comment_num)) {
 			return "redirect:" + url;
 		}
-		request.setAttribute("msg", "댓글삭제 실패하였습니다.");
+		request.setAttribute("msg", "댓글삭제를 실패하였습니다.");
 		request.setAttribute("url", url);
 		return "alert";
 	}
@@ -567,6 +567,7 @@ public class BoardController extends MskimRequestMapping {
 			String boardid = (String)request.getSession().getAttribute("boardid");
 			String readcnt = request.getParameter("readcnt");
 			int num = Integer.parseInt(request.getParameter("board_num"));
+
 			String url = "info?board_num=" + num + "&readcnt=f";
 			Board b = dao.selectOne(num);
 			
@@ -606,7 +607,7 @@ public class BoardController extends MskimRequestMapping {
 			
 
 		      //댓글 목록 화면에 전달
-		      List<Comment> commlist = cdao.selectclist(num);
+			  List<Comment> commlist = cdao.selectclist(num);
 			  List<Comment> top3Comments = commlist.stream()
 					    .sorted(Comparator.comparing(Comment::getRecommendcnt).reversed())
 					    .limit(3)
