@@ -11,8 +11,9 @@
 .inline-block {
 	display: inline-block;
 	text-align: center;
-	width: 400px;
+	width: 500px;
 	height: 300px;
+	line-height: 0.5;
 }
 </style>
 </head>
@@ -82,8 +83,8 @@
 					</c:if>
 				</c:forEach>
 			</table>
-
 		</div>
+		
 		<table class="inline-block">
 			<tr>
 				<th>해축게시판</th>
@@ -133,7 +134,6 @@
 				</c:if>
 			</c:forEach>
 		</table>
-	</div>
 	</div>
 </body>
 </html>

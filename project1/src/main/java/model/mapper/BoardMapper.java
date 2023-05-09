@@ -94,7 +94,7 @@ public interface BoardMapper {
 	@Select("select * from board where boardid=4 order by regdate desc" )
 	List<Board> selectFood();
 	
-	@Select("select * from board order by regdate desc" )
+	@Select("select * from board where recommendcnt >=10 order by recommendcnt desc" )
 	List<Board> selectBest();
 
 	
