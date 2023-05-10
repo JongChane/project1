@@ -220,7 +220,7 @@ public class MemberController extends MskimRequestMapping{
 		
 	}
 	@RequestMapping("join")
-	@MSLogin("loginIdCheck")
+	
 	public String join(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
@@ -254,6 +254,7 @@ public class MemberController extends MskimRequestMapping{
 		request.setAttribute("mem", mem);
 		return "member/updateForm";
 	}
+	
 	@RequestMapping("update")
 	@MSLogin("loginIdCheck")
 	public String update (HttpServletRequest request,
@@ -290,6 +291,12 @@ public class MemberController extends MskimRequestMapping{
 	@MSLogin("loginIdCheck")
 	public String deleteForm(HttpServletRequest request,
 			HttpServletResponse response) {
+		String member_id = request.getParameter("id");
+		if (member_id.equals("admin")) { 
+			request.setAttribute("msg", "관리자는 탈퇴 못합니다.");
+			request.setAttribute("url", "main");
+			return "alert";
+		}
 		return "member/deleteForm";
 	}
 	
@@ -305,7 +312,6 @@ public class MemberController extends MskimRequestMapping{
 	}
 
 	@RequestMapping("delete")
-	@MSLogin("loginIdCheck")
 	public String delete(HttpServletRequest request,
 			HttpServletResponse response) {
 		String member_id = request.getParameter("member_id");
@@ -313,7 +319,7 @@ public class MemberController extends MskimRequestMapping{
 		String login =(String)request.getSession().getAttribute("login");
 		String msg = null;
 		String url = null;
-		if (member_id.equals("admin")) { //
+		if (member_id.equals("admin")) { 
 			request.setAttribute("msg", "관리자는 탈퇴 못합니다.");
 			request.setAttribute("url", "list");
 			return "alert";

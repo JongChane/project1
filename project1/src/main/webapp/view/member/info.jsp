@@ -18,10 +18,10 @@ function selectAll(selectAll)  {
 </script>
 </head>
 <body>
-	<div class="container" style="text-align: center">
-		<h2 id="center">회원 상세 정보</h2>
+	<div class="container" style="width:1050px; height:300px; margin:auto;" align="center">
+		<h2 align="center">회원 상세 정보</h2>
 		<form name="f" method="post" action="deleteboard">
-			<table class="table table-hover">
+			<table >
 				<tr>
 					<td rowspan="6" width="30%">
 				<tr>
@@ -64,17 +64,17 @@ function selectAll(selectAll)  {
 					<th>현재exp/필요exp</th>
 					<td>${mem.exp}/<c:choose>
 							<c:when test="${mem.level == 1}">
-            100
-        </c:when>
+					            100
+					        </c:when>
 							<c:when test="${mem.level == 2}">
-            200
-        </c:when>
+					            200
+					        </c:when>
 							<c:when test="${mem.level == 3}">
-            300
-        </c:when>
+					            300
+					        </c:when>
 							<c:when test="${mem.level == 4}">
-            400
-        </c:when>
+					            400
+					        </c:when>
 							<c:when test="${mem.level == 5}">
             500
         </c:when>
@@ -108,16 +108,19 @@ function selectAll(selectAll)  {
 					<th>이메일</th>
 					<td>${mem.email}</td>
 				</tr>
-				<tr>
-					<td colspan="2" id="center"><a
-						href="updateForm?member_id=${mem.member_id}">수정</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<tr align="center">
+					<td colspan="7">
+					<a href="updateForm?member_id=${mem.member_id}">[수정]</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${param.member_id != 'admin'}">
-							<a href="deleteForm?member_id=${mem.member_id}">탈퇴</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="deleteForm?member_id=${mem.member_id}">[탈퇴]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:if>
-						<a href="list?member_id=${mem.member_id}">회원 목록</a>
+						<c:if test="${param.member_id == 'admin'}">
+						<a href="list?member_id=${mem.member_id}">[회원 목록]</a>
+						</c:if>
 						</td>
 				</tr>
 			</table>
+				<hr>
 			<table>
 				<tr>
 					<td colspan="5" style="text-align: right">내가 쓴글개수:${boardCount}&nbsp;&nbsp;&nbsp;
@@ -125,15 +128,15 @@ function selectAll(selectAll)  {
 						<a href="popularList?boardid=${boardid}"></a>
 					</td>
 				</tr>
-
+				<tr><td><br></td></tr>
 				<tr>
 					<th width="5%">글번호</th>
 					<th width="10%">분류</th>
 					<th width="40%">제목</th>
 					<th width="15%">글쓴이</th>
-					<th width="10%">작성일</th>
-					<th width="10%">조회수</th>
-					<th width="10%">추천수</th>
+					<th width="17%">작성일</th>
+					<th width="6%">조회수</th>
+					<th width="6%">추천수</th>
 					<th><input type='checkbox' onchange='selectAll(this)'></th>
 				</tr>
 				<c:forEach var="b" items="${list}">
@@ -175,7 +178,8 @@ function selectAll(selectAll)  {
             자랑
         </c:when>
 							</c:choose></td>
-						<td style="text-align: left">
+							
+						<td style="text-align: center">
 						<a href="../board/info?board_num=${b.board_num}">${b.title}</a></td>
 						<td>${b.member_id}</td>
 						<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
@@ -199,9 +203,11 @@ function selectAll(selectAll)  {
 				<tr>
 					<td colspan="5" class="w3-center">
 					<c:if test="${boardCount != 0}">
+					<br>
 						<div id="center">
 							<button type="submit" id="center">삭제</button>
 						</div>
+						<br>
 							</c:if>
 						 <c:if test="${pageNum <= 1}">[이전]</c:if> <c:if
 							test="${pageNum > 1}">
