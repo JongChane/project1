@@ -255,7 +255,7 @@ public class BoardMybatisDao {
 	public int recommend(BoardRecommend br) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {
-			session.getMapper(cls).recommendcnt(br);
+			return session.getMapper(cls).recommendcnt(br);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -312,7 +312,7 @@ public class BoardMybatisDao {
 	    }
 	    return null;
 	}
-	
+
 	public void downrecommend(int num) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {

@@ -26,23 +26,26 @@ public interface BoardMapper {
 			"</script>"})
 	int boardCount(Map<String, Object> map);
 
-	@Select({"<script>" ,"SELECT *,"
-			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
-			+ " FROM board b where boardid=#{boardid}  " + sqlcol
-			+ " order by board_num desc limit #{start},#{limit}",
-			"</script>"})
+	@Select({"<script>" ,"SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt, m.level "
+            + "FROM board b "
+            + "LEFT JOIN member m ON b.member_id = m.member_id "
+            + "WHERE boardid=#{boardid} " + sqlcol
+            + "ORDER BY board_num DESC LIMIT #{start},#{limit}",
+            "</script>"})
 	List<Board> selectlist(Map<String, Object> map);
+
 
 	@Select({ "<script>",
 			"select count(*) from board where boardid=#{boardid} and recommendcnt >= 10 " + sqlcol,
 		"</script>"})
 	int popularboardCount(Map<String, Object> map);
 	
-	@Select({"<script>" ,"SELECT *,"
-			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
-			+ " FROM board b where boardid=#{boardid} and recommendcnt >= 10 " + sqlcol
-			+ " ORDER BY recommendcnt DESC limit #{start},#{limit}",
-			"</script>"})
+	@Select({"<script>" ,"SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt, m.level "
+            + "FROM board b "
+            + "LEFT JOIN member m ON b.member_id = m.member_id "
+            + "WHERE boardid=#{boardid} and recommendcnt >= 10" + sqlcol
+            + "ORDER BY board_num DESC LIMIT #{start},#{limit}",
+            "</script>"})
 	List<Board> selectPopularList(Map<String, Object> map);
 
 	@Select("select ifnull(max(board_num),0) from board")
@@ -67,11 +70,12 @@ public interface BoardMapper {
 		"</script>"})
 	int bobboardCount(Map<String, Object> map);
 	
-	@Select({"<script>" ,"SELECT *,"
-			+ " (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
-			+ " FROM board b where recommendcnt >= 10 " + sqlcol
-			+ " ORDER BY recommendcnt DESC limit #{start},#{limit}",
-			"</script>"})
+	@Select({"<script>" ,"SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt, m.level "
+            + "FROM board b "
+            + "LEFT JOIN member m ON b.member_id = m.member_id "
+            + "WHERE recommendcnt >= 10 " + sqlcol
+            + "ORDER BY recommendcnt DESC LIMIT #{start},#{limit}",
+            "</script>"})
 	List<Board> selectbobList(Map<String, Object> map);
 
 	@Select({ "<script>", "SELECT *, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt"
@@ -104,7 +108,7 @@ public interface BoardMapper {
 	
 
 	@Insert("insert into board_recommend (board_num,member_id) values(#{board_num}, #{member_id})")
-	void recommendcnt(BoardRecommend br);
+	int recommendcnt(BoardRecommend br);
 
 	@Update("update board set recommendcnt = recommendcnt+1 where board_num=#{value}")
 	int updaterecommend(int num);

@@ -13,8 +13,42 @@
 	<h2 id="center">회원 상세 정보</h2>
 	<table class="table table-hover">
 		<tr><td rowspan="6" width="30%" >
-			<tr><th>레벨</th><td>${mem.level}</td></tr>
-		<th width="20%">아이디</th><td>${mem.member_id}</td></tr>
+			<tr><th>레벨</th>
+			<td>${mem.level}&nbsp;&nbsp;
+			<c:choose>
+        	<c:when test="${mem.level == 1}">
+            	<img src="../image/1.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 2}">
+            	<img src="../image/2.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 3}">
+            	<img src="../image/3.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 4}">
+            	<img src="../image/4.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 5}">
+        		<img src="../image/5.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 6}">
+        		<img src="../image/6.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 7}">
+        		<img src="../image/7.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 8}">
+        		<img src="../image/8.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 9}">
+        		<img src="../image/9.gif">
+        	</c:when>
+        	<c:when test="${mem.level == 10}">
+        		<img src="../image/10.gif">
+        	</c:when>        
+    	</c:choose>	
+			</td></tr>
+		<tr><th>아이디</th><td>${mem.member_id}</td></tr>
 		<c:if test="${param.member_id == 'member_id'}">
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
