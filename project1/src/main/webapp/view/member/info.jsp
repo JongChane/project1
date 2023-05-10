@@ -19,7 +19,6 @@ function selectAll(selectAll)  {
 </script>
 </head>
 <body>
-
 	<div class="container" style="text-align: center">
 		<h2 id="center">회원 상세 정보</h2>
 		<form name="f" method="post" action="deleteboard">
@@ -28,41 +27,73 @@ function selectAll(selectAll)  {
 					<td rowspan="6" width="30%">
 				<tr>
 					<th>레벨</th>
-					<td>${mem.level}</td>
+					<td>${mem.level}&nbsp;&nbsp;<c:choose>
+							<c:when test="${mem.level == 1}">
+								<img src="../image/1.gif">
+							</c:when>
+							<c:when test="${mem.level == 2}">
+								<img src="../image/2.gif">
+							</c:when>
+							<c:when test="${mem.level == 3}">
+								<img src="../image/3.gif">
+							</c:when>
+							<c:when test="${mem.level == 4}">
+								<img src="../image/4.gif">
+							</c:when>
+							<c:when test="${mem.level == 5}">
+								<img src="../image/5.gif">
+							</c:when>
+							<c:when test="${mem.level == 6}">
+								<img src="../image/6.gif">
+							</c:when>
+							<c:when test="${mem.level == 7}">
+								<img src="../image/7.gif">
+							</c:when>
+							<c:when test="${mem.level == 8}">
+								<img src="../image/8.gif">
+							</c:when>
+							<c:when test="${mem.level == 9}">
+								<img src="../image/9.gif">
+							</c:when>
+							<c:when test="${mem.level == 10}">
+								<img src="../image/10.gif">
+							</c:when>
+						</c:choose>
+					</td>
 				</tr>
 				<tr>
 					<th>현재exp/필요exp</th>
 					<td>${mem.exp}/<c:choose>
 							<c:when test="${mem.level == 1}">
-					            100
-					        </c:when>
+            100
+        </c:when>
 							<c:when test="${mem.level == 2}">
-					            200
-					        </c:when>
+            200
+        </c:when>
 							<c:when test="${mem.level == 3}">
-					            300
-					        </c:when>
+            300
+        </c:when>
 							<c:when test="${mem.level == 4}">
-					            400
-					        </c:when>
+            400
+        </c:when>
 							<c:when test="${mem.level == 5}">
-					            500
-					        </c:when>
+            500
+        </c:when>
 							<c:when test="${mem.level == 6}">
-					            600
-					        </c:when>
+            600
+        </c:when>
 							<c:when test="${mem.level == 7}">
-					            700
-					        </c:when>
+            700
+        </c:when>
 							<c:when test="${mem.level == 8}">
-					            800
-					        </c:when>
+            800
+        </c:when>
 							<c:when test="${mem.level == 9}">
-					            900
-					        </c:when>
+            900
+        </c:when>
 							<c:when test="${mem.level == 10}">
-				            999,999
-				        </c:when>
+            999,999
+        </c:when>
 						</c:choose>
 					</td>
 				</tr>
@@ -90,89 +121,12 @@ function selectAll(selectAll)  {
 			</table>
 			<table>
 				<tr>
-				<td> 
-					내가 받은 추천 수 :${recommendCount}
-
-	<div class="container" style="text-align:center">
-	<h2 id="center">회원 상세 정보</h2>
-	<table class="table table-hover">
-				<tr><td rowspan="6" width="30%" >
-			<tr><th>레벨</th>
-			<td>${mem.level}&nbsp;&nbsp;
-			<c:choose>
-        	<c:when test="${mem.level == 1}">
-            	<img src="../image/1.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 2}">
-            	<img src="../image/2.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 3}">
-            	<img src="../image/3.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 4}">
-            	<img src="../image/4.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 5}">
-        		<img src="../image/5.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 6}">
-        		<img src="../image/6.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 7}">
-        		<img src="../image/7.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 8}">
-        		<img src="../image/8.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 9}">
-        		<img src="../image/9.gif">
-        	</c:when>
-        	<c:when test="${mem.level == 10}">
-        		<img src="../image/10.gif">
-        	</c:when>        
-    	</c:choose>	
-			</td></tr>
-			<tr>
-				<th>현재exp/필요exp</th>
-				<td>${mem.exp}/
-		<c:choose>
-        <c:when test="${mem.level == 1}">
-            100
-        </c:when>
-        <c:when test="${mem.level == 2}">
-            200
-        </c:when>
-        <c:when test="${mem.level == 3}">
-            300
-        </c:when>
-        <c:when test="${mem.level == 4}">
-            400
-        </c:when>
-        <c:when test="${mem.level == 5}">
-            500
-        </c:when>
-        <c:when test="${mem.level == 6}">
-            600
-        </c:when>
-        <c:when test="${mem.level == 7}">
-            700
-        </c:when>
-        <c:when test="${mem.level == 8}">
-            800
-        </c:when>
-        <c:when test="${mem.level == 9}">
-            900
-        </c:when>
-        <c:when test="${mem.level == 10}">
-            999,999
-        </c:when>
-   	    </c:choose>
-
-				</td>
 					<td colspan="5" style="text-align: right">내가 쓴
-						글개수:${boardCount} <a href="popularList?boardid=${boardid}"></a>
+						글개수:${boardCount}&nbsp;&nbsp;&nbsp; 내가 받은 추천 수 :${recommendCount}
+						<a href="popularList?boardid=${boardid}"></a>
 					</td>
 				</tr>
+
 				<tr>
 					<th width="5%">글번호</th>
 					<th width="10%">분류</th>
@@ -181,13 +135,12 @@ function selectAll(selectAll)  {
 					<th width="10%">작성일</th>
 					<th width="10%">조회수</th>
 					<th width="10%">추천수</th>
-					<th><input type='checkbox' value='selectall'
-						onchange='selectAll(this)'></th>
+					<th><input type='checkbox' onchange='selectAll(this)'></th>
 				</tr>
 				<c:forEach var="b" items="${list}">
 					<tr>
 						<td>${boardnum}</td>
-						<c:set var="boardnum" value="${boardnum - 1}" />
+						<c:set var="boardnum" value="${boardnum + 1}" />
 						<td><c:choose>
 								<c:when test="${b.category_num == 1}">
             유머
@@ -240,6 +193,9 @@ function selectAll(selectAll)  {
 							value="${b.board_num}" /> <br /></td>
 					</tr>
 				</c:forEach>
+
+
+
 				<%-- 페이지 처리하기 --%>
 				<tr>
 					<td colspan="5" class="w3-center">
@@ -261,7 +217,6 @@ function selectAll(selectAll)  {
 				</tr>
 
 			</table>
-
 		</form>
 	</div>
 </body>

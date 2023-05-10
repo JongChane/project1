@@ -180,9 +180,7 @@
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">
-				<div id="right">
-					<button type="submit" id="right">삭제</button>
-				</div>
+			
       	<c:if test="${pageNum <= 1}">[이전]</c:if>
       	<c:if test="${pageNum > 1}">
       		<a href="finfo?member_id=${param.member_id}&pageNum=${pageNum-1}">[이전]</a>
