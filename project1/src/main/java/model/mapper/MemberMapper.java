@@ -48,14 +48,14 @@ public interface MemberMapper {
 	@Update("update member set pass=#{pass} where member_id=#{member_id}")
 	int updatePass(@Param("member_id") String member_id, @Param("pass") String pass);
 
-	@Select("select * from board where member_id = #{value}")
-	List<Board> boardlist(String member_id);
+	@Select("select * from board where member_id = #{member_id} limit #{start},#{limit}")
+	List<Board> boardlist(Map<String, Object> map);
 	
 	@Update("UPDATE member set EXP = "
 			+ "(SELECT "
 			+ "(SELECT COUNT(*) * 10 exp FROM board WHERE member_id=#{member_id}) "
 			+ " + (SELECT COUNT(*) * 5 FROM comment WHERE member_id=#{member_id}) "
-			+ " + (SELECT SUM(recommendcnt) FROM board WHERE member_id=#{member_id})) "
+			+ " + (SELECT ifnull(SUM(recommendcnt),0) FROM board WHERE member_id=#{member_id})) "
 			+ " WHERE member_id=#{member_id} ")
 	void exupdate(@Param("member_id") String member_id, @Param("exp") int exp);
 	
@@ -63,9 +63,19 @@ public interface MemberMapper {
 	int maxnum();
 
 	@Select("select count(*) from board where boardid=#{boardid}")
-	int boardCount(Map<String, Object> map);
+	int boardCount(String boardid);
 	
-	 @Delete("delete from board where member_id=#{member_id}")
-	    int listdelete(String member_id);
+	@Select("select count(*) from board where member_id=#{value}")
+	int memberboardCount(String member_id);
+	
+	@Select("select ifnull(sum(recommendcnt),0) from board where member_id=#{value}")
+	int memberrecommendCount(String member_id);
+	
+	 @Delete({"<script>","delete from board where board_num in "
+	+ " <foreach collection='numList' item='d' separator=',' open='(' close=')'>${d}</foreach>","</script>"})
+	 void deleteboard(Map<String, Object> map);
+
+	
+
 
 } 

@@ -22,10 +22,10 @@ function signUp() {
 	  const agreeCheckbox = document.getElementsByName("agreeCheckbox");
 
 	  if (agreeCheckbox[0].checked) {
-	    return false;
+	    return true;
 	  }
-		  alert("가입하기 전에 개인정보처리방침에 동의해야 합니다.");
-	  return true;
+		alert("가입하기 전에 개인정보처리방침에 동의해야 합니다.");
+	  return false;
 	}
 </script>
 <style type="text/css">
@@ -84,10 +84,10 @@ function signUp() {
 		<br>
 		<div >
   <div style="text-align:center;">
- <form onsubmit="return signUp();">
+ <form action="joinForm" onsubmit="return signUp();">
         동의<input type='checkbox'name="agreeCheckbox" value="Agree"/>
   <br>
-    <button type="submit" class="btn btn-dark" id="signupButton" onclick="location='joinForm'">동의 및 회원가입</button>
+    <button type="submit" class="btn btn-dark" id="signupButton">동의 및 회원가입</button>
     </form>
   </div>
 </div>

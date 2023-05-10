@@ -82,7 +82,7 @@
 		<c:forEach var="b" items="${list}">
  			<tr>
  				<td>${boardnum}</td>
- 					<c:set var="boardnum" value="${boardnum + 1}" />
+ 					<c:set var="boardnum" value="${boardnum - 1}" />
  				<td>
     <c:choose>
         <c:when test="${b.category_num == 1}">
@@ -141,22 +141,25 @@
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">
+				<div id="right">
+					<button type="submit" id="right">삭제</button>
+				</div>
       	<c:if test="${pageNum <= 1}">[이전]</c:if>
       	<c:if test="${pageNum > 1}">
-      		<a href="javascript:listsubmit(${pageNum-1})">[이전]</a>
+      		<a href="finfo?member_id=${param.member_id}&pageNum=${pageNum-1}">[이전]</a>
       	</c:if>
       	<c:forEach var="a" begin="${startpage}" end="${endpage}">
         	<c:if test="${a == pageNum}">[${a}]</c:if>
         	<c:if test="${a != pageNum}">
-          	<a href="javascript:listsubmit(${a})">[${a}]</a>
+          	<a href="finfo?member_id=${param.member_id}&pageNum=${a}">[${a}]</a>
         	</c:if>
       	</c:forEach>
       	<c:if test="${pageNum >= maxpage}">[다음]</c:if>
       	<c:if test="${pageNum < maxpage}">
-      		<a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
+      		<a href="finfo?member_id=${param.member_id}&pageNum=${pageNum+1}">[다음]</a>
       	</c:if>
  			</td>
- 		</tr>  
+ 		</tr>
 	</table>	
 			</div>
 	
