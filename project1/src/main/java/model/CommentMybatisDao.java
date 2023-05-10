@@ -51,21 +51,21 @@ public class CommentMybatisDao {
       return null;
    }
 
-   public void deleteAll(int board_num) {
-      SqlSession session = MybatisConnection.getConnection();
-      try {
-         session.getMapper(cls).deleteAll(board_num);
-      }catch(Exception e) {
-         e.printStackTrace();
-      }finally {
-         MybatisConnection.close(session);
-      }
-   }
+//   public void deleteAll(int board_num) {
+//      SqlSession session = MybatisConnection.getConnection();
+//      try {
+//         session.getMapper(cls).deleteAll(board_num);
+//      }catch(Exception e) {
+//         e.printStackTrace();
+//      }finally {
+//         MybatisConnection.close(session);
+//      }
+//   }
 
-   public boolean delete(int board_num,int comment_num) {
+   public boolean delete(int board_num,int grp) {
       SqlSession session = MybatisConnection.getConnection();
       try {
-         int cnt = session.getMapper(cls).delete(board_num,comment_num);
+         int cnt = session.getMapper(cls).delete(board_num,grp);
          if(cnt > 0) return true;
       }catch(Exception e) {
          e.printStackTrace();
@@ -151,7 +151,7 @@ public Comment selectOne(int comment_num) {
 	return null;
 }
 
-public void grpStepAdd(int grp, int grpstep) {
+public void grpStepAdd(int grp, int grpstep ) {
 	SqlSession session = MybatisConnection.getConnection();
 	try {
 		session.getMapper(cls).grpStepAdd(grp,grpstep);

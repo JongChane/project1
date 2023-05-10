@@ -368,10 +368,10 @@ public class BoardController extends MskimRequestMapping {
 			return "alert";
 		} else {
 			//게시글에 대한 댓글 삭제
-			cdao.deleteAll(board_num);
+//			cdao.deleteAll(board_num);
 
 			//게시글에 대한 추천 정보삭제
-			brdao.deleteAll(board_num);
+//			brdao.deleteAll(board_num);
 
 			// 게시글 삭제
 			if (dao.delete(board_num)) {
@@ -407,9 +407,11 @@ public class BoardController extends MskimRequestMapping {
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		int category_num = Integer.parseInt(request.getParameter("category_num"));
 		Board b = dao.selectOne(board_num);
 		b.setTitle(title);
 		b.setContent(content);
+		b.setCategory_num(category_num);
 		String msg = null; 
 		String url = null;
 		if (dao.update(b)) {
@@ -440,16 +442,17 @@ public class BoardController extends MskimRequestMapping {
 
 		String login = (String) request.getSession().getAttribute("login");
 		comm.setMember_id(login);
-		System.out.println(login);
 		cdao.grpStepAdd(comm.getGrp(),comm.getGrpstep()); // grpstep 변경
 		
 		// c.member_id 값 설정
 		comm.setContent(request.getParameter("content")); //name="content" 파라미터값 설정
 		int comment_num = cdao.maxcomment_num(board_num); // comment_num에 해당하는 최대 comment_num 컬럼의 값
 		int grpstep = comm.getGrpstep();
+		int grplevel = comm.getGrplevel();
 		comm.setComment_num(++comment_num);
 		comm.setGrp(comment_num);
-		comm.setGrpstep(grpstep+1);
+		comm.setGrplevel(grplevel);
+		
 		if (cdao.cominsert(comm)) { // comment 테이블에 insert
 			return "redirect:" + url;
 		}
@@ -462,11 +465,9 @@ public class BoardController extends MskimRequestMapping {
 	@RequestMapping("commdel")
 	public String commdel(HttpServletRequest request, HttpServletResponse response) {
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
-		int comment_num = Integer.parseInt(request.getParameter("comment_num"));
-		System.out.println(board_num);
-		System.out.println(comment_num);
+		int grp = Integer.parseInt(request.getParameter("grp"));
 		String url = "info?board_num=" + board_num + "&readcnt=f";
-		if(cdao.delete(board_num,comment_num)) {
+		if(cdao.delete(board_num,grp)) {
 			return "redirect:" + url;
 		}
 		request.setAttribute("msg", "댓글삭제를 실패하였습니다.");
@@ -649,5 +650,34 @@ public class BoardController extends MskimRequestMapping {
 		      return "board/info";
 		}
 		
-		
+		@RequestMapping("reply")
+		public String reply(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			int board_num = Integer.parseInt(request.getParameter("board_num"));
+			String url = "info?board_num=" + board_num + "&readcnt=f";
+			
+			String login = (String) request.getSession().getAttribute("login");
+			String content = request.getParameter("content");
+			Comment comm = new Comment();
+			int comment_num = Integer.parseInt(request.getParameter("comment_num"));
+			cdao.grpStepAdd(comm.getGrp(),comm.getGrpstep());
+			comm.setMember_id(login);
+			comm.setContent(content);
+			 int maxcomment_num = cdao.maxcomment_num(board_num);
+			comm.setComment_num(++maxcomment_num);
+			comm.setGrp(comment_num);
+			comm.setGrpstep(Integer.parseInt(request.getParameter("grpstep"))+1);
+			comm.setGrplevel(Integer.parseInt(request.getParameter("grplevel"))+1);
+			comm.setBoard_num(board_num);
+			if (cdao.cominsert(comm)) {
+				return "redirect:" + url;
+			}
+			request.setAttribute("msg", "답글 등록시 오류 발생");
+			request.setAttribute("url", url);
+			return "alert";
+		}
 }
