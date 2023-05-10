@@ -104,13 +104,12 @@
 		<c:forEach var="c" items="${commlist}" varStatus="stat">
 			<tr class="w3-black">
 
-			<td>${commnum}</td>
- 			<c:set var="commnum" value="${commnum-1}" />
-			<td>${c.member_id}</td>
+			
                  
-      <td>
+      	<td>
 				<c:if test="${c.grplevel ==1 }">└&nbsp;&nbsp;</c:if>
-			${c.member_id}</td>
+				${c.member_id}
+			</td>
 
 			<td>${c.content}</td>
 			<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -141,7 +140,9 @@
     				<input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
     				<button type="submit">👍 : ${c.recommendcnt}</button>
 					</form>
+					<c:if test="${sessionScope.login eq c.member_id}">
 					<a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}">삭제</a>
+					</c:if>
 			</td>
 		</tr>
 		</c:forEach>

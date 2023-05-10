@@ -344,6 +344,7 @@ public class BoardController extends MskimRequestMapping {
 	public String deleteForm(HttpServletRequest request, HttpServletResponse response) {
 		String login = (String)request.getSession().getAttribute("login");
 		String boardid = (String)request.getSession().getAttribute("boardid");
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
 
 		return "board/deleteForm";
 	}
@@ -390,9 +391,17 @@ public class BoardController extends MskimRequestMapping {
 	@RequestMapping("updateForm")
 	public String updateForm(HttpServletRequest request, HttpServletResponse response) {
 		String login = (String)request.getSession().getAttribute("login");
-		String boardid = (String)request.getSession().getAttribute("boardid");
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		Board b = dao.selectOne(board_num);
+		if(login==null) {
+			request.setAttribute("msg", "로그인을 하셔야합니다.");
+			request.setAttribute("url", "../member/loginForm");
+			return "alert";
+		} else if(!login.equals(b.getMember_id())) {
+			request.setAttribute("msg", "작성자만 수정가능합니다.");
+			request.setAttribute("url", "info?board_num="+board_num);
+			return "alert";
+		}
 		request.setAttribute("b",b);
 		return "board/updateForm";
 	}

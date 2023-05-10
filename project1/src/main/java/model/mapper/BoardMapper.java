@@ -122,5 +122,7 @@ public interface BoardMapper {
 
 	@Update("update board set recommendcnt = recommendcnt-1 where board_num=#{value}")
 	int downrecommend(int num);
+	
+
 
 }
