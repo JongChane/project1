@@ -41,7 +41,7 @@ public class CommentMybatisDao {
     	  map.clear();
     	  map.put("board_num", board_num);
     	  map.put("start", (pageNum - 1) * limit);
-		  map.put("limit", limit);
+				map.put("limit", limit);
          return session.getMapper(cls).selectclist(map);
       } catch (Exception e) {
          e.printStackTrace();
@@ -165,7 +165,7 @@ public void grpStepAdd(int grp, int grpstep ) {
 public int commcount(int num) {
 	SqlSession session = MybatisConnection.getConnection();
 	try {
-	return session.getMapper(cls).commcount(num);
+		return session.getMapper(cls).commcount(num);
 	} catch (Exception e) {
 		e.printStackTrace();
 	} finally {

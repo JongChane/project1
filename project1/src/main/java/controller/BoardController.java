@@ -645,7 +645,7 @@ public class BoardController extends MskimRequestMapping {
 			int endpage = startpage + 9;
 			if (endpage > maxpage)
 				endpage = maxpage;
-			int commnum = commcount - (pageNum - 1) * limit;
+
 
 		      //댓글 목록 화면에 전달
 			  List<Comment> commlist = cdao.selectclist(num, pageNum, limit);
@@ -653,14 +653,13 @@ public class BoardController extends MskimRequestMapping {
 					    .sorted(Comparator.comparing(Comment::getRecommendcnt).reversed())
 					    .limit(3)
 					    .collect(Collectors.toList());
-     		  request.setAttribute("top3Comments", top3Comments);					
-		      request.setAttribute("b",b);
-		      request.setAttribute("level", level);
-		      request.setAttribute("boardid",boardid);
-		      request.setAttribute("boardName",boardName);
-		      request.setAttribute("commnum", commnum);
-		      request.setAttribute("category_name", category_name);
-		      request.setAttribute("commlist",commlist);
+				request.setAttribute("top3Comments", top3Comments);
+				request.setAttribute("b", b);
+				request.setAttribute("level", level);
+				request.setAttribute("boardid", boardid);
+				request.setAttribute("boardName", boardName);
+				request.setAttribute("category_name", category_name);
+				request.setAttribute("commlist", commlist);
 			  request.setAttribute("startpage", startpage);
 			  request.setAttribute("endpage", endpage);
 			  request.setAttribute("maxpage", maxpage);
