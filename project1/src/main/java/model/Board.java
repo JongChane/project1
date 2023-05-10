@@ -14,8 +14,17 @@ public class Board {
 	private String member_id;
 	private String thumbnail;
 	private int commcnt;
+	private int level;
 
 	
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	public int getCommcnt() {
 		return commcnt;
 	}
@@ -107,9 +116,14 @@ public class Board {
 	public String toString() {
 		return "Board [board_num=" + board_num + ", title=" + title + ", content=" + content + ", readcnt=" + readcnt
 				+ ", recommendcnt=" + recommendcnt + ", regdate=" + regdate + ", boardid=" + boardid + ", category_num="
-				+ category_num + ", member_id=" + member_id + ", thumbnail=" + thumbnail + ", commcnt=" + commcnt + "]";
+				+ category_num + ", member_id=" + member_id + ", thumbnail=" + thumbnail + ", commcnt=" + commcnt
+				+ ", level=" + level + "]";
 	}
+
 
 
 	
 }
+
+
+   

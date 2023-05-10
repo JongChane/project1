@@ -12,7 +12,7 @@
 	<div class="container" style="text-align:center">
 	<h2 id="center">회원 상세 정보</h2>
 	<table class="table table-hover">
-				<tr><td rowspan="6" width="30%" >
+		<tr><td rowspan="6" width="30%" >
 			<tr><th>레벨</th>
 			<td>${mem.level}&nbsp;&nbsp;
 			<c:choose>
@@ -48,54 +48,18 @@
         	</c:when>        
     	</c:choose>	
 			</td></tr>
-			<tr>
-				<th>현재exp/필요exp</th>
-				<td>${mem.exp}/
-		<c:choose>
-        <c:when test="${mem.level == 1}">
-            100
-        </c:when>
-        <c:when test="${mem.level == 2}">
-            200
-        </c:when>
-        <c:when test="${mem.level == 3}">
-            300
-        </c:when>
-        <c:when test="${mem.level == 4}">
-            400
-        </c:when>
-        <c:when test="${mem.level == 5}">
-            500
-        </c:when>
-        <c:when test="${mem.level == 6}">
-            600
-        </c:when>
-        <c:when test="${mem.level == 7}">
-            700
-        </c:when>
-        <c:when test="${mem.level == 8}">
-            800
-        </c:when>
-        <c:when test="${mem.level == 9}">
-            900
-        </c:when>
-        <c:when test="${mem.level == 10}">
-            999,999
-        </c:when>
-   	    </c:choose>
-				</td>
-			</tr>
-			<tr><th width="20%">아이디</th><td>${mem.member_id}</td></tr>
+		<tr><th>아이디</th><td>${mem.member_id}</td></tr>
+		<c:if test="${param.member_id == 'member_id'}">
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
-			
-			
-			<tr><td colspan="2" id="center">
+	
+				<tr><td colspan="2" id="center">
 		<a href="updateForm?member_id=${mem.member_id}">수정</a>
 			<c:if test="${param.member_id != 'admin'}">
 		<a href="deleteForm?member_id=${mem.member_id}">탈퇴</a>
 		</c:if>
 	</td></tr>
+	</c:if>
 	</table>
  		<table>
 		<tr>
@@ -111,8 +75,6 @@
 			<th width="10%">작성일</th>
 			<th width="10%">조회수</th>
 			<th width="10%">추천수</th>
-			<th><input type='checkbox' name='idchks' 
-			value='selectall' onchange='selectAll(this)'></th>
 		</tr>
 		<c:forEach var="b" items="${list}">
  			<tr>
@@ -171,13 +133,8 @@
  		</td>
 		 		<td>${b.readcnt}</td>
 		 		<td>${b.recommendcnt}</td>
-		 		<td><input type='checkbox' name='idchks' value="${m.member_id}"/>
-				<br/></td>
 			</tr>
 		</c:forEach>
-		
-		
-			
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">
@@ -196,12 +153,8 @@
       		<a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
       	</c:if>
  			</td>
- 		</tr>
- 		
+ 		</tr>  
 	</table>	
-			</div>
-			<div id="right">
-				<button type="submit" id="right">삭제</button>
 			</div>
 	
 </body>
