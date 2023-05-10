@@ -8,15 +8,15 @@ public class BoardRecommendMybatisDao {
 
 	private Class<BoardRecommendMapper> cls = BoardRecommendMapper.class;
 
-	public void deleteAll(int board_num) {
-		SqlSession session = MybatisConnection.getConnection();
-		try {
-			session.getMapper(cls).deleteAll(board_num);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			MybatisConnection.close(session);
-		}
-	}
+//	public void deleteAll(int board_num) {
+//		SqlSession session = MybatisConnection.getConnection();
+//		try {
+//			session.getMapper(cls).deleteAll(board_num);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}finally {
+//			MybatisConnection.close(session);
+//		}
+//	}
 	
 }

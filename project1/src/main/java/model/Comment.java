@@ -10,6 +10,9 @@ public class Comment {
 	private String member_id;
 	private int board_num;
 	private String content;
+	private int grp;
+	private int grpstep;
+	private int grplevel;
 
 	public String getContent() {
 		return content;
@@ -59,11 +62,41 @@ public class Comment {
 		this.board_num = board_num;
 	}
 
+	
+	public int getGrp() {
+		return grp;
+	}
+
+	public void setGrp(int grp) {
+		this.grp = grp;
+	}
+
+	public int getGrpstep() {
+		return grpstep;
+	}
+
+	public void setGrpstep(int grpstep) {
+		this.grpstep = grpstep;
+	}
+
+	
+	
+	public int getGrplevel() {
+		return grplevel;
+	}
+
+	public void setGrplevel(int grplevel) {
+		this.grplevel = grplevel;
+	}
+
 	@Override
 	public String toString() {
 		return "Comment [comment_num=" + comment_num + ", regdate=" + regdate + ", recommendcnt=" + recommendcnt
-				+ ", member_id=" + member_id + ", board_num=" + board_num + ", content=" + content + "]";
+				+ ", member_id=" + member_id + ", board_num=" + board_num + ", content=" + content + ", grp=" + grp
+				+ ", grpstep=" + grpstep + ", grplevel=" + grplevel + "]";
 	}
 
+	
+	
 
 }

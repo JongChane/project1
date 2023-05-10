@@ -23,4 +23,4 @@ create table member (
 );
 select *from member
 
-
+select * from comment

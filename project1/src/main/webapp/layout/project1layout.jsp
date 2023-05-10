@@ -65,8 +65,6 @@ a{
   <a href="${path}/board/list?boardid=2" class="w3-bar-item w3-button">유머게시판</a>
   <a href="${path}/board/list?boardid=3" class="w3-bar-item w3-button">해축게시판</a>
   <a href="${path}/board/list?boardid=4" class="w3-bar-item w3-button">음식게시판</a>
-  <input type="text" class="w3-bar-item w3-input" placeholder="Search..">
-  <a href="#" class="w3-bar-item w3-button" style="background-color:#282a35;">검색</a>
   <span class="w3-bar-item w3-right">
   <c:if test="${empty sessionScope.login}">
      <a href="${path}/member/loginForm">로그인</a>
