@@ -90,11 +90,9 @@
     	</c:choose>	
 			</td></tr>
 		<tr><th>아이디</th><td>${mem.member_id}</td></tr>
-
 		<c:if test="${param.member_id == 'member_id'}">
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
-	
 				<tr><td colspan="2" id="center">
 		<a href="updateForm?member_id=${mem.member_id}">수정</a>
 			<c:if test="${param.member_id != 'admin'}">

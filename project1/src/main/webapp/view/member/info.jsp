@@ -11,7 +11,6 @@
 function selectAll(selectAll)  {
      const checkboxes 
           = document.getElementsByName('idchks');
-     
      checkboxes.forEach((checkbox) => {
        checkbox.checked = selectAll.checked;
      })
@@ -109,20 +108,20 @@ function selectAll(selectAll)  {
 					<th>이메일</th>
 					<td>${mem.email}</td>
 				</tr>
-
-
 				<tr>
 					<td colspan="2" id="center"><a
-						href="updateForm?member_id=${mem.member_id}">수정</a> <c:if
-							test="${param.member_id != 'admin'}">
-							<a href="deleteForm?member_id=${mem.member_id}">탈퇴</a>
-						</c:if></td>
+						href="updateForm?member_id=${mem.member_id}">수정</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:if test="${param.member_id != 'admin'}">
+							<a href="deleteForm?member_id=${mem.member_id}">탈퇴</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:if>
+						<a href="list?member_id=${mem.member_id}">회원 목록</a>
+						</td>
 				</tr>
 			</table>
 			<table>
 				<tr>
-					<td colspan="5" style="text-align: right">내가 쓴
-						글개수:${boardCount}&nbsp;&nbsp;&nbsp; 내가 받은 추천 수 :${recommendCount}
+					<td colspan="5" style="text-align: right">내가 쓴글개수:${boardCount}&nbsp;&nbsp;&nbsp;
+					 내가 받은 추천 수 :${recommendCount}
 						<a href="popularList?boardid=${boardid}"></a>
 					</td>
 				</tr>
@@ -176,8 +175,8 @@ function selectAll(selectAll)  {
             자랑
         </c:when>
 							</c:choose></td>
-						<td style="text-align: left"><a
-							href="../board/info?board_num=${b.board_num}">${b.title}</a></td>
+						<td style="text-align: left">
+						<a href="../board/info?board_num=${b.board_num}">${b.title}</a></td>
 						<td>${b.member_id}</td>
 						<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
 						<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" />
@@ -199,9 +198,12 @@ function selectAll(selectAll)  {
 				<%-- 페이지 처리하기 --%>
 				<tr>
 					<td colspan="5" class="w3-center">
-						<div id="right">
-							<button type="submit" id="right">삭제</button>
-						</div> <c:if test="${pageNum <= 1}">[이전]</c:if> <c:if
+					<c:if test="${boardCount != 0}">
+						<div id="center">
+							<button type="submit" id="center">삭제</button>
+						</div>
+							</c:if>
+						 <c:if test="${pageNum <= 1}">[이전]</c:if> <c:if
 							test="${pageNum > 1}">
 							<a href="info?member_id=${param.member_id}&pageNum=${pageNum-1}">[이전]</a>
 						</c:if> <c:forEach var="a" begin="${startpage}" end="${endpage}">
