@@ -13,6 +13,47 @@
 	<h2 id="center">회원 상세 정보</h2>
 	<table class="table table-hover">
 		<tr><td rowspan="6" width="30%" >
+
+			<tr><th>레벨</th><td>${mem.level}</td></tr>
+			<tr>
+				<th>현재exp/필요exp</th>
+				<td>${mem.exp}/
+		<c:choose>
+        <c:when test="${mem.level == 1}">
+            100
+        </c:when>
+        <c:when test="${mem.level == 2}">
+            200
+        </c:when>
+        <c:when test="${mem.level == 3}">
+            300
+        </c:when>
+        <c:when test="${mem.level == 4}">
+            400
+        </c:when>
+        <c:when test="${mem.level == 5}">
+            500
+        </c:when>
+        <c:when test="${mem.level == 6}">
+            600
+        </c:when>
+        <c:when test="${mem.level == 7}">
+            700
+        </c:when>
+        <c:when test="${mem.level == 8}">
+            800
+        </c:when>
+        <c:when test="${mem.level == 9}">
+            900
+        </c:when>
+        <c:when test="${mem.level == 10}">
+            999,999
+        </c:when>
+   	    </c:choose>
+				</td>
+			</tr>
+		<th width="20%">아이디</th><td>${mem.member_id}</td></tr>
+
 			<tr><th>레벨</th>
 			<td>${mem.level}&nbsp;&nbsp;
 			<c:choose>
@@ -49,6 +90,7 @@
     	</c:choose>	
 			</td></tr>
 		<tr><th>아이디</th><td>${mem.member_id}</td></tr>
+
 		<c:if test="${param.member_id == 'member_id'}">
 			<tr><th>전화</th><td>${mem.tel}</td></tr>
 			<tr><th>이메일</th><td>${mem.email}</td></tr>
@@ -79,7 +121,7 @@
 		<c:forEach var="b" items="${list}">
  			<tr>
  				<td>${boardnum}</td>
- 					<c:set var="boardnum" value="${boardnum + 1}" />
+ 					<c:set var="boardnum" value="${boardnum - 1}" />
  				<td>
     <c:choose>
         <c:when test="${b.category_num == 1}">
@@ -138,22 +180,25 @@
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">
+				<div id="right">
+					<button type="submit" id="right">삭제</button>
+				</div>
       	<c:if test="${pageNum <= 1}">[이전]</c:if>
       	<c:if test="${pageNum > 1}">
-      		<a href="javascript:listsubmit(${pageNum-1})">[이전]</a>
+      		<a href="finfo?member_id=${param.member_id}&pageNum=${pageNum-1}">[이전]</a>
       	</c:if>
       	<c:forEach var="a" begin="${startpage}" end="${endpage}">
         	<c:if test="${a == pageNum}">[${a}]</c:if>
         	<c:if test="${a != pageNum}">
-          	<a href="javascript:listsubmit(${a})">[${a}]</a>
+          	<a href="finfo?member_id=${param.member_id}&pageNum=${a}">[${a}]</a>
         	</c:if>
       	</c:forEach>
       	<c:if test="${pageNum >= maxpage}">[다음]</c:if>
       	<c:if test="${pageNum < maxpage}">
-      		<a href="javascript:listsubmit(${pageNum+1})">[다음]</a>
+      		<a href="finfo?member_id=${param.member_id}&pageNum=${pageNum+1}">[다음]</a>
       	</c:if>
  			</td>
- 		</tr>  
+ 		</tr>
 	</table>	
 			</div>
 	

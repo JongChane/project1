@@ -113,10 +113,14 @@ public class MemberMybatisDao {
 		return false;
 	}
 
-	public List<Board> boardselect(String member_id) {
+	public List<Board> boardselect(String member_id, int pageNum, int limit) {
 		SqlSession session = MybatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).boardlist(member_id);
+			map.clear();
+			map.put("member_id", member_id);
+			map.put("start", (pageNum - 1) * limit);
+			map.put("limit", limit);
+			return session.getMapper(cls).boardlist(map);
 		} catch(Exception e){
 			e.printStackTrace();
 		} finally {
@@ -135,19 +139,55 @@ public class MemberMybatisDao {
 			MybatisConnection.close(session);
 		}
 	}
-
-	public int boardCount(String member_id) {
+	
+	public int boardCount(String boardid) {
 		SqlSession session = MybatisConnection.getConnection();
-		try {
-			map.clear();
-			map.put("member_id", member_id);
-		return session.getMapper(cls).boardCount(map);
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		MybatisConnection.close(session);
-	}
+		 try {
+			return session.getMapper(cls).boardCount(boardid);
+		 } catch (Exception e){
+			 e.printStackTrace();
+		 } finally {
+			 MybatisConnection.close(session);
+		 }
 		return 0;
+	}
+
+	public int memberboardCount(String member_id) {
+		SqlSession session = MybatisConnection.getConnection();
+		 try {
+			return session.getMapper(cls).memberboardCount(member_id);
+		 } catch (Exception e){
+			 e.printStackTrace();
+		 } finally {
+			 MybatisConnection.close(session);
+		 }
+		return 0;
+	}
+	public int memberrecommendCount(String member_id) {
+		SqlSession session = MybatisConnection.getConnection();
+		 try {
+			return session.getMapper(cls).memberrecommendCount(member_id);
+		 } catch (Exception e){
+			 e.printStackTrace();
+		 } finally {
+			 MybatisConnection.close(session);
+		 }
+		return 0;
+	}
+
+  
+	public void deleteboard(List<Integer> numList) {
+		SqlSession session = MybatisConnection.getConnection();
+		 try {
+			Map<String,Object> map = new HashMap<>(); 
+			map.put("numList", numList);
+			session.getMapper(cls).deleteboard(map);
+		 } catch (Exception e){
+			 e.printStackTrace();
+		 } finally {
+			 MybatisConnection.close(session);
+		 }
+			
 	}
 
 	public void levelupdate() {

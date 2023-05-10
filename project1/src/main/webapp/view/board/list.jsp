@@ -95,6 +95,7 @@
         
     </td>
  		<td>
+
  		<c:if test="${sessionScope.login == b.member_id}">
  			<a href="../member/info?member_id=${b.member_id}">${b.member_id}</a>	
  		</c:if>
@@ -133,6 +134,7 @@
         		<img src="../image/9.gif">
         	</c:when>        
     	</c:choose>	
+
  		</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
  <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
@@ -140,10 +142,10 @@
  <td><c:if test="${t==r}">
      <fmt:formatDate value="${b.regdate}" pattern="HH:mm:ss" />
 	 </c:if>
-	 <c:if test="${t!=r}">
+		 <c:if test="${t!=r}">
      <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm" />
    </c:if>
-        </td>
+        	</td>
 		 		<td>${b.readcnt}</td>
 		 		<td>${b.recommendcnt}</td>
 			</tr>
