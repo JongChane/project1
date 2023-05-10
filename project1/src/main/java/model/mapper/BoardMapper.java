@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -15,11 +14,11 @@ import model.Comment;
 
 public interface BoardMapper {
 	String sqlcol = "<if test='column != null'>" 		
-	+"<if test='col1 != null'> and (${col1} like '%${find}%'</if>"
+			+ "<if test='col1 != null'> and (${col1} like '%${find}%'</if>"
 	+"<if test='col2 == null'> ) </if>"
-	+"<if test='col2 != null'> or ${col2} like '%${find}%'</if>"
+			+ "<if test='col2 != null'> or ${col2} like '%${find}%'</if>"
 	+"<if test='col2 != null and col3==null'> ) </if>"
-	+"<if test='col3 != null'> or ${col3} like '%${find}%')</if></if>";
+			+ "<if test='col3 != null'> or ${col3} like '%${find}%')</if></if>";
 	
 	@Select({ "<script>",
 			"select count(*) from board where boardid=#{boardid} "+sqlcol,
@@ -29,7 +28,7 @@ public interface BoardMapper {
 	@Select({"<script>" ,"SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt, m.level "
             + "FROM board b "
             + "LEFT JOIN member m ON b.member_id = m.member_id "
-            + "WHERE boardid=#{boardid} " + sqlcol
+            + "WHERE b.boardid=#{boardid} " + sqlcol
             + "ORDER BY board_num DESC LIMIT #{start},#{limit}",
             "</script>"})
 	List<Board> selectlist(Map<String, Object> map);
