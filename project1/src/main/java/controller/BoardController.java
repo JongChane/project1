@@ -575,6 +575,7 @@ public class BoardController extends MskimRequestMapping {
 			String boardid = (String)request.getSession().getAttribute("boardid");
 			String readcnt = request.getParameter("readcnt");
 			int num = Integer.parseInt(request.getParameter("board_num"));
+
 			String url = "info?board_num=" + num + "&readcnt=f";
 			Board b = dao.selectOne(num);
 			Member member = mdao.selectOne(b.getMember_id());

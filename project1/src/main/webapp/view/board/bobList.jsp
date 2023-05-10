@@ -130,7 +130,8 @@
         	</c:when>        
     	</c:choose>	
  		</td>
-				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
+
+	<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
  <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 
  <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd" var="r" /> 
  <td><c:if test="${t==r}">
