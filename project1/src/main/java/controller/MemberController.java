@@ -148,6 +148,7 @@ public class MemberController extends MskimRequestMapping{
 		int boardCount = dao.memberboardCount(member_id);
 		int recommendCount = dao.memberrecommendCount(member_id);
 		dao.exupdate(member_id, 0);
+		dao.levelupdate();
 		Member mem = dao.selectOne(member_id);
 		int maxpage = (int) ((double) boardCount / limit + 0.95);
 		int startpage = ((int)(pageNum / 10.0 + 0.9) - 1) * 10 + 1;

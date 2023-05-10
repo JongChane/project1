@@ -18,12 +18,11 @@ public interface MemberMapper {
 			+ " #{email}, 0, 1)")
 		int insert(Member mem);
 
-//		@Select("select * from member where member_id=#{value}")
-	    @Select("SELECT m.member_id, m.pass, m.tel,m.email, m.exp, l.level  "
+	@Select("SELECT m.member_id, m.pass, m.tel,m.email, m.exp, l.level  "
 	    		+ "FROM level l , member m WHERE member_id=#{value} and m.exp BETWEEN l.minexp and l.maxexp")
-		Member selectOne(String member_id);
+	Member selectOne(String member_id);
 
-		@Update("update member set tel=#{tel}, email=#{email} where member_id =#{member_id}")
+	@Update("update member set tel=#{tel}, email=#{email} where member_id =#{member_id}")
 	int update(Member mem);
 
 	@Select({"<script>",
@@ -76,6 +75,10 @@ public interface MemberMapper {
 	 void deleteboard(Map<String, Object> map);
 
 	
+	@Update("UPDATE member JOIN level ON member.level = level.level"
+			+ " SET member.level = CASE WHEN member.exp < level.minexp THEN level.level - 1"
+			+ " WHEN member.exp >= level.maxexp THEN level.level + 1 ELSE level.level END")
+	void levelupdate();
 
 
 } 

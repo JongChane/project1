@@ -19,6 +19,7 @@ agreeCheckbox[0].addEventListener("change", function() {
 });
 }
 function signUp() {
+
 	  const agreeCheckbox = document.getElementsByName("agreeCheckbox");
 
 	  if (agreeCheckbox[0].checked) {
@@ -27,16 +28,17 @@ function signUp() {
 		alert("가입하기 전에 개인정보처리방침에 동의해야 합니다.");
 	  return false;
 	}
+
 </script>
 <style type="text/css">
-	h2{
-		color : white;
-		align : center;
-	}
-	.scrolltable {
-  		display: block;
-  		overflow: auto;
-	}
+   h2{
+      color : white;
+      align : center;
+   }
+   .scrolltable {
+        display: block;
+        overflow: auto;
+   }
 
 </style>
 </head>
@@ -91,7 +93,7 @@ function signUp() {
     </form>
   </div>
 </div>
-		<hr>
-	</div>
+      <hr>
+   </div>
 </body>
 </html>

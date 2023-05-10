@@ -174,6 +174,8 @@ public class MemberMybatisDao {
 		 }
 		return 0;
 	}
+
+  
 	public void deleteboard(List<Integer> numList) {
 		SqlSession session = MybatisConnection.getConnection();
 		 try {
@@ -187,5 +189,17 @@ public class MemberMybatisDao {
 		 }
 			
 	}
-	 
+
+	public void levelupdate() {
+		SqlSession session = MybatisConnection.getConnection();
+	try {
+		session.getMapper(cls).levelupdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		MybatisConnection.close(session);
+	}
+		
+	}
+
 }
