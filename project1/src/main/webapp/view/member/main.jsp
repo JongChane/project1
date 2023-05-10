@@ -15,12 +15,37 @@
 	height: 300px;
 	line-height: 0.5;
 }
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px; /* Adjust as needed */
+    width: 100%;
+    height: 100vh; /* Adjust as needed */
+}
+
+#div1 {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+#div2 {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+#div3 {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+#div4 {
+    grid-area: 2 / 2 / 3 / 3;
+}
 </style>
+
 </head>
 <body>
-	<div class="container" style="text-align: center;">
-		<div>
-			<table class="inline-block">
+<div class="grid-container">
+	<div id = "div1" class="container inline-block" style="text-align: center;">
+			<table class="container">
 				<tr>
 					<th>베스트게시판</th>
 				</tr>
@@ -40,7 +65,6 @@
 							  <c:when test="${board.category_num == 9}">레시피</c:when>
 							  <c:when test="${board.category_num == 10}">맛집</c:when>
 							  <c:when test="${board.category_num == 11}">자랑</c:when>
-							  <c:otherwise></c:otherwise>
 							</c:choose>
 							</td>
 							<td><a href="../board/info?board_num=${board.board_num}">${board.content}</a></td>
@@ -59,7 +83,12 @@
 					</c:if>
 				</c:forEach>
 			</table>
-			<table class="inline-block">
+		</div>
+	</div>
+		
+	<div class="grid-container">
+		<div id = "div2" class="container inline-block" style="text-align: center;">
+			<table>
 				<tr>
 					<th>유머게시판</th>
 				</tr>
@@ -84,8 +113,11 @@
 				</c:forEach>
 			</table>
 		</div>
+	</div>
 		
-		<table class="inline-block">
+	<div class="grid-container">
+	<div id = "div3" class="container inline-block" style="text-align: center;">
+		<table>
 			<tr>
 				<th>해축게시판</th>
 			</tr>
@@ -109,8 +141,12 @@
 				</c:if>
 			</c:forEach>
 		</table>
-
-		<table class="inline-block">
+	</div>
+	</div>
+	
+	<div class="grid-container">
+	<div id = "div4" class="container inline-block" style="text-align: center;">
+		<table>
 			<tr>
 				<th>음식게시판</th>
 			</tr>
@@ -135,5 +171,7 @@
 			</c:forEach>
 		</table>
 	</div>
+	</div>
+
 </body>
 </html>

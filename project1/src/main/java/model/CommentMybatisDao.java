@@ -160,6 +160,7 @@ public void grpStepAdd(int grp, int grpstep) {
   } finally {
 		MybatisConnection.close(session);
 	}
+}
 
 public int commcount(int num) {
 	SqlSession session = MybatisConnection.getConnection();

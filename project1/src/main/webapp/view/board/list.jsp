@@ -95,7 +95,44 @@
         
     </td>
  		<td>
- 			<a href="../member/info?member_id=${b.member_id}">${b.member_id}</a>
+ 		<c:if test="${sessionScope.login == b.member_id}">
+ 			<a href="../member/info?member_id=${b.member_id}">${b.member_id}</a>	
+ 		</c:if>
+ 		<c:if test="${sessionScope.login != b.member_id}">
+ 			<a href="../member/finfo?member_id=${b.member_id}">${b.member_id}</a>
+ 		</c:if>
+ 		<c:choose>
+        	<c:when test="${b.level == 1}">
+            	<img src="../image/1.gif">
+        	</c:when>
+        	<c:when test="${b.level == 2}">
+            	<img src="../image/2.gif">
+        	</c:when>
+        	<c:when test="${b.level == 3}">
+            	<img src="../image/3.gif">
+        	</c:when>
+        	<c:when test="${b.level == 4}">
+            	<img src="../image/4.gif">
+        	</c:when>
+        	<c:when test="${b.level == 5}">
+        		<img src="../image/5.gif">
+        	</c:when>
+        	<c:when test="${b.level == 6}">
+        		<img src="../image/6.gif">
+        	</c:when>
+        	<c:when test="${b.level == 7}">
+        		<img src="../image/7.gif">
+        	</c:when>
+        	<c:when test="${b.level == 8}">
+        		<img src="../image/7.gif">
+        	</c:when>
+        	<c:when test="${b.level == 9}">
+        		<img src="../image/8.gif">
+        	</c:when>
+        	<c:when test="${b.level == 10}">
+        		<img src="../image/9.gif">
+        	</c:when>        
+    	</c:choose>	
  		</td>
 				<%-- 오늘 등록된 게시물 날짜 format대로 출력하기 --%>
  <fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="t" /> 

@@ -90,7 +90,6 @@ public class BoardController extends MskimRequestMapping {
 			if (endpage > maxpage)
 				endpage = maxpage;
 			// boardName : 게시판 이름 화면에 출력
-			
 			String boardName = null;
 			switch (boardid) {
 			case "1":
