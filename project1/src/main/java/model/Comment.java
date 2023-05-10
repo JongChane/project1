@@ -12,6 +12,7 @@ public class Comment {
 	private String content;
 	private int grp;
 	private int grpstep;
+	private int grplevel;
 
 	public String getContent() {
 		return content;
@@ -78,13 +79,24 @@ public class Comment {
 		this.grpstep = grpstep;
 	}
 
+	
+	
+	public int getGrplevel() {
+		return grplevel;
+	}
+
+	public void setGrplevel(int grplevel) {
+		this.grplevel = grplevel;
+	}
+
 	@Override
 	public String toString() {
 		return "Comment [comment_num=" + comment_num + ", regdate=" + regdate + ", recommendcnt=" + recommendcnt
 				+ ", member_id=" + member_id + ", board_num=" + board_num + ", content=" + content + ", grp=" + grp
-				+ ", grpstep=" + grpstep + "]";
+				+ ", grpstep=" + grpstep + ", grplevel=" + grplevel + "]";
 	}
 
+	
 	
 
 }

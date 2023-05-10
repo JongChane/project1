@@ -86,7 +86,7 @@ public interface BoardMapper {
 	int delete(int board_num);
 
 
-	@Update("update board set title=#{title},content=#{content} where board_num=#{board_num}")
+	@Update("update board set category_num=#{category_num}, title=#{title},content=#{content} where board_num=#{board_num}")
 	int update(Board board);
 
 	@Select("select * from board where boardid=2 order by regdate desc" )
