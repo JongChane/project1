@@ -85,10 +85,5 @@ a{
 
 
  </div>
- <footer>
-      <p><i class="fa fa-map-marker fa-fw w3-text-white w3-large w3-margin-right"></i> GDJ 62기 3300프로젝트</p>
-      <p><i class="fa fa-envelope fa-fw w3-text-white w3-large w3-margin-right"> </i> Email: 3300@3300.com</p>
-      <p>© 2023 • 3300.co.kr</p>
-</footer>
 </body>
 </html>

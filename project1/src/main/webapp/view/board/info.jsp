@@ -29,24 +29,32 @@
     }
 </script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>33OO</title>
 </head>
 
 <body>
    <div class="w3-container" style="width:1050px; height:300px; margin:auto;" align="center">
       <table>
          <tr>
-            <td>${category_name}</td>
+            <td>[분류]&nbsp;&nbsp;&nbsp;&nbsp;${category_name}</td>
          </tr>
          <tr>
-            <td>${b.title}</td>
+            <td>[제목]&nbsp;&nbsp;&nbsp;&nbsp;${b.title}</td>
          </tr>
          <tr>
-            <td>Lv${level} | ${b.member_id} | 조회수 : ${b.readcnt} | 추천수 : ${b.recommendcnt} | 댓글수 : ${b.commcnt} | <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+            <td>Lv${level}&nbsp;&nbsp;|&nbsp;&nbsp;${b.member_id}&nbsp;&nbsp;|&nbsp;&nbsp;조회수 : <fmt:formatNumber value="${b.readcnt}" groupingUsed="true"/>&nbsp;&nbsp;
+             |&nbsp;&nbsp;추천수 : <fmt:formatNumber value="${b.recommendcnt}" groupingUsed="true"/>&nbsp;&nbsp;|&nbsp;&nbsp;댓글수 : ${b.commcnt}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
          </tr>
-         
          <tr>
             <td>${b.content}</td>
+         </tr>
+         <tr>
+         <td class="w3-center">
+            <c:if test="${sessionScope.login eq b.member_id}">
+            <a href="updateForm?board_num=${b.board_num}" class="w3-btn"style="margin-right:10px;">[수정]</a>
+            <a href="deleteForm?board_num=${b.board_num}" style="margin-right:50px;">[삭제]</a>
+         </c:if>
+         </td> 
          </tr>
          <tr>
             <td class="w3-center">
@@ -54,28 +62,16 @@
                 <input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
                 <button type="submit">👍 : ${b.recommendcnt}</button>
                </form>
-            </td>
-            
+         </td>  
          </tr>
          
       </table>
-      
-      <div style="display:flex; justify-content:space-between; width:35%; margin-top:10px;">
-         <div >
+         <div align= "left">
             <a href="list?boardid=${boardid}">목록으로</a>
          </div>
-         <c:if test="${sessionScope.login eq b.member_id}">
-         <div align="right">
-            <a href="updateForm?board_num=${b.board_num}" class="w3-btn"style="margin-right:10px;">수정</a>
-            <a href="deleteForm?board_num=${b.board_num}" style="margin-right:50px;">삭제</a>
-         </div>
-         </c:if>
-      </div>
-   </div>
-   
+
    
    <%-- 댓글 작성시 화면 출력 공간 --%>
-   <div class="w3-container" style="width:1050px; height:auto; margin:auto;" align="center">
    <table class="w3-table-all">      
       
       <c:forEach var="c" items="${top3Comments}" varStatus="status">
@@ -94,7 +90,7 @@
               <td>🥉</td>              
             </c:when>
          </c:choose>
-         <tr>	
+         <tr>   
             <td colspan="2">${c.member_id} ${c.content}
            <fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td></tr>
            <tr>
@@ -104,7 +100,7 @@
                    <input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
                    <button type="submit">👍 : ${c.recommendcnt}</button>
                </form>
-            <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}&comment_num=${c.comment_num}&grplevel=${c.grplevel}">삭제</a>
+            <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
             </td>
           </tr>
     
@@ -133,12 +129,12 @@
                 <button type="submit">👍 : ${c.recommendcnt}</button>
                </form>
                <c:if test="${sessionScope.login eq c.member_id}">
-               <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}&comment_num=${c.comment_num}&grplevel=${c.grplevel}">삭제</a>
+               <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}">삭제</a>
                </c:if>
          </td>
       </tr>
       <tr>
-      	<td id="comment${stat.count}" style="display: none;">
+         <td id="comment${stat.count}" style="display: none;">
             <form action="reply"  method="post" name="comment" >
             <input type="hidden" name="board_num" value="${b.board_num}">
             <input type="hidden" name="member_id" value="${sessionScope.login}">
@@ -179,12 +175,11 @@
           </td>
        </tr>  
    </table>
-   </div>
    
    <%-- 댓글 등록,삭제 및 조회 --%>
    <span id="comment">
    <form action="comment" method="post" onsubmit="return input_check(this)">
-   <div style="width:1050px; height:300px; margin:auto;" align="center">
+   <div style=" margin:auto;" align="center">
    <input type="hidden" name="board_num" value="${b.board_num}">
    <input type="hidden" name="member_id" value="${sessionScope.login}">
          <p><textarea rows="2" cols="100" name="content" ></textarea></p>
@@ -192,5 +187,6 @@
       </div>
    </form>
    </span>
+   </div>
 </body>
 </html>

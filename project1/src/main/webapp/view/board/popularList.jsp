@@ -86,7 +86,7 @@
         <c:if test="${not empty b.thumbnail}">
              <img src="${b.thumbnail}" style="width: 70px; height: 70px; margin-right: 10px;">
         </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
-        ${b.title}</a>
+        ${b.title}</a>&nbsp;&nbsp;<span style="color:orange;">[${b.commcnt}]</span>
     </td>
  		<td>
  		<c:if test="${sessionScope.login == b.member_id}">
