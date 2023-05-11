@@ -18,7 +18,8 @@
 </head>
 <body>
 <form action="delete" method="post" onsubmit="return inputcheck(this)">
-	<input type="hidden" name="member_id" value="${param.member_id }">
+
+	<input type="hidden" name="member_id" value="${param.id }">
 	<table class="table"><caption>회원비밀번호 입력</caption>
 	<tr><th>비밀번호</th>
 		<td><input type="password" name="pass"></td></tr>

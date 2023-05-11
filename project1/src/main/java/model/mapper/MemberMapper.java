@@ -19,7 +19,7 @@ public interface MemberMapper {
 		int insert(Member mem);
 
 	@Select("SELECT m.member_id, m.pass, m.tel,m.email, m.exp, l.level  "
-	    		+ "FROM level l , member m WHERE member_id=#{value} and m.exp BETWEEN l.minexp and l.maxexp")
+	    		+ "FROM level l , member m WHERE BINARY member_id=#{value} and m.exp BETWEEN l.minexp and l.maxexp")
 	Member selectOne(String member_id);
 
 	@Update("update member set tel=#{tel}, email=#{email} where member_id =#{member_id}")
