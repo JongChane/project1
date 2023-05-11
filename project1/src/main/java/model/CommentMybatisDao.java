@@ -62,18 +62,24 @@ public class CommentMybatisDao {
 //      }
 //   }
 
-   public boolean delete(int board_num,int grp) {
-      SqlSession session = MybatisConnection.getConnection();
-      try {
-         int cnt = session.getMapper(cls).delete(board_num,grp);
-         if(cnt > 0) return true;
-      }catch(Exception e) {
-         e.printStackTrace();
-      }finally {
-         MybatisConnection.close(session);
-      }
-      return false;
-   }
+   public boolean delete(int board_num,int grp,int grplevel,int comment_num) {
+	      SqlSession session = MybatisConnection.getConnection();
+	      try {
+	         //@Param("board_num")int board_num,@Param("grp")int grp,@Param("grplevel") int grp
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("board_num", board_num);
+	        map.put("grp", grp);
+	        map.put("grplevel", grplevel);
+	        map.put("comment_num", comment_num);
+	         int cnt = session.getMapper(cls).delete(map);
+	         if(cnt > 0) return true;
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }finally {
+	         MybatisConnection.close(session);
+	      }
+	      return false;
+	   }
 
 public int checkcomRecommend(ComRecommend cr) {
 	SqlSession session = MybatisConnection.getConnection();

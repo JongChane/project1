@@ -29,8 +29,12 @@ public interface CommentMapper {
 //   @Delete("delete from comment where board_num = #{value}")
 //   void deleteAll(int board_num);
 
-   @Delete("delete from comment where grp = #{grp} and board_num = #{board_num}")
-   int delete(@Param("board_num")int board_num,@Param("grp")int grp);
+		@Delete({"<script>",
+		      "delete from comment where board_num = #{board_num} "
+		      + "<if test='grplevel == 0'>and grp=${grp}</if>"
+		      + "<if test='grplevel == 1'>and comment_num=${comment_num}</if>",
+		      "</script>"})
+		   int delete(Map map);
    
    @Select("SELECT COUNT(*) FROM com_recommend WHERE comment_num=#{comment_num} AND member_id=#{member_id}")
    int checkcomRecommend(ComRecommend cr);
