@@ -7,14 +7,28 @@
 <title>Smile 33OO</title>
 <script type="text/javascript">
    function input_check(f) {
-      if(f.member_id.value.trim() == "") {
+      if(f.id.value.trim() == "") {
          alert("아이디를 입력하세요")
-         f.member_id.focus()
+         f.id.focus()
          return false;
       }
       if(f.pass.value.trim() == "") {
          alert("비밀번호를 입력하세요")
          f.pass.focus()
+         return false;
+      }
+      if(f.tel.value.trim() == "") {
+         alert("전화번호를 입력하세요")
+         f.tel.focus()
+         return false;
+      }
+      if(f.email.value.trim() == "") {
+         alert("이메일을 입력하세요")
+         f.email.focus()
+         return false;
+      }
+      if(f.idchkchk.value.trim() != "checked") {
+         alert("아이디 중복체크를 해주세요");
          return false;
       }
       return true;
@@ -47,6 +61,7 @@
 
 <form action="join" method="post" name="f" onsubmit="return input_check(this)">
 <input type="hidden" name="picture" value="">
+
 <div class="container">
    <h2 align="center">회원가입</h2>
    <div class="row">
@@ -58,6 +73,7 @@
             <input type="text" class="form-control" name="id" id="id" style="width:250px"><br>
             
              <input type="button" value="중복체크" onclick="idchk()" class="btn btn-dark" id="idChkBtn"><br>
+             <input type="hidden" name="idchkchk" id="idchkchk" value="">
          <label for="pwd">비밀번호:</label>
             <input type="password" class="form-control" name="pass" id="pwd" style="width:250px"><br>
       </div>

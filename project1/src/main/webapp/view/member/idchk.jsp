@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디중복검색</title>
+<title>Smile 33OO</title>
 <link rel="stylesheet"
    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <style type="text/css">
@@ -23,8 +23,9 @@
 </table>    
 <script>
   if (${able}) {
-     //joinForm.jsp 페이지의 아이디 부분의 글자색을 초록색으로
+     
    opener.document.f.id.style.color="green"
+   opener.document.f.idchkchk.value="checked";
    //id="msg" 태그에 class 속성 등록
    document.querySelector("#msg").setAttribute("class","able")
   } else {

@@ -58,6 +58,7 @@ function inputout() {
             감동<input type="checkbox" name="category_num" value="4">&nbsp;&nbsp;&nbsp;
          </td>
       </tr>
+     </table>
 </c:if>      
 <c:if test="${boardid == 3}">
    <table>
