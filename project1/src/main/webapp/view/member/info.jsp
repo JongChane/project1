@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -18,6 +18,7 @@ function selectAll(selectAll)  {
 </script>
 </head>
 <body>
+
 	<div class="container" style="width:1050px; height:300px; margin:auto;" align="center">
 		<h2 align="center">회원 상세 정보</h2>
 		<form name="f" method="post" action="deleteboard">
@@ -145,38 +146,40 @@ function selectAll(selectAll)  {
 						<c:set var="boardnum" value="${boardnum + 1}" />
 						<td><c:choose>
 								<c:when test="${b.category_num == 1}">
+
             유머
         </c:when>
-								<c:when test="${b.category_num == 2}">
+                        <c:when test="${b.category_num == 2}">
             썰
         </c:when>
-								<c:when test="${b.category_num == 3}">
+                        <c:when test="${b.category_num == 3}">
             공포
         </c:when>
-								<c:when test="${b.category_num == 4}">
+                        <c:when test="${b.category_num == 4}">
             감동
         </c:when>
-								<c:when test="${b.category_num == 5}">
+                        <c:when test="${b.category_num == 5}">
             뉴스
         </c:when>
-								<c:when test="${b.category_num == 6}">
+                        <c:when test="${b.category_num == 6}">
             루머
         </c:when>
-								<c:when test="${b.category_num == 7}">
+                        <c:when test="${b.category_num == 7}">
             움짤
         </c:when>
-								<c:when test="${b.category_num == 8}">
+                        <c:when test="${b.category_num == 8}">
             분석
         </c:when>
-								<c:when test="${b.category_num == 9}">
+                        <c:when test="${b.category_num == 9}">
             레시피
         </c:when>
-								<c:when test="${b.category_num == 10}">
+                        <c:when test="${b.category_num == 10}">
             맛집
         </c:when>
-								<c:when test="${b.category_num == 11}">
+                        <c:when test="${b.category_num == 11}">
             자랑
         </c:when>
+
 							</c:choose></td>
 							
 						<td style="text-align: center">
@@ -227,5 +230,6 @@ function selectAll(selectAll)  {
 			</table>
 		</form>
 	</div>
+
 </body>
 </html>

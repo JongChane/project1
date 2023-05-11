@@ -9,16 +9,16 @@
 <title>회원 정보 보기</title>
 </head>
 <body>
-	<div class="container" style="text-align:center">
-	<h2 id="center">회원 상세 정보</h2>
-	<table class="table table-hover">
-		<tr><td rowspan="6" width="30%" >
+   <div class="container" style="text-align:center">
+   <h2 id="center">회원 상세 정보</h2>
+   <table class="table table-hover">
+      <tr><td rowspan="6" width="30%" >
 
-			<tr><th>레벨</th><td>${mem.level}</td></tr>
-			<tr>
-				<th>현재exp/필요exp</th>
-				<td>${mem.exp}/
-		<c:choose>
+         <tr><th>레벨</th><td>${mem.level}</td></tr>
+         <tr>
+            <th>현재exp/필요exp</th>
+            <td>${mem.exp}/
+      <c:choose>
         <c:when test="${mem.level == 1}">
             100
         </c:when>
@@ -49,10 +49,11 @@
         <c:when test="${mem.level == 10}">
             999,999
         </c:when>
-   	    </c:choose>
-				</td>
-			</tr>
-		<th width="20%">아이디</th><td>${mem.member_id}</td></tr>
+          </c:choose>
+            </td>
+         </tr>
+      <th width="20%">아이디</th><td>${mem.member_id}</td></tr>
+
 
 			<tr><th>레벨</th>
 			<td>${mem.level}&nbsp;&nbsp;
@@ -121,6 +122,7 @@
  				<td>${boardnum}</td>
  					<c:set var="boardnum" value="${boardnum - 1}" />
  				<td>
+
     <c:choose>
         <c:when test="${b.category_num == 1}">
             유머

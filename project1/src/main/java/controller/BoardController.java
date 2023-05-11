@@ -342,8 +342,19 @@ public class BoardController extends MskimRequestMapping {
 
 	@RequestMapping("deleteForm") //보류
 	public String deleteForm(HttpServletRequest request, HttpServletResponse response) {
-		String login = (String)request.getSession().getAttribute("login");
-		String boardid = (String)request.getSession().getAttribute("boardid");
+		String login = (String) request.getSession().getAttribute("login");
+		String boardid = (String) request.getSession().getAttribute("boardid");
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		Board b = dao.selectOne(board_num);
+		if (login == null) {
+			request.setAttribute("msg", "로그인을 하셔야합니다.");
+			request.setAttribute("url", "../member/loginForm");
+			return "alert";
+		} else if (!login.equals(b.getMember_id())) {
+			request.setAttribute("msg", "작성자일 경우만 수정 가능합니다.");
+			request.setAttribute("url", "list");
+			return "alert";
+		}
 
 		return "board/deleteForm";
 	}
@@ -389,11 +400,19 @@ public class BoardController extends MskimRequestMapping {
 
 	@RequestMapping("updateForm")
 	public String updateForm(HttpServletRequest request, HttpServletResponse response) {
-		String login = (String)request.getSession().getAttribute("login");
-		String boardid = (String)request.getSession().getAttribute("boardid");
+		String login = (String) request.getSession().getAttribute("login");
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		Board b = dao.selectOne(board_num);
-		request.setAttribute("b",b);
+		if (login == null) {
+			request.setAttribute("msg", "로그인을 하셔야합니다.");
+			request.setAttribute("url", "../member/loginForm");
+			return "alert";
+		} else if (!login.equals(b.getMember_id())) {
+			request.setAttribute("msg", "작성자만 수정가능합니다.");
+			request.setAttribute("url", "list");
+			return "alert";
+		}
+		request.setAttribute("b", b);
 		return "board/updateForm";
 	}
 
@@ -626,7 +645,7 @@ public class BoardController extends MskimRequestMapping {
 			int endpage = startpage + 9;
 			if (endpage > maxpage)
 				endpage = maxpage;
-			int commnum = commcount - (pageNum - 1) * limit;
+
 
 		      //댓글 목록 화면에 전달
 			  List<Comment> commlist = cdao.selectclist(num, pageNum, limit);
@@ -634,14 +653,13 @@ public class BoardController extends MskimRequestMapping {
 					    .sorted(Comparator.comparing(Comment::getRecommendcnt).reversed())
 					    .limit(3)
 					    .collect(Collectors.toList());
-     		  request.setAttribute("top3Comments", top3Comments);					
-		      request.setAttribute("b",b);
-		      request.setAttribute("level", level);
-		      request.setAttribute("boardid",boardid);
-		      request.setAttribute("boardName",boardName);
-		      request.setAttribute("commnum", commnum);
-		      request.setAttribute("category_name", category_name);
-		      request.setAttribute("commlist",commlist);
+				request.setAttribute("top3Comments", top3Comments);
+				request.setAttribute("b", b);
+				request.setAttribute("level", level);
+				request.setAttribute("boardid", boardid);
+				request.setAttribute("boardName", boardName);
+				request.setAttribute("category_name", category_name);
+				request.setAttribute("commlist", commlist);
 			  request.setAttribute("startpage", startpage);
 			  request.setAttribute("endpage", endpage);
 			  request.setAttribute("maxpage", maxpage);

@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-
 import model.ComRecommend;
 import model.Comment;
 
@@ -23,7 +22,8 @@ public interface CommentMapper {
    int cominsert(Comment comm);
    
 
-   @Select("select * from comment where board_num = #{board_num} ")
+		@Select("select * from comment where board_num = #{board_num}"
+				+ " order by grp asc, grplevel asc, grpstep desc limit #{start}, #{limit}")
    List<Comment> selectclist(Map<String, Object> map);
 
 //   @Delete("delete from comment where board_num = #{value}")
@@ -55,9 +55,8 @@ public interface CommentMapper {
 			+ " where  grp=#{grp} and grpstep>#{grpstep}" )
   	void grpStepAdd(@Param("grp")int grp, @Param("grpstep")int grpstep);
 
-   
-   @Select("select count(*) from comment where board_num=#{value} ")
-   int commcount(int num);
-   
+		@Select("select count(*) from comment where board_num=#{value} ")
+		int commcount(int num);
+
 }
 

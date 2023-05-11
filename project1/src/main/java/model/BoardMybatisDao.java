@@ -46,6 +46,9 @@ public class BoardMybatisDao {
 			map.put("boardid", boardid);
 			map.put("start", (pageNum - 1) * limit);
 			map.put("limit", limit);
+			if ("member_id".equals(column)) {
+				column = "b.member_id";
+			}
 			map.put("column", column);
 			if (column != null) {
 				String[] cols = column.split(",");
@@ -102,6 +105,9 @@ public class BoardMybatisDao {
 			map.put("boardid", boardid);
 			map.put("start", (pageNum - 1) * limit);
 			map.put("limit", limit);
+			if ("member_id".equals(column)) {
+				column = "b.member_id";
+			}
 			map.put("column", column);
 			if (column != null) {
 				String[] cols = column.split(",");
@@ -158,6 +164,9 @@ public class BoardMybatisDao {
 			map.put("boardid", boardid);
 			map.put("start", (pageNum - 1) * limit);
 			map.put("limit", limit);
+			if ("member_id".equals(column)) {
+				column = "b.member_id";
+			}
 			map.put("column", column);
 			if (column != null) {
 				String[] cols = column.split(",");
