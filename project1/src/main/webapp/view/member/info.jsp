@@ -121,14 +121,13 @@ function selectAll(selectAll)  {
 						</td>
 				</tr>
 			</table>
-				<hr>
+			
 			<table>
 				<tr>
-					<td colspan="5" style="text-align: right">작성글수:<fmt:formatNumber value="${boardCount}" groupingUsed="true"/>&nbsp;&nbsp;&nbsp;
+					<td colspan="7" style="text-align: right">작성글수:<fmt:formatNumber value="${boardCount}" groupingUsed="true"/>&nbsp;&nbsp;&nbsp;
 					 받은추천수 : <fmt:formatNumber value="${recommendCount}" groupingUsed="true"/>
 					</td>
 				</tr>
-				<tr><td><br></td></tr>
 				<tr>
 					<th width="5%">글번호</th>
 					<th width="10%">분류</th>
@@ -139,6 +138,7 @@ function selectAll(selectAll)  {
 					<th width="6%">추천수</th>
 					<th><input type='checkbox' onchange='selectAll(this)'></th>
 				</tr>
+					<tr><td colspan="7"><hr></td></tr>
 				<c:forEach var="b" items="${list}">
 					<tr>
 						<td>${boardnum}</td>
@@ -197,6 +197,7 @@ function selectAll(selectAll)  {
 						<td><input type='checkbox' name='idchks'
 							value="${b.board_num}" /> <br /></td>
 					</tr>
+				<tr><td colspan="7"><hr></td></tr>
 				</c:forEach>
 
 

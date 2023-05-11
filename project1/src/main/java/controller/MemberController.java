@@ -81,12 +81,22 @@ public class MemberController extends MskimRequestMapping{
    @RequestMapping("loginForm")
    public String loginForm(HttpServletRequest request,
          HttpServletResponse response) {
+	   try {
+	         request.setCharacterEncoding("UTF-8");
+	      } catch (UnsupportedEncodingException e) {
+	         e.printStackTrace();
+	      }
       request.setAttribute("uri", request.getRequestURI());
       return "member/loginForm"; 
    }
    @RequestMapping("login")
    public String login(HttpServletRequest request,
          HttpServletResponse response) {
+	   try {
+	         request.setCharacterEncoding("UTF-8");
+	      } catch (UnsupportedEncodingException e) {
+	         e.printStackTrace();
+	      }
       String member_id = request.getParameter("member_id");
       String pass = request.getParameter("pass");
       Member mem = dao.selectOne(member_id);
@@ -239,6 +249,7 @@ public class MemberController extends MskimRequestMapping{
       
       List<Board> list = dao.boardselect(member_id, pageNum, limit);
       int boardCount = dao.memberboardCount(member_id);
+      int recommendCount = dao.memberrecommendCount(member_id);
       dao.exupdate(member_id, 0);
       Member mem = dao.selectOne(member_id);
       int maxpage = (int) ((double) boardCount / limit + 0.95);
@@ -248,6 +259,7 @@ public class MemberController extends MskimRequestMapping{
          endpage = maxpage;
       int boardnum = boardCount - (pageNum - 1) * limit;
       request.setAttribute("pageNum", pageNum);
+      request.setAttribute("recommendCount", recommendCount);
       request.setAttribute("boardCount", boardCount);
       request.setAttribute("mem", mem);
       request.setAttribute("list", list);

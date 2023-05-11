@@ -40,6 +40,7 @@
 			<th width="10%">조회수</th>
 			<th width="10%">추천수</th>
 		</tr>
+			<tr><td colspan="7"><hr></td></tr>
 		<c:forEach var="b" items="${popularList}">
  			<tr>
  				<td>${boardnum}</td>
@@ -142,6 +143,7 @@
 		 		<td><fmt:formatNumber value="${b.readcnt}" groupingUsed="true"/></td>
 		 		<td><fmt:formatNumber value="${b.recommendcnt}" groupingUsed="true"/></td>
 			</tr>
+	<tr><td colspan="7"><hr></td></tr>
 		</c:forEach>
 		<%-- 페이지 처리하기 --%>
  		<tr>

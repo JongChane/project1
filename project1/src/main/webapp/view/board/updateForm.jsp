@@ -89,11 +89,9 @@ function inputout() {
 				
 			</tr>
 			<tr>
-				<td>제목</td>
 				<td><input type="text" name="title" value="${b.title}"></td>
 			</tr>
 			<tr>
-				<td>내용</td>
 				<td>
 					<textarea rows="5" cols="68" name="content">${b.content}</textarea>
 				</td>

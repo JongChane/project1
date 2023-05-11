@@ -49,7 +49,7 @@
 			<th width="5%">조회수</th>
 			<th width="5%">추천수</th>
 		</tr>
-		
+			<tr><td colspan="7"><hr></td></tr>
 		<c:forEach var="b" items="${list}">
  			<td>${boardnum}</td>
  			<c:set var="boardnum" value="${boardnum - 1}" />

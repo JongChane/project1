@@ -9,7 +9,7 @@
 <title>Smile 33OO</title>
 </head>
 <body>
-   <div class="container" style="text-align:center">
+  <div class="container" style="width:1050px; height:300px; margin:auto;" align="center">
    <h2 id="center">회원 상세 정보</h2>
    <table class="table table-hover">
       <tr><td rowspan="6" width="30%" >
@@ -102,12 +102,13 @@
 	</td></tr>
 	</c:if>
 	</table>
+
  		<table>
-		<tr>
-		<td colspan="5" style="text-align: right">작성글수:<fmt:formatNumber value="${boardCount}" groupingUsed="true"/>&nbsp;&nbsp;&nbsp;
-			받은 추천 수 : <fmt:formatNumber value="${recommendCount}" groupingUsed="true"/>
-			</td>
-		</tr>
+				<tr>
+					<td colspan="7" style="text-align: right">작성글수:<fmt:formatNumber value="${boardCount}" groupingUsed="true"/>&nbsp;&nbsp;&nbsp;
+					 받은추천수 : <fmt:formatNumber value="${recommendCount}" groupingUsed="true"/>
+					</td>
+				</tr>
 		<tr>
 			<th width="5%">글번호</th>
 			<th width="10%">분류</th>
@@ -117,6 +118,7 @@
 			<th width="10%">조회수</th>
 			<th width="10%">추천수</th>
 		</tr>
+			<tr><td colspan="7"><hr></td></tr>
 		<c:forEach var="b" items="${list}">
  			<tr>
  				<td>${boardnum}</td>
@@ -176,6 +178,7 @@
 		 		<td>${b.readcnt}</td>
 		 		<td>${b.recommendcnt}</td>
 			</tr>
+			<tr><td colspan="7"><hr></td></tr>	
 		</c:forEach>
 		<%-- 페이지 처리하기 --%>
  		<tr>

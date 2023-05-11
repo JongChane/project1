@@ -48,8 +48,8 @@ function inputout() {
 <hr>
 <div >
 <form action="write" method="post" name="f">       
+<table>
 <c:if test="${boardid == 2 }">
-   <table>
       <tr>
          <td>
             유머<input type="checkbox" name="category_num" value="1">&nbsp;&nbsp;&nbsp;
@@ -58,10 +58,9 @@ function inputout() {
             감동<input type="checkbox" name="category_num" value="4">&nbsp;&nbsp;&nbsp;
          </td>
       </tr>
-     </table>
+
 </c:if>      
 <c:if test="${boardid == 3}">
-   <table>
       <tr>
          <td>
             뉴스<input type="checkbox" name="category_num" value="5">&nbsp;&nbsp;&nbsp;
@@ -70,11 +69,10 @@ function inputout() {
             분석<input type="checkbox" name="category_num" value="8">&nbsp;&nbsp;&nbsp;
          </td>
       </tr>
-     </table>
+
 </c:if>
 
 <c:if test="${boardid == 4}"> 
-   <table>
       <tr>
          <td>
             레시피<input type="checkbox" name="category_num" value="9">&nbsp;&nbsp;&nbsp;
@@ -82,7 +80,7 @@ function inputout() {
             자랑<input type="checkbox" name="category_num" value="11">&nbsp;&nbsp;&nbsp;
          </td>
       </tr>
-      </table>
+
 </c:if>   
       <tr>
          <td>

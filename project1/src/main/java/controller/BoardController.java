@@ -351,7 +351,7 @@ public class BoardController extends MskimRequestMapping {
 			request.setAttribute("url", "../member/loginForm");
 			return "alert";
 		} else if (!login.equals(b.getMember_id())) {
-			request.setAttribute("msg", "작성자일 경우만 수정 가능합니다.");
+			request.setAttribute("msg", "작성자일 경우만 삭제 가능합니다.");
 			request.setAttribute("url", "list");
 			return "alert";
 		}
