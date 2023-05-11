@@ -16,7 +16,10 @@
 			grid-template-rows: repeat(2, 1fr);
 			grid-gap: 20px;
 		}
-
+		.container > div{
+			width:80%
+		}
+		
 		.category {
 			font-weight: bold;
 			font-size: 30px;
@@ -43,6 +46,8 @@
 			scrollbar-color: gray;
 		}
 
+		.container > div:nth-child(2n-1){margin : 0 0 0 150px;}
+		.container > div:nth-child(2n){margin : 0 30x 0 0;}
 		.container > div::-webkit-scrollbar {
 			width: 8px;
 		}
@@ -58,7 +63,7 @@
 	<div>
     <div class="category">베스트게시판</div><hr>
     <c:forEach items="${best}" var="board" varStatus="status">
-        <c:if test="${status.index < 5}">
+        <c:if test="${status.index < 7}">
             <div class="board" style="display: flex; justify-content: space-between; align-items: center;">
                 <c:choose>
                     <c:when test="${board.category_num == 1}">유머</c:when>
@@ -90,7 +95,7 @@
 	<div>
 		<div class="category">유머게시판</div><hr>
 		<c:forEach items="${humor}" var="board" varStatus="status">
-			<c:if test="${status.index < 5}">
+			<c:if test="${status.index < 7}">
 				<div class="board" style="display: flex; justify-content: space-between; align-items: center;">
 					${board.category_num == 1 ? "유머" : board.category_num == 2 ? "썰" : board.category_num == 3? "공포" : board.category_num == 4 ? "감동" : ""}
 					<a href="../board/info?board_num=${board.board_num}">
@@ -110,7 +115,7 @@
 	<div>
 		<div class="category">해축게시판</div><hr>
 		<c:forEach items="${soccer}" var="board" varStatus="status">
-				<c:if test="${status.index < 5}">
+				<c:if test="${status.index < 7}">
 					<div class="board" style="display: flex; justify-content: space-between; align-items: center;">
 					${board.category_num == 5 ? "뉴스" : board.category_num == 6 ? "루머" : board.category_num == 7? "움짤" : board.category_num == 8 ? "분석" : ""}
 					<a href="../board/info?board_num=${board.board_num}">
@@ -130,7 +135,7 @@
 	<div>
 		<div class="category">음식게시판</div><hr>
 		<c:forEach items="${food}" var="board" varStatus="status">
-				<c:if test="${status.index < 5}">
+				<c:if test="${status.index < 7}">
 					<div class="board" style="display: flex; justify-content: space-between; align-items: center;">
 					${board.category_num == 9 ? "레시피" : board.category_num == 10 ? "맛집" : board.category_num == 11? "자랑" : ""}
 					  <a href="../board/info?board_num=${board.board_num}">
