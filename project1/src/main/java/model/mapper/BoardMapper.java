@@ -92,16 +92,16 @@ public interface BoardMapper {
 	@Update("update board set category_num=#{category_num}, title=#{title},content=#{content} where board_num=#{board_num}")
 	int update(Board board);
 
-	@Select("select * from board where boardid=2 order by regdate desc" )
+	@Select("SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt from board b where boardid=2 order by regdate desc" )
 	List<Board> selectHumor();
 	
-	@Select("select * from board where boardid=3 order by regdate desc" )
+	@Select("SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt from board b where boardid=3 order by regdate desc" )
 	List<Board> selectSoccer();
 	
-	@Select("select * from board where boardid=4 order by regdate desc" )
+	@Select("SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt from board b where boardid=4 order by regdate desc" )
 	List<Board> selectFood();
 	
-	@Select("select * from board where recommendcnt >=10 order by recommendcnt desc" )
+	@Select("SELECT b.*, (SELECT COUNT(*) FROM comment c WHERE c.board_num = b.board_num) commcnt from board b where recommendcnt >=10 order by recommendcnt desc" )
 	List<Board> selectBest();
 
 	

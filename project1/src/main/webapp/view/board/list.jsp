@@ -98,8 +98,7 @@
             <img src="${b.thumbnail}" >
         </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
         ${b.title}&nbsp;&nbsp;<span style="color:orange;">[${b.commcnt}]</span>
-        </a>
-        
+        </a>        
     </td>
  		<td>
 

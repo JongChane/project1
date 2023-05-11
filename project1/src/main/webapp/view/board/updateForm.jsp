@@ -104,7 +104,7 @@ function inputout() {
 				})
 			</script>
 			<tr>
-				<td colspan="2"><a href="javascript:document.f.submit()">[게시물수정]</a></td>
+				<td colspan="2"><a href="javascript:inputcheck()">[게시물수정]</a></td>
 			</tr>
 		</table>
 	</div>

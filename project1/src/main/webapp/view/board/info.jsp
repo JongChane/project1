@@ -104,7 +104,7 @@
                    <input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
                    <button type="submit">👍 : ${c.recommendcnt}</button>
                </form>
-            <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&comment_num=${c.comment_num}">삭제</a>
+            <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}&comment_num=${c.comment_num}&grplevel=${c.grplevel}">삭제</a>
             </td>
           </tr>
     
@@ -133,7 +133,7 @@
                 <button type="submit">👍 : ${c.recommendcnt}</button>
                </form>
                <c:if test="${sessionScope.login eq c.member_id}">
-               <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}">삭제</a>
+               <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}&comment_num=${c.comment_num}&grplevel=${c.grplevel}">삭제</a>
                </c:if>
          </td>
       </tr>

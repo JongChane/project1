@@ -481,18 +481,20 @@ public class BoardController extends MskimRequestMapping {
 
 	}
 
-	@RequestMapping("commdel")
-	public String commdel(HttpServletRequest request, HttpServletResponse response) {
-		int board_num = Integer.parseInt(request.getParameter("board_num"));
-		int grp = Integer.parseInt(request.getParameter("grp"));
-		String url = "info?board_num=" + board_num + "&readcnt=f";
-		if(cdao.delete(board_num,grp)) {
-			return "redirect:" + url;
-		}
-		request.setAttribute("msg", "댓글삭제를 실패하였습니다.");
-		request.setAttribute("url", url);
-		return "alert";
-	}
+	   @RequestMapping("commdel")
+	   public String commdel(HttpServletRequest request, HttpServletResponse response) {
+	      int board_num = Integer.parseInt(request.getParameter("board_num"));
+	      int comment_num = Integer.parseInt(request.getParameter("comment_num"));
+	      int grp = Integer.parseInt(request.getParameter("grp"));
+	      int grplevel = Integer.parseInt(request.getParameter("grplevel"));
+	      String url = "info?board_num=" + board_num + "&readcnt=f";
+	      if(cdao.delete(board_num,grp,grplevel,comment_num)) {
+	         return "redirect:" + url;
+	      }
+	      request.setAttribute("msg", "댓글삭제를 실패하였습니다.");
+	      request.setAttribute("url", url);
+	      return "alert";
+	   }
 
 
 		@RequestMapping("recommend")

@@ -1,14 +1,14 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -112,14 +112,72 @@ public class MemberController extends MskimRequestMapping{
 			HttpServletResponse response) {
 		String login=(String)request.getSession().getAttribute("login");
 		List<Board> humor = bdao.selectHumor();
+		List<String> humorImg = new ArrayList<>();
+		for (Board board : humor) {
+		    String content = board.getContent();
+		    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+		    Matcher imgMatcher = imgPattern.matcher(content);
+
+		    if (imgMatcher.find()) {
+		        String thumbnailUrl = imgMatcher.group(1);
+		        humorImg.add(thumbnailUrl);
+		    }else {
+		    	humorImg.add(null);
+		    }
+		}
 		List<Board> soccer = bdao.selectSoccer();
+		List<String> soccerImg = new ArrayList<>();
+		for (Board board : soccer) {
+		    String content = board.getContent();
+		    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+		    Matcher imgMatcher = imgPattern.matcher(content);
+
+		    if (imgMatcher.find()) {
+		        String thumbnailUrl = imgMatcher.group(1);
+		        soccerImg.add(thumbnailUrl);
+		    }else {
+		    	soccerImg.add(null);
+		    }
+		}
+		
 		List<Board> food = bdao.selectFood();
+		List<String> foodImg = new ArrayList<>();
+		for (Board board : food) {
+		    String content = board.getContent();
+		    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+		    Matcher imgMatcher = imgPattern.matcher(content);
+
+		    if (imgMatcher.find()) {
+		        String thumbnailUrl = imgMatcher.group(1);
+		        foodImg.add(thumbnailUrl);
+		    }else {
+		    	foodImg.add(null);
+		    }
+		}
+		
 		List<Board> best = bdao.selectBest();
+		List<String> bestImg = new ArrayList<>();
+		for (Board board : best) {
+		    String content = board.getContent();
+		    Pattern imgPattern = Pattern.compile("<img[^>]+src=\"([^\">]+)\"");
+		    Matcher imgMatcher = imgPattern.matcher(content);
+
+		    if (imgMatcher.find()) {
+		        String thumbnailUrl = imgMatcher.group(1);
+		        bestImg.add(thumbnailUrl);
+		    }else {
+		    	bestImg.add(null);
+		    }
+		}
 	
 		request.setAttribute("humor", humor);
 		request.setAttribute("soccer", soccer);
 		request.setAttribute("food", food);
 		request.setAttribute("best", best);
+		request.setAttribute("humorImg", humorImg);
+		request.setAttribute("soccerImg", soccerImg);
+		request.setAttribute("foodImg", foodImg);
+		request.setAttribute("bestImg", bestImg);
 		request.setAttribute("today", new Date());
 		return "member/main"; 
 	}
@@ -305,7 +363,9 @@ public class MemberController extends MskimRequestMapping{
 			HttpServletResponse response) {
 		String login = (String)request.getSession().getAttribute("login");
 		String[] boardnums = request.getParameterValues("idchks");
-		List<Integer> numList = Arrays.stream(boardnums).map(s->Integer.parseInt(s)).toList();
+		List<Integer> numList = Arrays.stream(boardnums)
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
 		dao.deleteboard(numList);
 //		request.setAttribute("board_num", board_num);
 		return "redirect:info?member_id="+login;
@@ -435,15 +495,5 @@ public class MemberController extends MskimRequestMapping{
 		return "member/password";
 	}
 
-	public final class MyAuthenticator extends Authenticator {
-		private String id;
-		private String pw;
-		public MyAuthenticator(String id, String pw) {
-			this.id = id;
-			this.pw = pw;
-		}
-		protected PasswordAuthentication getPasswordAuthentication() {
-			return new PasswordAuthentication(id, pw);
-		}
-	}
+
 }
