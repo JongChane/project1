@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 수정</title>
+<title>Smile 33OO</title>
 <link rel="stylesheet" href="../../css/main.css">
 <script type="text/javascript">
    function inchk(f) {

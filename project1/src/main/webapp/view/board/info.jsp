@@ -29,7 +29,7 @@
     }
 </script>
 <meta charset="UTF-8">
-<title>33OO</title>
+<title>Smile 33OO</title>
 </head>
 
 <body>

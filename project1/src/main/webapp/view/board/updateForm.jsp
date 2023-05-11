@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 수정</title>
+<title>Smile 33OO</title>
 <script>
 function inputcheck() {
   var f = document.f;

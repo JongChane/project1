@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Smile 33OO</title>
 <script>
 function inputcheck() {
   var f = document.f;

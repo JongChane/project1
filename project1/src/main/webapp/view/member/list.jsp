@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 목록</title>
+<title>Smile 33OO</title>
 </head>
 <body>
 	<div class="container">

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 수정</title>
+<title>Smile 33OO</title>
 <script type="text/javascript">
 	function inputcheck(f){
 		if(f.pass.value == ""){

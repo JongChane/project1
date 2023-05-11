@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시물 목록</title>
+<title>Smile 33OO</title>
 <script type="text/javascript">
     function popularListsubmit(page) {
     	f = document.sf;  //검색 form 태그

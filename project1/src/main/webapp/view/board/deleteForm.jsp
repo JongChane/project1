@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 삭제</title>
+<title>Smile 33OO</title>
 </head>
 <body>
 <div style="width:1050px; height:300px; margin:auto;" align="center">

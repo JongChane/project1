@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디 찾기</title>
+<title>Smile 33OO</title>
 </head>
 <body>
 <h3>아이디찾기</h3>

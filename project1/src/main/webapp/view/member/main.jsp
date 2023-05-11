@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>회원관리</title>
+	<title>Smile 33OO</title>
 	<style type="text/css">
 		.container {
 			width: 100%;
