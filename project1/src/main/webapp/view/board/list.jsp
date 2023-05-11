@@ -15,10 +15,18 @@
     	f.submit();
     }
 </script>    
+<style type="text/css">
+	.img{
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+	}
+</style>
 </head>
 <body>
+<div style="width:1050px; height:300px; margin:auto;" align="center">
 <h2>${boardName}</h2>
-<table>
+<table >
 	<c:if test="${boardcount == 0}">
 		<tr>
 			<td colspan="5">등록된 게시글이 없습니다.</td>
@@ -31,7 +39,6 @@
 			<a href="popularList?boardid=${boardid}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[인기글]</a>
 			</c:if>
 			</td>
-			
 		</tr>
 		<tr>
 			<th width="5%">글번호</th>
@@ -88,7 +95,7 @@
 		<td style="text-align: left">
         <a href="info?board_num=${b.board_num}">
         <c:if test="${not empty b.thumbnail}">
-            <img src="${b.thumbnail}" style="width: 50px; height: 50px; margin-right: 10px;">
+            <img src="${b.thumbnail}" >
         </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
         ${b.title}&nbsp;&nbsp;<span style="color:orange;">[${b.commcnt}]</span>
         </a>        
@@ -188,6 +195,7 @@
 		<input type="text" placeholder="검색" name="find" value="${param.find}">
 		<button type="submit">Search</button>
 	</form>
+</div>
 </div>
 </body>
 </html>

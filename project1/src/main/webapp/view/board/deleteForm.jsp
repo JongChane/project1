@@ -7,6 +7,7 @@
 <title>게시글 삭제</title>
 </head>
 <body>
+<div style="width:1050px; height:300px; margin:auto;" align="center">
 	<h2>게시물 삭제</h2>
 	<form action="delete" method="post">
 		<input type="hidden" name="board_num" value="${param.board_num}">
@@ -16,5 +17,6 @@
 			<button type="submit">게시물삭제</button>
 		</div>
 	</form>
+</div>
 </body>
 </html>

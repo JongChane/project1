@@ -16,6 +16,7 @@
 </script>    
 </head>
 <body>
+<div style="width:1050px; height:300px; margin:auto;" align="center">
 <h2>${boardName}</h2>
 <table>
 	<c:if test="${boardcount == 0}">
@@ -181,6 +182,7 @@
 		<input type="text" placeholder="Search" name="find" value="${param.find}">
 		<button type="submit">Search</button>
 	</form>
+</div>
 </div>
 </body>
 </html>

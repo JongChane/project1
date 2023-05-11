@@ -20,13 +20,20 @@
       else 
          document.querySelector('#comment'+rno).style.display = 'block';
    }
+    function input_check(f){
+       if(f.content.value.trim() == ""){
+          alert("글 작성 하세요")
+          f.content.focus()
+          return false;
+       }
+    }
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 
 <body>
-   <div class="w3-container">
+   <div class="w3-container" style="width:1050px; height:300px; margin:auto;" align="center">
       <table>
          <tr>
             <td>${category_name}</td>
@@ -54,7 +61,7 @@
       </table>
       
       <div style="display:flex; justify-content:space-between; width:35%; margin-top:10px;">
-         <div align="left">
+         <div >
             <a href="list?boardid=${boardid}">목록으로</a>
          </div>
          <c:if test="${sessionScope.login eq b.member_id}">
@@ -68,7 +75,7 @@
    
    
    <%-- 댓글 작성시 화면 출력 공간 --%>
-   <div class="w3-container">
+   <div class="w3-container" style="width:1050px; height:auto; margin:auto;" align="center">
    <table class="w3-table-all">      
       
       <c:forEach var="c" items="${top3Comments}" varStatus="status">
@@ -87,9 +94,10 @@
               <td>🥉</td>              
             </c:when>
          </c:choose>
-            <td>${c.member_id}</td>
-            <td>${c.content}</td>
-            <td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+         <tr>	
+            <td colspan="2">${c.member_id} ${c.content}
+           <fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td></tr>
+           <tr>
             <td class="w3-right">
                <form id="comrecommend" method="post" action="comrecommend" name="rf">
                    <input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
@@ -98,16 +106,13 @@
                </form>
             <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}&comment_num=${c.comment_num}&grplevel=${c.grplevel}">삭제</a>
             </td>
+          </tr>
     
       </c:if>
-      </tr>
       </c:forEach>
       
       <c:forEach var="c" items="${commlist}" varStatus="stat">
          <tr class="w3-black">
-
-         
-                 
          <td>
             <c:if test="${c.grplevel ==1 }">└&nbsp;&nbsp;</c:if>
             ${c.member_id}
@@ -119,23 +124,8 @@
             <c:if test="${c.grplevel !=1 }">
                <input type="button" name="reply" id="reply${stat.count}" value="[댓글달기]" onclick="showreply(${stat.count})">
             </c:if>
-            <form action="reply" id="comment${stat.count}" method="post" name="comment" style="display: none;">
-            <input type="hidden" name="board_num" value="${b.board_num}">
-            <input type="hidden" name="member_id" value="${sessionScope.login}">
-            <input type="hidden" name="comment_num" value="${c.comment_num}">
-            <input type="hidden" name="grpstep" value="${c.grpstep}">
-            <input type="hidden" name="grplevel" value="${c.grplevel}">
-            <div class="w3-row-padding">
-               <div class="w3-col s6 ">
-                  <p><textarea rows="2" cols="68" name="content"></textarea></p>
-               </div>
-               
-               <div class="w3-col s6">
-                  <p><button type="submit" class="w3-btn w3-border w3-white">댓글등록</button></p>
-               </div>
-            </div>
-            </form>
          </td>
+         
          <td class="w3-right">
                <form id="comrecommend" method="post" action="comrecommend" name="rf">
                 <input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
@@ -145,6 +135,27 @@
                <c:if test="${sessionScope.login eq c.member_id}">
                <a class="w3-btn w3-border w3-green" href="commdel?board_num=${param.board_num}&grp=${c.grp}&comment_num=${c.comment_num}&grplevel=${c.grplevel}">삭제</a>
                </c:if>
+         </td>
+      </tr>
+      <tr>
+      	<td id="comment${stat.count}" style="display: none;">
+            <form action="reply"  method="post" name="comment" >
+            <input type="hidden" name="board_num" value="${b.board_num}">
+            <input type="hidden" name="member_id" value="${sessionScope.login}">
+            <input type="hidden" name="comment_num" value="${c.comment_num}">
+            <input type="hidden" name="grpstep" value="${c.grpstep}">
+            <input type="hidden" name="grplevel" value="${c.grplevel}">
+            
+            <!-- ============================================================================ -->
+            
+            <div class="w3-row-padding" >
+               <div class="w3-col s6 ">
+                  <p><textarea rows="2" cols="68" name="content"></textarea></p>
+               
+                  <p><button type="submit" class="w3-btn w3-border w3-white">댓글등록</button></p>
+               </div>
+            </div>
+            </form>
          </td>
       </tr>
       </c:forEach>
@@ -172,19 +183,14 @@
    
    <%-- 댓글 등록,삭제 및 조회 --%>
    <span id="comment">
-   <form action="comment" method="post">
+   <form action="comment" method="post" onsubmit="return input_check(this)">
+   <div style="width:1050px; height:300px; margin:auto;" align="center">
    <input type="hidden" name="board_num" value="${b.board_num}">
    <input type="hidden" name="member_id" value="${sessionScope.login}">
-   <div class="w3-row-padding">
-      <div class="w3-col s6 ">
-         <p><textarea rows="2" cols="68" name="content"></textarea></p>
+         <p><textarea rows="2" cols="100" name="content" ></textarea></p>
+         <p><button type="submit" class="w3-btn w3-border w3-white" style="margin:auto;">댓글등록</button></p>
       </div>
-      <div class="w3-col s6">
-         <p><button type="submit" class="w3-btn w3-border w3-white">댓글등록</button></p>
-      </div>
-   </div>
    </form>
-   
    </span>
 </body>
 </html>

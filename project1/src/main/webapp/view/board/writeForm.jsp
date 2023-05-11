@@ -43,9 +43,10 @@ function inputout() {
 </script>
 </head>
 <body>
+<div style="width:1050px; height:300px; margin:auto;" align="center">
 <h2>글 쓰기</h2>
 <hr>
-<div style="margin-left:200px">
+<div >
 <form action="write" method="post" name="f">       
 <c:if test="${boardid == 2 }">
    <table>
@@ -106,6 +107,7 @@ function inputout() {
       </tr>
    </table>
 </form>   
+</div>
 </div>
 </body>
 </html>
