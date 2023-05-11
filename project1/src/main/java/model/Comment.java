@@ -13,6 +13,15 @@ public class Comment {
 	private int grp;
 	private int grpstep;
 	private int grplevel;
+	private int level;
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
 	public String getContent() {
 		return content;
@@ -93,7 +102,7 @@ public class Comment {
 	public String toString() {
 		return "Comment [comment_num=" + comment_num + ", regdate=" + regdate + ", recommendcnt=" + recommendcnt
 				+ ", member_id=" + member_id + ", board_num=" + board_num + ", content=" + content + ", grp=" + grp
-				+ ", grpstep=" + grpstep + ", grplevel=" + grplevel + "]";
+				+ ", grpstep=" + grpstep + ", grplevel=" + grplevel + ", level=" + level + "]";
 	}
 
 	

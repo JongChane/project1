@@ -22,7 +22,8 @@ public interface CommentMapper {
    int cominsert(Comment comm);
    
 
-		@Select("select * from comment where board_num = #{board_num}"
+		@Select("select *, (SELECT level FROM member m WHERE m.member_id = c.member_id) as level"
+				+ " from comment c where board_num = #{board_num}"
 				+ " order by grp asc, grplevel asc, grpstep desc limit #{start}, #{limit}")
    List<Comment> selectclist(Map<String, Object> map);
 
