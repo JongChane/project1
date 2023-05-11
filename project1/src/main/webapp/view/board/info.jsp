@@ -15,7 +15,7 @@
    function showreply(rno) {
       comm1 = document.querySelector('#comment'+rno)
       console.log(comm1.style.display)
-      if (comm1.style.display == 'block')
+      if (comm1.style.display == 'table-row')
           document.querySelector('#comment'+rno).style.display = 'none';
       else 
          document.querySelector('#comment'+rno).style.display = 'table-row';
@@ -130,7 +130,9 @@
                    <input type="hidden" id="board_num" name="board_num" value="${b.board_num}">
                    <button type="submit">👍 : ${c.recommendcnt}</button>
                </form>
+                <c:if test="${sessionScope.login eq c.member_id}">
             <a class="w3-btn w3-border w3-green" href="commdel?board_num=${b.board_num}&comment_num=${c.comment_num}">삭제</a>
+            </c:if>
             </td>
     			</tr>
       </c:if>
