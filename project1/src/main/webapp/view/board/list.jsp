@@ -91,8 +91,7 @@
             <img src="${b.thumbnail}" style="width: 50px; height: 50px; margin-right: 10px;">
         </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
         ${b.title}&nbsp;&nbsp;<span style="color:orange;">[${b.commcnt}]</span>
-        </a>
-        
+        </a>        
     </td>
  		<td>
 
