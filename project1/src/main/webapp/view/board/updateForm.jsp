@@ -43,6 +43,7 @@ function inputout() {
 </script>
 </head>
 <body>
+<div style="width:1050px; height:300px; margin:auto;" align="center">
 <form action="update" method="post" name="f">
 	<input type="hidden" name="board_num" value="${b.board_num}">
 	<input type="hidden" name="boardid" value="${b.boardid}">
@@ -108,5 +109,6 @@ function inputout() {
 		</table>
 	</div>
 </form>	
+</div>
 </body>
 </html>
