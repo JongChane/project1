@@ -51,7 +51,6 @@
 		</tr>
 		
 		<c:forEach var="b" items="${list}">
- 		<tr>
  			<td>${boardnum}</td>
  			<c:set var="boardnum" value="${boardnum - 1}" />
 
@@ -154,9 +153,9 @@
         	</td>
 		 		<td><fmt:formatNumber value="${b.readcnt}" groupingUsed="true"/></td>
 		 		<td><fmt:formatNumber value="${b.recommendcnt}" groupingUsed="true"/></td>
-			</tr>
+	<tr><td colspan="7"><hr></td></tr>
 		</c:forEach>
-		
+
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">
