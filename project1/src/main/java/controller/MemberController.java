@@ -143,7 +143,6 @@ public class MemberController extends MskimRequestMapping{
 		}
 		int limit = 10;
 		//List<Board>: Board.java(빈클래스) list를 변수명을 주고 MemberDao에  함수 만들어주고 함수 만든거로 멤버메퍼에서 DB연동해서 DB값 저장
-		
 		List<Board> list = dao.boardselect(member_id, pageNum, limit);
 		int boardCount = dao.memberboardCount(member_id);
 		int recommendCount = dao.memberrecommendCount(member_id);
@@ -201,7 +200,27 @@ public class MemberController extends MskimRequestMapping{
 		return "member/finfo";
 	}
 
+	@RequestMapping("joinForm")
+	public String joinForm(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String agree = request.getParameter("agreeCheckbox");
+		if(agree == null) agree="";
+		if(agree.equals("Agree")) {
+			return "member/joinForm";
+		} else {
+			request.setAttribute("msg","개인정보동의 해주셈");
+			request.setAttribute("url", "joinAgree");
+			return "alert";
+		}
+		
+	}
 	@RequestMapping("join")
+	
 	public String join(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
@@ -235,6 +254,7 @@ public class MemberController extends MskimRequestMapping{
 		request.setAttribute("mem", mem);
 		return "member/updateForm";
 	}
+	
 	@RequestMapping("update")
 	@MSLogin("loginIdCheck")
 	public String update (HttpServletRequest request,
@@ -268,9 +288,15 @@ public class MemberController extends MskimRequestMapping{
 	}
 
 	@RequestMapping("deleteForm")
-	@MSLogin("loginCheck")
+	@MSLogin("loginIdCheck")
 	public String deleteForm(HttpServletRequest request,
 			HttpServletResponse response) {
+		String member_id = request.getParameter("id");
+		if (member_id.equals("admin")) { 
+			request.setAttribute("msg", "관리자는 탈퇴 못합니다.");
+			request.setAttribute("url", "main");
+			return "alert";
+		}
 		return "member/deleteForm";
 	}
 	
@@ -286,7 +312,6 @@ public class MemberController extends MskimRequestMapping{
 	}
 
 	@RequestMapping("delete")
-	@MSLogin("loginIdCheck")
 	public String delete(HttpServletRequest request,
 			HttpServletResponse response) {
 		String member_id = request.getParameter("member_id");
@@ -294,7 +319,7 @@ public class MemberController extends MskimRequestMapping{
 		String login =(String)request.getSession().getAttribute("login");
 		String msg = null;
 		String url = null;
-		if (member_id.equals("admin")) { //
+		if (member_id.equals("admin")) { 
 			request.setAttribute("msg", "관리자는 탈퇴 못합니다.");
 			request.setAttribute("url", "list");
 			return "alert";
@@ -389,7 +414,7 @@ public class MemberController extends MskimRequestMapping{
 			Member dbmem = dao.selectOne(login);
 			if(pass.equals(dbmem.getPass())) { 
 				if(dao.updatePass(login,chgpass)) { 
-					msg = "비밀번호가 변경되었습니다 \\n  다시로그인 하세요";
+					msg = "비밀번호가 변경되었습니다 다시로그인 하세요";
 					request.getSession().invalidate();
 					url = "loginForm";
 					opener = true;
