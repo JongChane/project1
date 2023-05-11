@@ -239,6 +239,7 @@ public class MemberController extends MskimRequestMapping{
 		
 		List<Board> list = dao.boardselect(member_id, pageNum, limit);
 		int boardCount = dao.memberboardCount(member_id);
+		int recommendCount = dao.memberrecommendCount(member_id);
 		dao.exupdate(member_id, 0);
 		Member mem = dao.selectOne(member_id);
 		int maxpage = (int) ((double) boardCount / limit + 0.95);
@@ -249,6 +250,7 @@ public class MemberController extends MskimRequestMapping{
 		int boardnum = boardCount - (pageNum - 1) * limit;
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("boardCount", boardCount);
+		request.setAttribute("recommendCount", recommendCount);
 		request.setAttribute("mem", mem);
 		request.setAttribute("list", list);
 		request.setAttribute("boardnum", boardnum);

@@ -63,7 +63,7 @@ function selectAll(selectAll)  {
 				</tr>
 				<tr>
 					<th>현재exp/필요exp</th>
-					<td>${mem.exp}/<c:choose>
+					<td><fmt:formatNumber value="${mem.exp}" groupingUsed="true"/>&nbsp;/<c:choose>
 							<c:when test="${mem.level == 1}">
 					            100
 					        </c:when>
@@ -124,9 +124,8 @@ function selectAll(selectAll)  {
 				<hr>
 			<table>
 				<tr>
-					<td colspan="5" style="text-align: right">내가 쓴글개수:${boardCount}&nbsp;&nbsp;&nbsp;
-					 내가 받은 추천 수 :${recommendCount}
-						<a href="popularList?boardid=${boardid}"></a>
+					<td colspan="5" style="text-align: right">작성글수:<fmt:formatNumber value="${boardCount}" groupingUsed="true"/>&nbsp;&nbsp;&nbsp;
+					 받은추천수 : <fmt:formatNumber value="${recommendCount}" groupingUsed="true"/>
 					</td>
 				</tr>
 				<tr><td><br></td></tr>
@@ -193,8 +192,8 @@ function selectAll(selectAll)  {
 							</c:if> <c:if test="${t!=r}">
 								<fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm" />
 							</c:if></td>
-						<td>${b.readcnt}</td>
-						<td>${b.recommendcnt}</td>
+						<td><fmt:formatNumber value="${b.readcnt}" groupingUsed="true"/></td>
+						<td><fmt:formatNumber value="${b.recommendcnt}" groupingUsed="true"/></td>
 						<td><input type='checkbox' name='idchks'
 							value="${b.board_num}" /> <br /></td>
 					</tr>

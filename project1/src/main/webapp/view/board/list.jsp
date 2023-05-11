@@ -26,7 +26,7 @@
 <body>
 <div style="width:1050px; height:300px; margin:auto;" align="center">
 <h2>${boardName}</h2>
-<table >
+<table>
 	<c:if test="${boardcount == 0}">
 		<tr>
 			<td colspan="5">등록된 게시글이 없습니다.</td>
@@ -95,7 +95,7 @@
 		<td style="text-align: left">
         <a href="info?board_num=${b.board_num}">
         <c:if test="${not empty b.thumbnail}">
-            <img src="${b.thumbnail}" >
+            <img src="${b.thumbnail}" style="width: 70px; height: 70px; margin-right: 10px;">
         </c:if>&nbsp;&nbsp;&nbsp;&nbsp;
         ${b.title}&nbsp;&nbsp;<span style="color:orange;">[${b.commcnt}]</span>
         </a>        
@@ -131,13 +131,13 @@
         		<img src="../image/7.gif">
         	</c:when>
         	<c:when test="${b.level == 8}">
-        		<img src="../image/7.gif">
-        	</c:when>
-        	<c:when test="${b.level == 9}">
         		<img src="../image/8.gif">
         	</c:when>
-        	<c:when test="${b.level == 10}">
+        	<c:when test="${b.level == 9}">
         		<img src="../image/9.gif">
+        	</c:when>
+        	<c:when test="${b.level == 10}">
+        		<img src="../image/10.gif">
         	</c:when>        
     	</c:choose>	
 
@@ -152,10 +152,11 @@
      <fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm" />
    </c:if>
         	</td>
-		 		<td>${b.readcnt}</td>
-		 		<td>${b.recommendcnt}</td>
+		 		<td><fmt:formatNumber value="${b.readcnt}" groupingUsed="true"/></td>
+		 		<td><fmt:formatNumber value="${b.recommendcnt}" groupingUsed="true"/></td>
 			</tr>
 		</c:forEach>
+		
 		<%-- 페이지 처리하기 --%>
  		<tr>
  			<td colspan="5" class="w3-center">

@@ -104,8 +104,8 @@
 	</table>
  		<table>
 		<tr>
-			<td colspan="5" style="text-align:right">내가 쓴 글개수:${boardcount}
-			<a href="popularList?boardid=${boardid}"></a>
+		<td colspan="5" style="text-align: right">작성글수:<fmt:formatNumber value="${boardCount}" groupingUsed="true"/>&nbsp;&nbsp;&nbsp;
+			받은 추천 수 : <fmt:formatNumber value="${recommendCount}" groupingUsed="true"/>
 			</td>
 		</tr>
 		<tr>

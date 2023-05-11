@@ -17,6 +17,7 @@
 </script>
 </head>
 <body>
+<div style="width:1050px; height:300px; margin:auto;" align="center">
 <form action="delete" method="post" onsubmit="return inputcheck(this)">
 
 	<input type="hidden" name="member_id" value="${param.id }">
@@ -27,5 +28,6 @@
 		<input type="submit" value="탈퇴하기"></td></tr>
 	</table>
 	</form>
+	</div>
 </body>
 </html>

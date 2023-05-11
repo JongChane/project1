@@ -25,7 +25,7 @@
 </script>
 </head>
 <body>
-<div class="container">
+<div class="container" style="width:1050px; height:300px; margin:auto;" align="center">
 <form action="update" name="f" method="post"
 		onsubmit="return inputcheck(this)">
 <h2 id="center">회원 정보 수정</h2>
