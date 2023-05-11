@@ -18,7 +18,7 @@
       if (comm1.style.display == 'block')
           document.querySelector('#comment'+rno).style.display = 'none';
       else 
-         document.querySelector('#comment'+rno).style.display = 'block';
+         document.querySelector('#comment'+rno).style.display = 'table-row';
    }
     function input_check(f){
        if(f.content.value.trim() == ""){
@@ -121,10 +121,9 @@
               <td>🥉</td>              
             </c:when>
          </c:choose>
-         <tr>   
-            <td colspan="2">${c.member_id} ${c.content}
-           <fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td></tr>
-           <tr>
+            <td>${c.member_id}</td>
+            <td> ${c.content}</td>
+           	<td><fmt:formatDate value="${c.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
             <td class="w3-right">
                <form id="comrecommend" method="post" action="comrecommend" name="rf">
                    <input type="hidden" id="comment_num" name="comment_num" value="${c.comment_num}">
@@ -133,15 +132,14 @@
                </form>
             <a class="w3-btn w3-border w3-green" href="commdel?board_num=${b.board_num}&comment_num=${c.comment_num}">삭제</a>
             </td>
-          </tr>
-    
+    			</tr>
       </c:if>
       </c:forEach>
       
       <c:forEach var="c" items="${commlist}" varStatus="stat">
          <tr class="w3-black">
          <td>
-            <c:if test="${c.grplevel ==1 }">└&nbsp;&nbsp;</c:if>
+          <c:if test="${c.grplevel ==1 }">└&nbsp;&nbsp;</c:if>
             ${c.member_id}
           <c:choose>
         	<c:when test="${level == 1}">
@@ -174,7 +172,7 @@
         	<c:when test="${level == 10}">
         		<img src="../image/10.gif">
         	</c:when>        
-    	</c:choose>
+    			</c:choose>
          </td>
 
          <td>${c.content}</td>
@@ -196,9 +194,9 @@
                </c:if>
          </td>
       </tr>
-      <tr>
-         <td id="comment${stat.count}" style="display: none;">
-            <form action="reply"  method="post" name="comment" >
+      <tr id="comment${stat.count}" style="display: none;">
+         <td colspan="5">
+           <form action="reply"  method="post" name="comment" >
             <input type="hidden" name="board_num" value="${b.board_num}">
             <input type="hidden" name="member_id" value="${sessionScope.login}">
             <input type="hidden" name="comment_num" value="${c.comment_num}">
@@ -206,14 +204,9 @@
             <input type="hidden" name="grplevel" value="${c.grplevel}">
             
             <!-- ============================================================================ -->
-            
-            <div class="w3-row-padding" >
-               <div class="w3-col s6 ">
-                  <p><textarea rows="2" cols="68" name="content"></textarea></p>
-               
-                  <p><button type="submit" class="w3-btn w3-border w3-white">댓글등록</button></p>
-               </div>
-            </div>
+             <span style="color:black">└</span>&nbsp;&nbsp;&nbsp;
+             <input style="width:85%" type="text" name="content"/>             
+             <button type="submit" class="w3-btn w3-border w3-white">댓글등록</button>
             </form>
          </td>
       </tr>
