@@ -42,7 +42,38 @@
             <td>[제목]&nbsp;&nbsp;&nbsp;&nbsp;${b.title}</td>
          </tr>
          <tr>
-            <td>Lv${level}&nbsp;&nbsp;|&nbsp;&nbsp;${b.member_id}&nbsp;&nbsp;|&nbsp;&nbsp;조회수 : <fmt:formatNumber value="${b.readcnt}" groupingUsed="true"/>&nbsp;&nbsp;
+            <td><c:choose>
+        	<c:when test="${level == 1}">
+            	<img src="../image/1.gif">
+        	</c:when>
+        	<c:when test="${level == 2}">
+            	<img src="../image/2.gif">
+        	</c:when>
+        	<c:when test="${level == 3}">
+            	<img src="../image/3.gif">
+        	</c:when>
+        	<c:when test="${level == 4}">
+            	<img src="../image/4.gif">
+        	</c:when>
+        	<c:when test="${level == 5}">
+        		<img src="../image/5.gif">
+        	</c:when>
+        	<c:when test="${level == 6}">
+        		<img src="../image/6.gif">
+        	</c:when>
+        	<c:when test="${level == 7}">
+        		<img src="../image/7.gif">
+        	</c:when>
+        	<c:when test="${level == 8}">
+        		<img src="../image/8.gif">
+        	</c:when>
+        	<c:when test="${level == 9}">
+        		<img src="../image/9.gif">
+        	</c:when>
+        	<c:when test="${level == 10}">
+        		<img src="../image/10.gif">
+        	</c:when>        
+    	</c:choose>	&nbsp;&nbsp;|&nbsp;&nbsp;${b.member_id}&nbsp;&nbsp;|&nbsp;&nbsp;조회수 : <fmt:formatNumber value="${b.readcnt}" groupingUsed="true"/>&nbsp;&nbsp;
              |&nbsp;&nbsp;추천수 : <fmt:formatNumber value="${b.recommendcnt}" groupingUsed="true"/>&nbsp;&nbsp;|&nbsp;&nbsp;댓글수 : ${b.commcnt}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${b.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
          </tr>
          <tr>
@@ -112,6 +143,38 @@
          <td>
             <c:if test="${c.grplevel ==1 }">└&nbsp;&nbsp;</c:if>
             ${c.member_id}
+          <c:choose>
+        	<c:when test="${level == 1}">
+            	<img src="../image/1.gif">
+        	</c:when>
+        	<c:when test="${level == 2}">
+            	<img src="../image/2.gif">
+        	</c:when>
+        	<c:when test="${level == 3}">
+            	<img src="../image/3.gif">
+        	</c:when>
+        	<c:when test="${level == 4}">
+            	<img src="../image/4.gif">
+        	</c:when>
+        	<c:when test="${level == 5}">
+        		<img src="../image/5.gif">
+        	</c:when>
+        	<c:when test="${level == 6}">
+        		<img src="../image/6.gif">
+        	</c:when>
+        	<c:when test="${level == 7}">
+        		<img src="../image/7.gif">
+        	</c:when>
+        	<c:when test="${level == 8}">
+        		<img src="../image/8.gif">
+        	</c:when>
+        	<c:when test="${level == 9}">
+        		<img src="../image/9.gif">
+        	</c:when>
+        	<c:when test="${level == 10}">
+        		<img src="../image/10.gif">
+        	</c:when>        
+    	</c:choose>
          </td>
 
          <td>${c.content}</td>
